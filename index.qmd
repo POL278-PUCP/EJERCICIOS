@@ -1,0 +1,65 @@
+---
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+# Bienvenidx! {#welcome .unnumbered}
+
+...
+a una recopilación de los ejercicios del curso Estadística para el Análisis Político 1 - POL278 (del ciclo 2022-1)
+
+Edited by [luccemhu](https://github.com/luccemhu)
+
+Powered by **Bajitos**
+
+::: {.alert .alert-secondary}
+**Este libro es posible gracias a...**\
+Book´s codes thanks to Jannik Buhr aka [jmbuhr](https://github.com/jmbuhr).
+
+Jannik Buhr aka [jmbuhr](https://github.com/jmbuhr) por los códigos del libro.\
+
+La magister [Marylia Cruz](https://github.com/MaryliaCruzS) por los scripts del curso.\
+
+[Luis Valverde](https://github.com/LuisEduardoValverdeRamos) por editar algunos scripts.\
+:::
+
+En este compendio, se abordarán diversos tipos de datos, se elaborarán visualizaciones con ggplot2, se realizarán cálculos estadísticos variados y se profundizará en el significado de dichos conceptos estadísticos.
+
+## Requisitos Previos
+
+No se requiere conocimiento previo.
+
+Software para instalar:
+
+-   [R](https://cloud.r-project.org/)
+-   [Rstudio](https://www.rstudio.com/products/rstudio/download/#download)
+-   *windows only*: [Rtools](https://cran.r-project.org/bin/windows/Rtools/)
+
+Este libro te ofrece una colección de ejercicios prácticos para ayudarte a dominar los fundamentos estadísticos necesarios para el análisis político. Es una herramienta esencial para estudiantes y profesionales de la Ciencia Política y Gobierno.
+
+**¿Qué encontrarás en este libro?**
+
+* Ejercicios que abarcan desde conceptos básicos hasta aplicaciones avanzadas.
+* Soluciones paso a paso que te guiarán en el uso de los códigos necesarios para cada análisis.
+* Optimización del uso de códigos para ahorrar tiempo y recursos en tus investigaciones.
+* Un proyecto en constante desarrollo, abierto a tu retroalimentación y sugerencias.
+
+**¿Para quién está dirigido este libro?**
+
+* Estudiantes del curso POL 278: Estadística para el análisis político 1.
+* Estudiantes y profesionales de Ciencia Política y Gobierno que buscan fortalecer sus habilidades estadísticas.
+* Cualquier persona interesada en aplicar la estadística al análisis político.
+
+**¿Cómo puedo contribuir?**
+
+* Si tienes dudas o deseas proponer mejoras, puedes realizar un pull request o enviar un correo electrónico a a20196510@pucp.edu.pe.
+* Tu participación es fundamental para que este proyecto siga creciendo y mejorando.
+
+**Agradecimientos**
+
+A la magister Marylia Cruz, a la comunidad académica y a mis amigxs por su apoyo constante.
+
+**¡Prepárate para sumergirte en el apasionante mundo de la estadística aplicada a la ciencia política y gobierno!**
+
+**Nota:** Este libro se encuentra en proceso de desarrollo y aún no es la versión final.

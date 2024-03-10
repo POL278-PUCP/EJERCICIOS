@@ -1,0 +1,152 @@
+---
+aliases:
+  - ejercicio-semana10.html
+---
+
+# Correlación
+
+Abrir la base de datos
+
+Importa la base de datos a R. Recuerda que si termina en .dta proviene de stata, si termina con .xslx proviene de excel
+
+#### Más información del paquete rio en el siguiente link: <https://www.rdocumentation.org/packages/rio/versions/0.5.16>
+
+```{r}
+#setwd(" ")
+
+library("rio")
+data <- import("./data/s10/PVotos_CirElectoral_idh.xlsx")
+```
+
+```{r}
+names(data)
+```
+
+#### Realizo la prueba de normalidad para definir si empleo Pearson o Spearman . Recordar que cuando el número de casos es menor a 121 , utilizo la prueba de Spearman.
+
+la H0 de la prueba de normalidad: HAY NORMALIDAD
+
+```{r}
+# Hipótesis de normalidad: la variable se distribuye normalmente
+library(nortest)
+shapiro.test(data$IDH)
+shapiro.test(data$VotosV_Castillo)
+shapiro.test(data$VotosV_De_Soto)
+```
+  - IDH
++ Con respecto a la prueba de normalidad shapiro wilk de la variable IDH, el p-value (0.6605) es mayor a 0.05, por tanto, aceptamos la H0 y concluimos que la variable edad presenta una distribución normal.
+
+  - Castillo
++ Con respecto a la prueba de normalidad shapiro wilk de la variable (VotosV_Castillo), el p-value (0.07519) es mayor a 0.05, por tanto, aceptamos la H0 y concluimos que la variable edad presenta una distribución normal.
+
+  - De Doto 
++ Con respecto a la prueba de normalidad Kolmogorov smirnov de la variable edad, el p-value (0.01307) es menor a 0.05, por tanto, rechazamos la H0 y concluimos que la variable (VotosV_De_Soto) no presenta una distribución normal.
+
+
+### Prueba de correlación (EL MéTODO SE PRECISA EN LA PRUEBA DE CORRELACION)
+
+EN CASTILLO, LA HO: NO EXISTE CORRELACION 
+
+-> CORT TEST - VARIABLE X - VARIABLE Y - EL METODO
+```{r}
+cor.test(data$IDH, data$VotosV_Castillo, method = c("pearson"))
+```
+#INTERPRETACIÓN: 
+  + Al revisar el P-value (0.008096), el cual es menor a 0.05, rechazamos la H0 y, por tanto, aceptamos la H1. A un 95% del nivel de confianza, sí parece existir una relación entre las variables IDH Y EL PORCENTAJE DE VOTO A PEDRO CASTILLO.
+  
+*--> O HAY EVIDENCIA ESTADISTICA SUFICIEnTE PARA AFIRMAR O NO LA HAY PARA NEGAR LA RELACION.*
+
++ El Coeficiente de Parson (COR) es de 0.5077587 (50%). 
+
++ Por tanto, se trata de una correlación negativa; es decir, la relación es inversa: a medida de que el IDH aumenta, hay menor porcentaje de voto a Castillo.  
++ Además, se trata de una correlación que es grande En efecto, según el criterio de Cohen, la correlación se encuentra en el rango entre 0.5 y 1.0. 
+
+*Acá reflexionar respecto a las afirmaciones*:
+
+ - POR EJEMPLO: LAS PERSONAS QUE TENGAN LOS SERIVICOS BÁSICOS CUBIERTOS (BUEN IDH), REGISTRARON MENOR POSIBLIDAD QUE VOTEN POR UN CANDIDATO OUTSIDER Y CON UNA AGENDA RADICAL. REPRESENTANTES NUEVOS. VOTO ANTISISTEMA, NO EN LA NORMA.
+ 
+ PROFUNDIZAR QUÉ PASA EN ESAS REGIONES QUE VOTARON ASÍ.
+
+## VER MÁS ALLÁ DE LO EVIDENTE
+STORY TELLING --> IMPORTANTE EN CÓMO COMUNICO LA EVIDENCIA ESTADISTICA. MANEJAR UNA ARGUMETNACIÓN DE INTERPRETACIÓN DE LOS DATOS
+INICIAR UNA DISCUSIÓN. CONTRUBUIR A LA ACADEMIA
+
+  - AHORA CON DE SOTO:
+```{r}
+cor.test(data$IDH, data$VotosV_De_Soto, method = c("spearman"))
+```
+#INTERPRETACIÓN: 
+
++ Al revisar el P-value (1.539e-06), el cual es menor a 0.05, rechazamos la H0 y, por tanto, aceptamos la H1. A un 95% del nivel de confianza, sí parece existir una relación entre las variables IDH Y el porcentaje de voto a De Soto.
+
++ El Coeficiente de Spearman (RHO es de 0.8988034 (89%). 
+
++ Por tanto, se trata de una correlación positiva; es decir, la relación es directa: a medida de que el IDH aumenta, hay mayor porcentaje de voto a Castillo. 
++ Además, se trata de una correlación que es grande. En efecto, según el criterio de Cohen, la correlación se encuentra en el rango entre 0.5 y 1.0. 
+
+
+## Gráfico de dispersión
+
+### A través del gráfico de dispersión puedo percibir el sentido de la relación
+usualmente eje X: variables que suceden primero (VARIABLES INDEPENDIENTES)
+
+  - IDH - Castillo
+```{r}
+plot(data$IDH, data$VotosV_Castillo) #gráfico básico de R
+
+#OTRA FORMA DE CREAR EL GRÁFICO, PERO MÁS BELLO:
+library(ggplot2)
+ggplot(data, aes(x = IDH, y = VotosV_Castillo)) + geom_point(colour = "red")
+```
+RELACIÓN QUE PARECIERA SER INVERSA (MENOS IDH, MAYOR VOTO POR CASTILLO)
+
+  - IDH - De Soto
+```{r}
+library(ggplot2)
+ggplot(data, aes(x = IDH, y = VotosV_De_Soto)) + geom_point(colour = "blue")
+```
+EN DE SOTO SE DA UNA RELACION FUERTE Y DIRECTA (+IDH, +REGIONES VOTAN)
+SENTIDO: POSITIVO
+
+
+--------------------------------------------------------------------------------
+
+## OTRO TEMA:
+
+RECORDAR DOS FORMAS PARA RECODIFICAR:
+USANDO LA MISMA BASE, POR EJEMPLO:
+
+1) FORMA: UNO POR UNO
+```{r}
+str(data$Distrito.electoral)
+```
+OJO, ESTA VARIABLE ESTÁ EN chr (CONVERTIR A NUMERICA)
+
+Costa = 1
+Sierra = 2
+Selva = 3
+
+```{r}
+# AQUÍ TAMBIÉN PODEMOS COLOCAR 1 en LUGAR DE SELVA:
+data$region[data$Distrito.electoral == 'Amazonas'] = 'Selva' 
+data$region[data$Distrito.electoral == 'Ancash'] = 'Sierra'
+data$region[data$Distrito.electoral == 'Apurimac'] = 'Sierra'
+```
+
+```{r}
+table(data$region)
+```
+
+2) forma: USANDO RECODE
+
+```{r}
+library(car)
+data$region2 = recode(data$Distrito.electoral,
+                      "'Amazonas' = 'Selva'; 'Ancash' = 'Sierra'")
+```
+
+```{r}
+table(data$region2)
+```
+AQUÍ, FALTA DEFINIR (SE HACE UN POR UNO)
+

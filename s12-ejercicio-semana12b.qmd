@@ -1,0 +1,163 @@
+---
+aliases:
+  - ejercicio-semana12b.html
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+Co-author: Luis Valverde
+
+# Regresión Lineal II
+
+
+- Pavimentando con votos
+
+```{r}
+#getwd() 
+#setwd("")
+library("rio")
+dataPAVI = import("./data/s12/b-pavimentando con votos.sav")
+```
+
+```{r}
+#names(dataPAVI)
+#str(dataPAVI)
+```
+
+## Formateo: DISTINGAMOS LAS VARIABLES NUMERICAS Y (NOMINALES) DICOTOMICAS
+```{r}
+# forma corta
+dataPAVI[,c(1:2, 5, 7:8)] = lapply(dataPAVI[,c(1:2, 5, 7:8)],as.numeric)
+dataPAVI[,c(3:4, 6)] = lapply(dataPAVI[,c(3:4, 6)],as.factor)
+```
+
+```{r}
+# forma larga
+#dataPAVI$poblacioncienmil = as.numeric(dataPAVI$poblacioncienmil)
+#dataPAVI$nbi = as.numeric(dataPAVI$nbi)
+
+#dataPAVI$consejocomunal = as.factor(dataPAVI$consejocomunal)
+#dataPAVI$priorizado = as.factor(dataPAVI$priorizado)
+
+#dataPAVI$uribista = as.numeric(dataPAVI$uribista)
+
+#dataPAVI$ejecucion = as.factor(dataPAVI$ejecucion)
+
+#dataPAVI$apropiaciondolar = as.numeric(dataPAVI$apropiaciondolar)
+#dataPAVI$pctopo = as.numeric(dataPAVI$pctopo)
+```
+
+**Si la variable independiente es numérica**
+============================================================
+  - HIPOTESIS: La asignación presupuestal se explica por el indicador de necesidades básicas insatisfechas
+
+```{r}
+modelo1 = lm(apropiaciondolar ~ nbi, data = dataPAVI)
+summary(modelo1)
+```
+
+
+Pr(>|t|) <- 1.46e-09 
+
+
+
+
+
+
+
+**Si la variable independiente es categórica (dicotómica)**
+============================================================
+  - HIPOTESIS: La asignación presupuestal se debe a criterios técnicos
+
+```{r}
+modelo2 = lm(apropiaciondolar ~ priorizado, data = dataPAVI)
+summary(modelo2)
+```
+
+
+
+
+**Si la variable independiente es categórica (politómica)**
+============================================================
+  - Creo la variable categórica porque no existe en esta base de datos
+```{r}
+library(gtools)
+dataPAVI$tamaño = quantcut(dataPAVI$pctopo, q=3)
+levels(dataPAVI$tamaño) = c("Bajo","Medio","Alto")
+```
+
+## Dictomizo la variable categórica
+```{r}
+library(fastDummies)
+dataPAVI = dummy_cols(dataPAVI, select_columns = c( "tamaño"))
+names(dataPAVI)
+```
+
+  - HIPOTESIS: La asignación presupuestal se debe al tamaño de población de las comunas
+
+```{r}
+modelo3 = lm(apropiaciondolar ~ tamaño_Bajo + tamaño_Medio, data = dataPAVI)
+summary(modelo3)
+```
+
+
+
+**COMPARANDO LOS MODELOS**
+============================================================
+```{r}
+library(stargazer)
+tabla = stargazer(modelo1,modelo2,modelo3, type = "text")
+```
+
+
+```{r}
+tabla = write.csv(tabla,"tablaRegresion.csv")
+#install.packages("jtools")
+library(jtools)
+#install.packages("ggstance")
+library(ggstance)
+#install.packages("broom.mixed")
+library(broom.mixed)
+```
+
+
+```{r,message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+
+testplot1 <- plot_summs(modelo1,modelo2,modelo3,legend.title="Determinantes de la asignación presupuestal",scale = TRUE, robust = TRUE)
+testplot1
+```
+
+
+**Interpretación**:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

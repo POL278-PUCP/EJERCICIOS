@@ -1,0 +1,161 @@
+---
+aliases:
+  - ejercicio-semana12.html
+---
+
+# Regresión Lineal
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+## **PRIMERA BASE DE DATOS: ELECCIONES PERÚ (CASTILLO)**
+  
+  - IDH Y CASTILLO:
+```{r}
+#getwd()
+#setwd("")
+
+library(rio)
+dataVOTO = import("./data/s12/PVotos_CirElectoral_idh.xlsx")
+
+#names(dataVOTO)
+#str(dataVOTO)
+```
+
+**Modelo 1**
+============================================================
+```{r}
+modelo1 <- lm(VotosV_Castillo ~ IDH, data = dataVOTO)
+summary(modelo1)
+```
+
+INTERPRETACION: 
+
+## **1. ¿Existe una relación de depencia entre las variables? ¿Y depende de X1?**
+
+  - **H0: La variable independiente (`IDH`) no tiene efecto sobre la variable dependiente (`VotosV_Castillo`)**
+
+  + Al revisar el p-value (0.008096), el cual es menor a 0.05, rechazamos la H0. Por lo que a un 95% de confianza, el (`IDH`) tiene **impacto significativo** / **sí tiene un efecto** / **sí influye** en (`VotosV_Castillo`). Así se determina que el "modelo1" es válido para predecir el porcentaje de votos válidos a Castillo en los departamentos del país a partir del IDH; es decir, existe una relación lineal entre ambas variables.
+     
+## **2. ¿Cuánto explica el modelo?**
+
+  + La mejor recta graficada del "modelo1" de regresión lineal ayuda a predecir el 22% de la variabilidad total de la variable (`VotosV_Castillo`) explicada por la variable (`IDH`). Por lo que podemos concluir que es un modelo bajo.
+
+## **3. ¿Cómo Y depende de X 1?**
+
+COEFICIENTE:
+
+  + El porcentaje de votos válidos de Castillo va a ser igual a 0.7566 + (-0.9311)*IDH. En ese sentido, cuando el (`IDH`) se incrementa en una unidad, el porcentaje de votos válidos de Castillo **disminuye** / **se reduce** en 0.9311 puntos porcentuales / 93%.
+
+INTERCEPTO:
+
+  + Cuando IDH toma el valor 0, el porcentaje de votos válidos para Castillo sería 0.7566.
+
+  + Y = 0.7566 +(-0.9311)*X
+
+  + Y = 0.7566 +(-0.9311)*IDH
+
+```{r}
+summary(dataVOTO$IDH)
+```
+  + ¿Qué sucede con la región que tiene el min de IDH? remplazar 0.3838 en --> Y= 0.7566 + (-0.9311)*IDH
+```{r}
+Y1 = 0.7566 + (-0.9311)*0.3838
+Y1
+```
+ 
+  + Porcentaje de voto a castillo al 40% 
+
+## **Gráfica**
+```{r,message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+#plot(VotosV_Castillo ~ IDH, dataVOTO)
+#abline(modelo1, col = "red")
+
+# GRÁFICO FACHEREX:
+library(ggplot2)
+library(hrbrthemes)
+ggplot(dataVOTO, aes(x = IDH, y = VotosV_Castillo, color = "")) +
+  geom_point(size = 6,
+                     alpha = 1/2) +  xlab("IDH") +  ylab("Votos por Castillo") +
+  ggtitle("IDH \ Votos por Castillo") +
+  theme_light() + geom_smooth(method="lm", 
+                             se = F) +  # Se eliminan las bandas de confianza (se = standard error) 
+  theme_ipsum()
+```
+
+INTERPRETACIÓN:
+
+  + Las regiones con mayor IDH votaron menos por castillo.
+
+
+**SEGUNDA BASE DE DATOS: ELECCIONES COLOMBIA (PETRO)**
+============================================================
+  - IDH Y PETRO:
+```{r}
+#getwd()
+#setwd("")
+
+library(rio)
+dataCOLOM = import("./data/s12/Colombia2022.xlsx")
+
+#names(dataCOLOM)
+#str(dataCOLOM)
+```
+
+```{r}
+str(dataCOLOM$`Petro (%)`)
+str(dataCOLOM$`IDH-2019`)
+```
+**Modelo 2**
+============================================================
+```{r}
+modelo2 <- lm(`Petro (%)` ~ `IDH-2019`, data = dataCOLOM)
+summary(modelo2)
+```
+
+## INTERPRETACION:
+
+  - **H0: La variable independiente (`IDH-2019`) no tiene efecto sobre la variable dependiente (`Petro (%)`)**
+
+  + Al revisar el p-value (0.003354), el cual es menor a 0.05, rechazamos la H0. Por lo que a un 95% de confianza el (`IDH-2019`) tiene impacto significativo en (`Petro (%)`). Así se determina que el modelo2 es válido para predecir el porcentaje de votos válidos a Petro en las regiones del país colombiano a partir del IDH. Es decir, existe una relación lineal entre ambas variables.
+
+  + La mejor recta graficada del modelo2 de regresión lineal ayuda a predecir el 24% de la variabilidad total de la variable (`Petro (%)`) explicada por la variable (`IDH-2019`). Por lo que podemos concluir que es un modelo bajo.
+
+COEFICIENTE:
+  
+  + El porcentaje de votos válidos de Petro va a ser igual a 2.0028 + (-2.1193)*`IDH-2019`. En ese sentido, cuando el `IDH-2019` se incrementa en una unidad, el porcentaje de votos válidos de Petro disminuye/se reduce en 2.1193 puntos porcentuales.
+
+INTERCEPTO:
+
+  + Cuando IDH toma el valor 0, el porcentaje de votos válidos para Petro sería 2.0028.
+
+```{r}
+summary(dataCOLOM$`IDH-2019`)
+```
+
+```{r}
+Y2 = 2.0028 +(-0.9311*0)
+Y2
+```
+
+## GRÁFICA
+```{r,message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+#plot(`Petro (%)` ~ `IDH-2019`, dataCOLOM)
+#abline(modelo2, col = "red")
+
+# GRÁFICO FACHEREX:
+library(ggplot2)
+ggplot(dataCOLOM, aes(x=`IDH-2019`, y = `Petro (%)`)) +
+  geom_point(colour="red", size = 3, alpha = 1/2) + 
+  xlab("IDH 2019") + 
+  ylab("Votos por Petro") +
+  ggtitle("IDH 2019 \ Votos por Petro") +
+  theme_light()+ geom_smooth(method="lm", 
+                             se = F) # Se eliminan las bandas de confianza (se = standard error)
+```
+  + Del mismo modo las regiones con mayor IDH votaron menos por Petro.
+
+
+
+

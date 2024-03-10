@@ -1,0 +1,285 @@
+---
+output:
+  pdf_document:
+    latex_engine: xelatex
+  html_document:
+    df_print: paged
+---
+
+
+<br> 
+<center><img src=" " width="200"></center>
+
+```{r,echo=FALSE, out.width="30%"}
+knitr::include_graphics("logo_pucp.png") 
+```
+
+
+
+
+## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+
+### Curso: POL 278 - Estadística para el análisis político 1 <br> 
+
+### Semestre 2021-2<br> 
+
+### Docente: Marylia Cruz <br> 
+
+### **Sesión 6: RAnálisis de variables categóricas* <br>
+
+============================================================
+
+<br>
+
+
+
+<br>
+
+El objetivo de esta sesión es conocer los comandos básicos de la prueba Chi-cuadrado y medidas de asociación.
+
+La base de datos es del LATINOBARÓMETRO : 
+
+https://www.latinobarometro.org/latContents.jsp
+
+
+# Abrir la base de datos
+
+```{r}
+library(rio)
+data <-import("Latinobarometro_2018_Esp_Spss_v20190303.sav")
+
+```
+
+## SELECCIONAR DATA
+
+
+```{r}
+data=subset(data,IDENPA==68 |IDENPA==170|IDENPA==604|IDENPA==218)
+table(data$IDENPA)
+```
+
+```{r}
+library(car)
+data$pais<- recode(data$IDENPA, "68='Bolivia'; 170='Colombia';604='Peru';218='Ecuador'")
+table(data$pais)
+```
+
+
+## Descripción de la base
+
+Sexo
+
+```{r}
+data$SEXO=as.factor(data$SEXO)
+levels(data$SEXO)=c("Hombre","Mujer")
+```
+
+Autoubicación en escala de pobreza-riqueza: Personal
+
+```{r}
+data$pobr_riq=as.numeric(data$P10STC.A)
+```
+
+En términos generales ¿Diría usted que (PAÍS) está gobernado por unos cuantos grupos poderosos en su propio beneficio, o que está gobernado para el bien de todo el pueblo? (ESPERE RESPUESTA Y MARQUE UNA SOLA)
+
+```{r}
+data$pode_pueblo=as.factor(data$P14ST)
+levels(data$pode_pueblo)=c("Poderosos","Pueblo")
+```
+
+
+ ¿Y en los próximos doce meses, cree que su situación económica y la de su familia será mucho mejor, un poco mejor, igual, un poco peor, o mucho peor qu e la que tiene hoy? (ORDINAL)  5 Mucho peor 1 Mucho mejor
+ 
+```{r}
+data$situ_eco=as.factor(data$P9STGBSC)
+levels(data$situ_eco)=c("Mucho mejor","Un poco mejor","Igual","Un poco peor","Mucho peor")
+```
+
+¿Diría Ud. que este país...
+progresado 1  
+estancado 2
+esta retroceso  3
+
+```{r}
+library(car)
+data$pais_pro=as.factor(data$P2STC)
+data$pais_pro=factor(data$pais_pro,
+                 levels = levels(data$pais_pro),
+                 labels = c("Progreso","Estancado","Retrocedio"),
+                 ordered = T)
+table(data$pais_pro)
+```
+
+En general, ¿Diría Ud. que está muy satisfecho, más bien satisfecho, no muy satisfecho o nada satisfecho con el funcionamiento de la democracia en (PAÍS)?
+
+```{r}
+library(car)
+table(data$P13STGBS.A)
+data$satis_democracia=as.factor(data$P13STGBS.A)
+data$satis_democracia <- recode(data$P13STGBS.A, "1:2=1; 3:4=2")
+table(data$satis_democracia)
+data$satis_democracia=as.factor(data$satis_democracia)
+levels(data$satis_democracia)=c("Satisfecho","No Satisfecho")
+```
+
+
+¿Cuán justa cree Ud. que es la distribución del ingreso en (PAÍS)?
+
+```{r}
+str(data$P23ST)
+data$justo=as.factor(data$P23ST)
+levels(data$justo)=c("Muy justa","Justa","Injusta","Muy injusta")
+```
+
+
+## DESCRIPCIÓN DE VARIABLES 
+
+```{r}
+library(jmv)
+descriptives(data,vars=vars(justo,pode_pueblo,pobr_riq,situ_eco,pais_pro,satis_democracia),freq = TRUE)
+```
+
+
+## TABLA DE CONTINGENCIA
+
+UNIDAD DE ANÁLISIS : Personas entrevistadas
+
+
+```{r}
+table(data$pais,data$satis_democracia)
+```
+
+```{r}
+addmargins(table(data$pais,data$satis_democracia))
+```
+
+Distribución conjunta
+
+Porcentaje en relación al total general 
+
+Bolivia&Satisfechos= 314/4568=0.068
+
+```{r}
+prop.table(table(data$pais,data$satis_democracia))
+```
+
+Distribución Marginal
+
+Porcentaje en relación al total de las filas
+
+```{r}
+prop.table(table(data$pais,data$satis_democracia),1)
+```
+
+Porcentaje en relación al total de las columnas
+
+
+```{r}
+prop.table(table(data$pais,data$satis_democracia),2)
+```
+
+
+```{r}
+prop.table(table(data$satis_democracia,data$pais),2)
+```
+
+## GRÁFICO
+
+```{r}
+cuadro=prop.table(table(data$satis_democracia,data$pais),2)
+barplot(cuadro,  legend = rownames(cuadro),axis.lty = 2)
+```
+
+
+
+
+## FRECUENCIAS ESPERADAS
+
+
+```{r}
+table(data$satis_democracia,data$pais)
+tablaFesperadas <- chisq.test(data$satis_democracia,data$pais)$expected
+tablaFesperadas
+```
+
+
+## CHI CUADRADO
+
+grados de libertad= (filas-1)*(columnas-1)
+grados de libertad= (2-1)*(4-1)
+grados de libertad=3
+```{r}
+qchisq(0.95,3) # Valor de la tabla
+```
+
+```{r}
+chisq.test(data$pais,data$satis_democracia)
+```
+
+H0: NO HAY ASOCIACIÓN ENTRE LA SATISFACCIÓN DE LA DEMOCRACIA Y EL PAÍS
+
+P-VALOR= 0.00000000000000022
+
+Rechazo la hipotesis nula. Si es posible una relación entre la satisfacción de la democracia y el país. 
+
+# MEDIDAS DE ASOCIACIÓN PARA ALMENOS UNA VARIABLE NOMINAL 
+
+```{r}
+cuadro=table(data$satis_democracia,data$pais)
+#install.packages("vcd")
+library(vcd)
+assocstats(cuadro)
+```
+
+```{r}
+#install.packages("DescTools")
+library(DescTools)
+Phi(cuadro,conf.level=0.95)
+UncertCoef(cuadro,conf.level=0.95)
+Lambda(cuadro, conf.level=0.95)
+```
+
+
+#  MEDIDAS DE ASOCIACIÓN PARA RELACIÓN ENTRE DOS VARIABLES ORDINALES
+
+
+```{r}
+table(data$justo,data$pais_pro)
+```
+
+```{r}
+tabla=prop.table(table(data$justo,data$pais_pro),1)*100
+addmargins(tabla)
+```
+
+```{r}
+cuadro2=table(data$justo,data$pais_pro)
+chisq.test(cuadro2)
+```
+
+
+
+```{r}
+# Medidas de asociación para variables ordinales
+
+
+GoodmanKruskalGamma(cuadro2, conf.level=0.95)
+
+KendallTauB(cuadro2, conf.level=0.95)
+
+StuartTauC(cuadro2, conf.level=0.95)
+```
+
+
+```{r}
+#Medidas asimetricas
+cuadro2=table(data$pais_pro,data$justo)
+cuadro2
+SomersDelta(cuadro2, direction = "row") #fila = variable dependiente  #row reemplazar por col si es que la variable esta en columnas
+```
+
+DIRECTA:
+A medida que se cree que la distribución de ingresos es muy injusta, se considera que el país retrocedio.
+A medida que se cree que la distribución de ingresos es muy justa, se considera que el país progreso
+
+INTENSIDAD: BAJA 0 a 0.3 es relación baja.

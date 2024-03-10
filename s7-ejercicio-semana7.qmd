@@ -1,0 +1,73 @@
+---
+aliases:
+  - ejercicio-semana7.html
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+**<b style = 'color : #50D050;'>CHI-CUADRADO Y MEDIDAS DE ASOCIACIÓN</b>**
+============================================================
+
+```{r}
+#getwd() 
+#setwd("")
+#dir()
+
+library(rio)
+df_baro = import("./data/s7/Peru_Latinobarometro2020.sav")
+
+#head(df_baro)
+#names(df_baro)
+#str(df_baro)
+#class(df_baro) 
+```
+
+
+**<b style = 'color : #50D050;'>Exploracion de variables categoricas</b>**
+
+  - damos formato a nuestras variables:
+```{r}
+df_baro$SEXO = as.factor(df_baro$SEXO)
+levels(df_baro$SEXO) = c("Hombre", "Mujer")
+```
+ 
+```{r}
+df_baro$P21STM = as.factor(df_baro$P21STM)
+levels(df_baro$P21STM) = c("Apoyaria_Gob_Militar", "No_Apoyaria_Gob_Militar")
+```
+
+  - LUEGO CREAMOS NUESTRAS TABLAS:
+```{r}
+table(df_baro$P21STM, df_baro$SEXO) #TABLA DE CONTINGENCIA
+
+# TABLA DE FRECUENCIA ESPERADA:
+tablaFesperadas = chisq.test(df_baro$P21STM, df_baro$SEXO)$expected 
+tablaFesperadas
+```
+
+  - CHI CUADRADO:
+  
+```{r}
+chisq.test(df_baro$P21STM,df_baro$SEXO)
+```
+
+H0: No existe relación entre las variables. el sexo no determina la preferencia por un gobierno militar.
+
+P-value = 0.0002791. menor a 0.05, por tanto, rechazo la H0. Es posible a un 95% de confianzsa que exista una relación entre el sexo y la preferencia por un gobierno militar.
+
+
+CALCULAR LOS PORCENTAJES DE LA DISTRIBUCION CONDICIONAL: EN FUNCION DE LA VARIABLE SEXO (TOMAMOS EL 100% DE ACUERDO A LA VARIABLE INDEPENDIENTE) EN ESTE CASO NOS CONVIENE LAS COLUMNAS:
+
+```{r}
+# ,1 -> calcula en función de las filas (suman 100%):
+prop.table(table(df_baro$P21STM, df_baro$SEXO), 1)*100 
+```
+
+```{r}
+#  ,2 -> calcula en función de las columnas (suman 100%):
+prop.table(table(df_baro$P21STM, df_baro$SEXO), 2)*100
+```
+
+  - Los hombres aprox un 55% apoyarian un gobierno militar. las mujeres un 44% y un 55% no apoyaria un gobierno militar.
+¿POR QUÉ ocurre esto de manera agregada? diferencia de género? quienes reclaman más derechos?

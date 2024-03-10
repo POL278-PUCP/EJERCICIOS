@@ -1,0 +1,195 @@
+---
+aliases:
+  - ejercicio-semana2.html
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Mis Primeros Pasos Con R - Actividad 2 
+
+	Replica el html  visto en clases con los códigos que contiene correspondiente a la exploración univariada de los diferentes tipos de variables.  Recuerda que el R es un software por lenguaje de objetos.
+
+	Realiza tu propio Rmd (Rmarkdown)
+
+	Adjunta el html que has generado.
+
+```{r}
+a = 5+6 # a = objeto
+a
+```
+
+Estos objetos creados se llaman vectores (suma de elementos):
+
+```{r}
+colores <- c("azul", "negro", "blanco", "rojo") # c = concatenar
+colores
+```
+
+```{r}
+edad = c(20, 15, 30, 12)
+edad
+```
+
+  - revisar la infografia de la carpeta para replicar otros ejemplos
+
+```{r}
+x = seq(2, 3, by = 0.5) # crea un secuencia del 2 al 3 con una diferencia de 0.5
+x
+```
+
+# Replicando html de la profesora:
+
+  - El objetivo de esta sesión es conocer los comandos básicos de para la estadística descriptiva
+
+```{r}
+# Descarga las siguientes librerias:
+# instalar paquetes con la siguiente forma:
+#install.packages("rio") 
+
+#install.packages("psych") # En Console
+library(psych) # para usar la función describe
+
+#install.packages("DescTools") # En Console
+library(DescTools) # para calcular la moda y mediana
+
+library(Hmisc)
+
+#install.packages("ggplot2") #En Console
+library(ggplot2) # para realizar gráficos
+```
+
+  - Más información del paquete rio en el siguiente link: https://www.rdocumentation.org/packages/rio/versions/0.5.16
+
+```{r}
+#getwd() # En Console
+#setwd("") # En Console
+
+library(rio)
+datalapop = import("./data/s2/LAPOP_PERU_2019.dta")
+#names(datalapop) # En Console
+#str(datalapop) # En Console
+```
+
+
+# Variable Categórica nominal: q1 -> sexo
+
+```{r}
+datalapop$q1 = as.factor(datalapop$q1) #as.factor -> a formato a c. nominal
+
+datalapop$q1 = factor(datalapop$q1,
+                levels = levels(datalapop$q1), 
+                labels = c("Hombre","Mujer"),  
+                ordered = F) 
+```
+
+```{r}
+table(datalapop$q1) # Tabla respecto al sexo
+
+prop.table(table(datalapop$q1))*100 # frecuencias relativas porcentuales
+```
+
+```{r}
+describe(datalapop$q1)
+```
+
+```{r}
+pie(table(datalapop$q1))
+
+pie(prop.table(table(datalapop$q1))*100)
+```
+
+# Ejemplo 2: sd6new2 es la variable nivel de satisfaccion con la salud - ordinal
+
+```{r}
+datalapop$Satisalud  = as.factor(datalapop$sd6new2)
+
+datalapop$Satisalud = factor(datalapop$Satisalud, 
+                levels = levels(datalapop$Satisalud),  
+                labels = c("Muy satisfecho","Satisfecho","Insatisfecho",
+                           "Muy insatisfecho"),  
+                ordered = T)
+```
+
+```{r}
+table(datalapop$Satisalud) # Tabla respecto al sexo
+
+prop.table(table(datalapop$Satisalud))*100 #frecuencias relativas porcentuales
+```
+
+```{r}
+library(Hmisc)
+describe(datalapop$Satisalud)
+```
+
+```{r}
+##BOXPLOT
+boxplot(datalapop$Satisalud) #BASICO
+
+barplot(table(datalapop$Satisalud),col = "red",
+        xlab = NULL,
+        ylab = "Conteo de encuestados",
+        main = "Percepción de satisfacción con el sistema de salud")
+```
+
+# Ejemplo 3: q2 es una variable numérica
+
+```{r}
+datalapop$q2 = as.numeric(datalapop$q2)
+summary(datalapop$q2)
+describe(datalapop$q2)
+```
+
+```{r}
+boxplot(datalapop$q2) # Gráfico simple boxplot BASICO
+
+
+ggplot(data = datalapop, aes(x = "", # Gráfico ggplot2 boxplot
+                             y = q2)) + 
+  geom_boxplot() 
+
+hist(datalapop$q2) # Gráfico simple histograma
+
+ggplot(datalapop, aes(x = q2)) + # Gráfico ggplot2 histograma 
+  geom_histogram()
+```
+
+# Medidas de centralidad
+
+```{r}
+library(DescTools)
+Mode(datalapop$q1, na.rm = T)
+```
+
+```{r,message=FALSE}
+library(DescTools)
+Mode(datalapop$q2, na.rm = T)
+Median(datalapop$q2, na.rm = T) # En este caso es 36
+mean(datalapop$q2, na.rm = T)
+```
+
+# Medidas de dispersion para una variable numerica
+
+```{r}
+min(datalapop$q2, na.rm = T) #`na.rm= T` no considera los valores perdidos
+max(datalapop$q2, na.rm = T)
+range(datalapop$q2, na.rm = T)
+quantile(datalapop$q2, na.rm = T)
+IQR(datalapop$q2, na.rm = T)
+```
+
+```{r}
+var(datalapop$q2, na.rm = T) #varianza
+sd(datalapop$q2, na.rm = T) #desviación
+```
+
+# Medidas de distribución de la variable numérica
+
+```{r}
+# Funcion que instala paquete para obtener la asimetria o curtosis
+#install.packages("moments")
+
+library(moments)
+skewness(datalapop$q2, na.rm = T) #asimetría
+kurtosis(datalapop$q2, na.rm = T) #curtosis
+```

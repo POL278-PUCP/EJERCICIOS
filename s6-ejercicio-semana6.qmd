@@ -1,0 +1,204 @@
+---
+aliases:
+  - ejercicio-semana6.html
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Comparación de grupos
+
+- El objetivo de esta sesión es aplicar la técnica de ANOVA en R
+
+```{r}
+#getwd() 
+#setwd("") # Indicar el directorio de trabajo
+#dir()
+
+library(rio)
+lapop = import("./data/s6/LAPOP20172016.sav") # Abrir la base de datos
+#names(datalapop)
+#str(datalapop)
+#class(datalapop) 
+```
+
+
+## **<b style = 'color : #50D050;'>PASO 1: Formato</b>**
+
+  - `PEconomica`:
+  
+```{r}
+lapop$PEconomica = as.factor(lapop$q10e)
+levels(lapop$PEconomica)
+levels(lapop$PEconomica) <- c("Aumento", "Igual", "Disminuyó")
+lapop <- lapop[!is.na(lapop$PEconomica), ]
+```
+
+```{r}
+table(lapop$PEconomica)
+```
+
+  - `ing4`: Apoyo a la democracia -> Variable ordinal de 7 categorias tambien la podemos tratar como numerica (per se no lo es), pues va a tener cierta variabilidad.
+  
+```{r}
+lapop$ing4 = as.numeric(lapop$ing4)
+lapop <- lapop[!is.na(lapop$ing4), ] # Eliminando NA
+
+summary(lapop$ing4) # Resumen
+```
+
+## **<b style = 'color : #50D050;'>PASO 2: Medias en los grupos</b>**
+
+  - Para ver por grupos
+  
+```{r}
+library(psych)
+describeBy(lapop$ing4, group = lapop$PEconomica)
+```
+
+  - Otra alternativa al descriBy, pero solo para obtener la Media y la desviacion estandar:
+  
+```{r}
+with(lapop, do.call(rbind, tapply 
+                    (ing4, PEconomica, function(x) 
+                      c(Media = mean(x), 
+                        SD = sd(x)))))
+```
+
+  - Parece que el apoyo a la democracia en promedio es mayor en las personas que consideran que aumentó
+
+  - Parece que el apoyo a la democracia en promedio es menor en aquellas personas que consideran que disminuyó
+
+Pero en suma: promedios similares, es decir, no podemos garantizar si son diferentes signifcativamente.  La dispersion es baja. 
+
+
+## **<b style = 'color : #50D050;'>PASO 3: REQUISITOS</b>**
+
+  - ***NORMALIDAD DE LA VARIABLE NUMÉRICA***
+
+Cuando tengo un n menor a 50 casos (Fijarnos en las observaciones de la data), usamos la prueba de normalidad Shapiro-Wilk 
+
+  - Hipotesis para ambas pruebas:
+(H0 = La variable se distribuye normalmente)
+
+  - Entonces, debemos utilizar la prueba Kolmogorov-Smirnov (mayor a 50 casos)
+   
+   - **Prueba Shapiro-Wilk**
+```{r}
+library(nortest)
+#by(lapop$ing4, lapop$PEconomica, shapiro.test) # Menor a 50 casos
+```
+
+  Interpretacion en caso sea menor a 50 casos:
+  
+  - De acuerdo con el criterio del p-value menor a 0.05, rechazamos la H0.
+Entpnces, parece que esta variable no se comporta de manera normal en ninguno de los 3 grupos.
+
+
+  - **Prueba Kolmogorov-Smirnov**
+  
+```{r}
+#library(nortest)
+by(lapop$ing4, lapop$PEconomica, lillie.test) # Mayor a 50 casos
+```
+
+Interpretacion:
+  
+  - De acuerdo con el criterio del p-value menor a 0.05, rechazamos la H0.
+Entpnces, parece que esta variable no se comporta de manera normal en ninguno de los 3 grupos. o La variable no se distribuye normalmente.
+
+
+  - ***PRUEBA DE HOMOGENEIDAD DE VARIANZA***
+
+Prueba de igualdad de varianzas (Homocedasticidad). La prueba de Levene tiene como 
+
+  - H0 =  las varianzas son iguales
+
+```{r}
+library(car)
+leveneTest(lapop$ing4, lapop$PEconomica) #Prueba de Levene, Pr es igual al Pvalue
+```
+
+  - Fijarnos en el Pr(>F): En este caso, aceptamos la H0, es probable que las varianzas sean iguales o similares.
+  
+**Interpretacion:**
+  
+  - El p-valor sale 0.1019 que es mayor a 0.05, entonces no rechazo la hipotesis nula. Conclusion es que las varianzas son iguales.
+ 
+
+***Hasta aquí, advertimos que la variable no ha cumplido con el supuesto de normalidad (prueba Kolgomorov), pero sí la prueba de varianza (Levene). Es decir, ya no se puede continuar con la prueba ANOVA, Sino con otras pruebas de Estadistica no parametrica.***
+
+***A menos que la pregunta solo pida la prueba Anova, asumiendo que hay normalidad (Estadistica parametrica) se continuara con Anova.***
+
+  - Entonces, asumiremos que sí hay normalidad y continuaremos con la prueba ANOVA:
+
+## **<b style = 'color : #50D050;'>PASO 4: ANOVA</b>**
+
+  - H0: Las medias son iguales 
+  
+  - HA: Al menos una media es diferente
+```{r}
+anova <- aov(lapop$ing4 ~ lapop$PEconomica)
+summary(anova)
+```
+
+  - Df: Grados de Libertad
+  - Sum Sq: suma de cuadrados
+  - Mean Sq: promedio de suma de cuadrados
+  - F value: Estadistico F
+  - Pr(>F): P-value del estadistico F <- ***Ayuda a determinar si rechazamos o no la hipotesis nula***
+   
+   
+Entonces, rechazamos la hipotesis nula, 2.88e-10 es menor a 0.05. Es decir, al menos una de las medias es diferente (de los 3 grupos). Además el estadistico F (22.16) es muy alto 
+
+  - Para comprobar qué grupos son iguales o no
+   
+  Prueba TukeyHSD: comparacion multiple de promedios
+```{r}
+TukeyHSD(anova) # H0: las medias son iguales / No son diferentes
+```
+
+  Se lee así:
+  
+  - La diferencia entre los promedios de (`Igual-Aumento`) es signficativa, ya que el (`p adj`) es menor a 0.05 (`0.0006666`). Además, a un 95% del nivel de confianza, el intervalo de confianza en el que oscila esta diferencia está entre 47% y el 10%
+
+En el caso de esta variable (`ing4`), advertimos que todas la diferencias de promedios son signficativas.
+
+  ENTONCES, sí hay relacion entre la autopercepción economica y el apoyo a la democracia. se evidencia que los promedios dentro de los grupos nos anuncian que mientras que el apoyo a la democracia en promedio es alto la perpecion economica tambien lo es en el grupo de las personas que consideran que aumentó.
+
+Sí impacta el apoyo a la democracia en la autopercepción economica. Es decir, si la gente considera que sus ingresos hayn disminuido, su apoyo a la democracia va a tender a disminuir.
+
+Este es un indicador importante, aun más que medir el PBI y el apoyo a la democracia.
+
+## **<b style = 'color : #50D050;'>GRAFICO</b>**
+
+  - `ing4`
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center", fig.cap="Figure 1: Docentes según sexo (ENDO 2020)."}
+
+library(ggplot2)
+library(plotly)
+
+boxplot <- ggplot(lapop, aes(y = ing4, x = PEconomica, 
+                             fill = factor(PEconomica))) + 
+  geom_boxplot() + 
+  xlab("Percepción económica") + 
+  ylab("Apoyo a la democracia")
+
+ggplotly(boxplot)
+```
+
+  - Advertimos rapidamente que la distribucion es similar y quizas la mediana tambien en los boxplots de `aumento` e `igual`.
+
+  - En este caso, si queremos ver promedios es mejor advertirlas en las barras de error. No recomendable un boxplot.
+
+  - **BARRAS DE ERROR**
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center", fig.cap="Figure 1: Docentes según sexo (ENDO 2020)."}
+library(gplots)
+plotmeans(lapop$ing4 ~ lapop$PEconomica, p = 0.95,
+          main = "Mean Plot \n with 95% CI")
+```
+
+**Interpretación**:
+  - En este caso no se traslapan. son diferentes signficativamente
+
+si se traslapan la diferencia podria ser 0.

@@ -1,0 +1,27 @@
+---
+aliases:
+  - ejercicio-semana6b.html
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Segunda parte de ejercicios
+
+- Revisar el documento 02_Cuestionario_2.pdf de la carpeta data.
+ 
+## Comparación de grupos
+
+- El objetivo de esta sesión es aplicar la técnica de ANOVA en R
+
+```{r}
+#getwd() 
+#setwd("") # Indicar el directorio de trabajo
+#dir()
+
+library(rio)
+lapop = import("./data/s6/ENSUSALUD_2015_C2-3.sav") # Abrir la base de datos
+#names(datalapop)
+#str(datalapop)
+#class(datalapop) 
+```

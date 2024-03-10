@@ -1,0 +1,84 @@
+project:
+  output-dir: docs
+  type: book
+
+book:
+  site-url: "https://pol278-pucp.github.io/test1/"
+  title: "Ejercicios POL278 - 2022-1"
+  author: "Joel Belsasar Ccallocunto \n *[luccemhu](https://github.com/luccemhu)* \n a20196510@pucp.edu.pe"
+  description: "This is where you will find all the resources for the book´s exercises POL278"
+  date: today
+  image: cover.png
+  favicon: "favicon.png"
+  page-navigation: true
+  search: true
+  repo-url: https://github.com/POL278-PUCP/test1
+  repo-actions: [issue, source]
+  # downloads: [pdf, epub]
+  # sharing: [twitter]
+  open-graph: true
+  # twitter-card:
+  #   creator: "@jannikbuhr"
+  chapters:
+    - index.qmd
+    - s2-ejercicio-semana2.qmd
+    - s3-ejercicio-semana3.qmd
+    - s4-ejercicio-semana4.qmd    
+    - s6-ejercicio-semana6.qmd
+    - s6-ejercicio-semana6b.qmd
+    - s7-ejercicio-semana7.qmd
+    - s7-ejercicio-semana7b.qmd
+    - s8-ejercicio-parcial-semana8.qmd
+    - s8-ejercicio-parcial-semana8b.qmd
+    - s10-ejercicio-semana10.qmd
+    - s12-ejercicio-semana12.qmd
+    - s12-ejercicio-semana12b.qmd
+    - s13-ejercicio-semana13.qmd
+    - s14-ejercicio-semana14.qmd
+    - s15-ejercicio-final-semana15.qmd
+    - s15-ejercicio-final-semana15b.qmd
+    
+  appendices:
+    - references.qmd
+
+execute:
+  cache: false
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    comment: ""
+    out.width: "100%"
+    echo: TRUE
+    paged.print: TRUE
+
+
+bibliography: references.bib
+citation:
+  license: "CC BY"
+  type: book
+  author: Joel Belsasar
+  collection-title: Ejercicios POL278 - 2022-1
+  issued: 2024-03-10
+  abstract: |
+    Ejercicios del curso POL278.
+
+
+format:
+  html:
+    theme:
+      dark: [default, darkly, theme.scss]
+      light: [default, theme.scss]
+    # mainfont: Roboto
+    # monofont: Fira Mono
+    css: ./style.css
+    number-sections: true 
+    code-link: true
+    reference-links: true
+    reference-location: margin
+
+
+

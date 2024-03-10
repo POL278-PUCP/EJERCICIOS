@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="This is where you will find all the resources for the course Introduction to Data Analysis with R">
+
+<title>Ejercicios POL278 - 2022-1 - 7&nbsp; ANALISIS DE VARIABLES CATEGORICAS</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./s8-ejercicio-parcial-semana8.html" rel="next">
+<link href="./s7-ejercicio-semana7.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="./style.css">
+<meta property="og:title" content="Ejercicios POL278 - 2022-1 - 7&nbsp; ANALISIS DE VARIABLES CATEGORICAS">
+<meta property="og:description" content="This is where you will find all the resources for the course Introduction to Data Analysis with R">
+<meta property="og:image" content="https://pol278-pucp.github.io/test1/s7-ejercicio-semana7b_files/figure-html/unnamed-chunk-18-1.png">
+<meta property="og:site-name" content="Ejercicios POL278 - 2022-1">
+<meta property="og:image:height" content="960">
+<meta property="og:image:width" content="1344">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s7-ejercicio-semana7b.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">**<b style="color : #50D050;">ANALISIS DE VARIABLES CATEGORICAS</b>**</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Ejercicios POL278 - 2022-1</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/POL278-PUCP/test1" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hello and welcome!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s2-ejercicio-semana2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Mis Primeros Pasos Con R - Actividad 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s3-ejercicio-semana3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ejercicio estadistica descriptiva</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s4-ejercicio-semana4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intervalo de Confianza</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s6-ejercicio-semana6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Comparación de grupos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s6-ejercicio-semana6b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Segunda parte de ejercicios</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s7-ejercicio-semana7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong><b style="color : #50D050;">CHI-CUADRADO Y MEDIDAS DE ASOCIACIÓN</b></strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s7-ejercicio-semana7b.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong><b style="color : #50D050;">ANALISIS DE VARIABLES CATEGORICAS</b></strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s8-ejercicio-parcial-semana8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pregunta 1 (3 puntos)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s8-ejercicio-parcial-semana8b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">FACULTAD DE CIENCIAS SOCIALES - PUCP <br></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s10-ejercicio-semana10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Correlación</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s12-ejercicio-semana12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regresión Lineal</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s12-ejercicio-semana12b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Regresión Lineal II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s13-ejercicio-semana13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Regresión lineal Múltiple</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s14-ejercicio-semana14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Regresión lineal múltiple II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s15-ejercicio-final-semana15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">REPASO FINAL I</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s15-ejercicio-final-semana15b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso Final II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#seleccionar-un-subconjunto-de-la-data---funcion-subset" id="toc-seleccionar-un-subconjunto-de-la-data---funcion-subset" class="nav-link active" data-scroll-target="#seleccionar-un-subconjunto-de-la-data---funcion-subset"><span class="header-section-number">7.1</span> <strong>SELECCIONAR (un subconjunto de la) DATA</strong> &lt;- funcion subset</a></li>
+  <li><a href="#descripción-de-la-base" id="toc-descripción-de-la-base" class="nav-link" data-scroll-target="#descripción-de-la-base"><span class="header-section-number">7.2</span> <strong>Descripción de la base</strong></a></li>
+  <li><a href="#descripción-de-variables" id="toc-descripción-de-variables" class="nav-link" data-scroll-target="#descripción-de-variables"><span class="header-section-number">7.3</span> <strong>DESCRIPCIÓN DE VARIABLES</strong></a></li>
+  <li><a href="#tabla-de-contingencia" id="toc-tabla-de-contingencia" class="nav-link" data-scroll-target="#tabla-de-contingencia"><span class="header-section-number">7.4</span> TABLA DE CONTINGENCIA</a></li>
+  <li><a href="#distribución-conjunta-porcentaje-en-relación-al-total-general" id="toc-distribución-conjunta-porcentaje-en-relación-al-total-general" class="nav-link" data-scroll-target="#distribución-conjunta-porcentaje-en-relación-al-total-general"><span class="header-section-number">7.5</span> <strong><em>Distribución conjunta</em></strong>: Porcentaje en relación al total general</a></li>
+  <li><a href="#distribución-marginal-porcentaje-en-relación-al-total-de-las-filas" id="toc-distribución-marginal-porcentaje-en-relación-al-total-de-las-filas" class="nav-link" data-scroll-target="#distribución-marginal-porcentaje-en-relación-al-total-de-las-filas"><span class="header-section-number">7.6</span> <strong><em>Distribución Marginal</em></strong>: Porcentaje en relación al total de las filas</a></li>
+  <li><a href="#gráfico" id="toc-gráfico" class="nav-link" data-scroll-target="#gráfico"><span class="header-section-number">7.7</span> <strong>GRÁFICO</strong></a></li>
+  <li><a href="#frecuencias-esperadas" id="toc-frecuencias-esperadas" class="nav-link" data-scroll-target="#frecuencias-esperadas"><span class="header-section-number">8</span> <strong><b style="color : #50D050;">FRECUENCIAS ESPERADAS</b></strong></a>
+  <ul class="collapse">
+  <li><a href="#chi-cuadrado" id="toc-chi-cuadrado" class="nav-link" data-scroll-target="#chi-cuadrado"><span class="header-section-number">8.1</span> <strong><b style="color : #50D050;">CHI CUADRADO</b></strong></a></li>
+  </ul></li>
+  <li><a href="#caso-1-medidas-de-asociación-para-al-menos-una-variable-nominal" id="toc-caso-1-medidas-de-asociación-para-al-menos-una-variable-nominal" class="nav-link" data-scroll-target="#caso-1-medidas-de-asociación-para-al-menos-una-variable-nominal"><span class="header-section-number">9</span> <strong><b style="color : #50D050;">CASO 1: MEDIDAS DE ASOCIACIÓN PARA AL MENOS UNA VARIABLE NOMINAL</b></strong></a></li>
+  <li><a href="#caso-2-medidas-de-asociación-para-relación-entre-dos-variables-ordinales" id="toc-caso-2-medidas-de-asociación-para-relación-entre-dos-variables-ordinales" class="nav-link" data-scroll-target="#caso-2-medidas-de-asociación-para-relación-entre-dos-variables-ordinales"><span class="header-section-number">10</span> <strong><b style="color : #50D050;">CASO 2: MEDIDAS DE ASOCIACIÓN PARA RELACIÓN ENTRE DOS VARIABLES ORDINALES</b></strong></a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/POL278-PUCP/test1/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/POL278-PUCP/test1/blob/main/s7-ejercicio-semana7b.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong><b style="color : #50D050;">ANALISIS DE VARIABLES CATEGORICAS</b></strong></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#getwd() </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd("")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#dir()</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dfbaro <span class="ot">&lt;-</span><span class="fu">import</span>(<span class="st">"./data/s7/b-Latinobarometro_2018_Esp_Spss_v20190303.sav"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#names(dfbaro)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#str(dfbaro)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#class(dfbaro) </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Co-author: Luis Valverde</li>
+</ul>
+<section id="seleccionar-un-subconjunto-de-la-data---funcion-subset" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="seleccionar-un-subconjunto-de-la-data---funcion-subset"><span class="header-section-number">7.1</span> <strong>SELECCIONAR (un subconjunto de la) DATA</strong> &lt;- funcion subset</h2>
+<ul>
+<li>Subsetear data:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dfbaro <span class="ot">=</span> <span class="fu">subset</span>(dfbaro, IDENPA <span class="sc">==</span> <span class="dv">68</span> <span class="sc">|</span> IDENPA <span class="sc">==</span> <span class="dv">170</span> <span class="sc">|</span> IDENPA <span class="sc">==</span> <span class="dv">604</span> <span class="sc">|</span> IDENPA <span class="sc">==</span> <span class="dv">218</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>IDENPA) <span class="co"># | &lt;- signfica o</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  68  170  218  604 
+1200 1200 1200 1200 </code></pre>
+</div>
+</div>
+<ul>
+<li>Recodificar (cambiar los valores) numeros por paises</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>pais <span class="ot">&lt;-</span> <span class="fu">recode</span>(dfbaro<span class="sc">$</span>IDENPA, <span class="st">"68 = 'Bolivia'; 170 = 'Colombia'; 604 = 'Peru'; 218 = 'Ecuador'"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>pais)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Bolivia Colombia  Ecuador     Peru 
+    1200     1200     1200     1200 </code></pre>
+</div>
+</div>
+</section>
+<section id="descripción-de-la-base" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="descripción-de-la-base"><span class="header-section-number">7.2</span> <strong>Descripción de la base</strong></h2>
+<ul>
+<li><strong><em>Sexo</em></strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>SEXO <span class="ot">=</span> <span class="fu">as.factor</span>(dfbaro<span class="sc">$</span>SEXO)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dfbaro<span class="sc">$</span>SEXO) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Hombre"</span>,<span class="st">"Mujer"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong><em>Autoubicación en escala de pobreza-riqueza: Personal</em></strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>pobr_riq <span class="ot">=</span> <span class="fu">as.numeric</span>(dfbaro<span class="sc">$</span>P10STC.A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong><em>En términos generales ¿Diría usted que (PAÍS) está gobernado por unos cuantos grupos poderosos en su propio beneficio, o que está gobernado para el bien de todo el pueblo? (ESPERE RESPUESTA Y MARQUE UNA SOLA)</em></strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>pode_pueblo <span class="ot">=</span> <span class="fu">as.factor</span>(dfbaro<span class="sc">$</span>P14ST)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dfbaro<span class="sc">$</span>pode_pueblo) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Poderosos"</span>,<span class="st">"Pueblo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong><em>¿Y en los próximos doce meses, cree que su situación económica y la de su familia será mucho mejor, un poco mejor, igual, un poco peor, o mucho peor qu e la que tiene hoy? (ORDINAL) 5 Mucho peor / 1 Mucho mejor</em></strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>situ_eco <span class="ot">=</span> <span class="fu">as.factor</span>(dfbaro<span class="sc">$</span>P9STGBSC)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dfbaro<span class="sc">$</span>situ_eco) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Mucho mejor"</span>, <span class="st">"Un poco mejor"</span>, <span class="st">"Igual"</span>, <span class="st">"Un poco peor"</span>, <span class="st">"Mucho peor"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><strong><em>¿Diría Ud. que este país… progresado 1, estancado 2, esta retroceso 3?</em></strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>pais_pro <span class="ot">=</span> <span class="fu">as.factor</span>(dfbaro<span class="sc">$</span>P2STC)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>pais_pro <span class="ot">=</span> <span class="fu">factor</span>(dfbaro<span class="sc">$</span>pais_pro, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">levels</span>(dfbaro<span class="sc">$</span>pais_pro),  </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Progreso"</span>,<span class="st">"Estancado"</span>,<span class="st">"Retrocedio"</span>),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">ordered =</span> T)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>pais_pro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  Progreso  Estancado Retrocedio 
+      1336       2375        948 </code></pre>
+</div>
+</div>
+<ul>
+<li><p><strong><em>En general, ¿Diría Ud. que está muy satisfecho, más bien satisfecho, no muy satisfecho o nada satisfecho con el funcionamiento de la democracia en (PAÍS)?</em></strong> -&gt; 4 niveles: muy satisfecho, mas bien satisfecho, no muy satisfecho, nada satisfecho</p></li>
+<li><p>En este caso pasaremos de 4 niveles a 2:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>P13STGBS.A)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2    3    4 
+ 271  899 2383 1015 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>satis_democracia <span class="ot">=</span> <span class="fu">as.factor</span>(dfbaro<span class="sc">$</span>P13STGBS.A)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>satis_democracia <span class="ot">&lt;-</span> <span class="fu">recode</span>(dfbaro<span class="sc">$</span>P13STGBS.A, <span class="st">"1:2 = 1; 3:4 =2"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>satis_democracia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   1    2 
+1170 3398 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>satis_democracia <span class="ot">=</span> <span class="fu">as.factor</span>(dfbaro<span class="sc">$</span>satis_democracia)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dfbaro<span class="sc">$</span>satis_democracia) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Satisfecho"</span>,<span class="st">"No Satisfecho"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>satis_democracia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   Satisfecho No Satisfecho 
+         1170          3398 </code></pre>
+</div>
+</div>
+<ul>
+<li><strong><em>¿Cuán justa cree Ud. que es la distribución del ingreso en (PAÍS)?</em></strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dfbaro<span class="sc">$</span>P23ST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:4800] 1 3 3 3 4 2 2 NA 3 3 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dfbaro<span class="sc">$</span>justo <span class="ot">=</span> <span class="fu">as.factor</span>(dfbaro<span class="sc">$</span>P23ST)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dfbaro<span class="sc">$</span>justo) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Muy justa"</span>,<span class="st">"Justa"</span>,<span class="st">"Injusta"</span>,<span class="st">"Muy injusta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="descripción-de-variables" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="descripción-de-variables"><span class="header-section-number">7.3</span> <strong>DESCRIPCIÓN DE VARIABLES</strong></h2>
+<ul>
+<li>Calcular las tablas de frecuencias y de frecuencias acumuladas en porcentajes (variables categoricas)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jmv) <span class="co"># Para calcular tablas </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">descriptives</span>(dfbaro, <span class="at">vars =</span> <span class="fu">vars</span>(justo, pode_pueblo, pobr_riq, situ_eco, pais_pro, satis_democracia), <span class="at">freq =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ DESCRIPTIVES
+
+ Descriptives                                                                                           
+ ────────────────────────────────────────────────────────────────────────────────────────────────────── 
+                         justo    pode_pueblo    pobr_riq    situ_eco    pais_pro    satis_democracia   
+ ────────────────────────────────────────────────────────────────────────────────────────────────────── 
+   N                      4588           4623        4752        4562        4659                4568   
+   Missing                 212            177          48         238         141                 232   
+   Mean                                          4.258628                                               
+   Median                                        5.000000                                               
+   Standard deviation                            1.880180                                               
+   Minimum                                       1.000000                                               
+   Maximum                                       10.00000                                               
+ ────────────────────────────────────────────────────────────────────────────────────────────────────── 
+
+
+ FREQUENCIES
+
+ Frequencies of justo                                    
+ ─────────────────────────────────────────────────────── 
+   justo          Counts    % of Total    Cumulative %   
+ ─────────────────────────────────────────────────────── 
+   Muy justa          81       1.76548         1.76548   
+   Justa             916      19.96513        21.73060   
+   Injusta          2500      54.48997        76.22058   
+   Muy injusta      1091      23.77942       100.00000   
+ ─────────────────────────────────────────────────────── 
+
+
+ Frequencies of pode_pueblo                              
+ ─────────────────────────────────────────────────────── 
+   pode_pueblo    Counts    % of Total    Cumulative %   
+ ─────────────────────────────────────────────────────── 
+   Poderosos        3693      79.88319        79.88319   
+   Pueblo            930      20.11681       100.00000   
+ ─────────────────────────────────────────────────────── 
+
+
+ Frequencies of situ_eco                                   
+ ───────────────────────────────────────────────────────── 
+   situ_eco         Counts    % of Total    Cumulative %   
+ ───────────────────────────────────────────────────────── 
+   Mucho mejor         663      14.53310        14.53310   
+   Un poco mejor      1647      36.10259        50.63569   
+   Igual              1662      36.43139        87.06708   
+   Un poco peor        433       9.49145        96.55853   
+   Mucho peor          157       3.44147       100.00000   
+ ───────────────────────────────────────────────────────── 
+
+
+ Frequencies of pais_pro                                
+ ────────────────────────────────────────────────────── 
+   pais_pro      Counts    % of Total    Cumulative %   
+ ────────────────────────────────────────────────────── 
+   Progreso        1336      28.67568        28.67568   
+   Estancado       2375      50.97660        79.65229   
+   Retrocedio       948      20.34771       100.00000   
+ ────────────────────────────────────────────────────── 
+
+
+ Frequencies of satis_democracia                              
+ ──────────────────────────────────────────────────────────── 
+   satis_democracia    Counts    % of Total    Cumulative %   
+ ──────────────────────────────────────────────────────────── 
+   Satisfecho            1170      25.61296        25.61296   
+   No Satisfecho         3398      74.38704       100.00000   
+ ──────────────────────────────────────────────────────────── </code></pre>
+</div>
+</div>
+</section>
+<section id="tabla-de-contingencia" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="tabla-de-contingencia"><span class="header-section-number">7.4</span> TABLA DE CONTINGENCIA</h2>
+<p>UNIDAD DE ANALISIS: Personas entrevistadas</p>
+<ul>
+<li>Para obtener las frecuencias observadas, solo con la funcion table</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>pais, dfbaro<span class="sc">$</span>satis_democracia) <span class="co">#tabla cruzada</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          
+           Satisfecho No Satisfecho
+  Bolivia         314           816
+  Colombia        304           841
+  Ecuador         426           740
+  Peru            126          1001</code></pre>
+</div>
+</div>
+<ul>
+<li>Totales marginales: de filas y columnas</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>pais, dfbaro<span class="sc">$</span>satis_democracia))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          
+           Satisfecho No Satisfecho  Sum
+  Bolivia         314           816 1130
+  Colombia        304           841 1145
+  Ecuador         426           740 1166
+  Peru            126          1001 1127
+  Sum            1170          3398 4568</code></pre>
+</div>
+</div>
+<ul>
+<li>Total general de esta tabla: 4568</li>
+</ul>
+</section>
+<section id="distribución-conjunta-porcentaje-en-relación-al-total-general" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="distribución-conjunta-porcentaje-en-relación-al-total-general"><span class="header-section-number">7.5</span> <strong><em>Distribución conjunta</em></strong>: Porcentaje en relación al total general</h2>
+<ul>
+<li>Bolivia &amp; Satisfechos = 314/4568 = 0.068</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>pais, dfbaro<span class="sc">$</span>satis_democracia)) <span class="co"># Para obetner las proporciones</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          
+           Satisfecho No Satisfecho
+  Bolivia  0.06873905    0.17863398
+  Colombia 0.06654991    0.18410683
+  Ecuador  0.09325744    0.16199650
+  Peru     0.02758319    0.21913310</code></pre>
+</div>
+</div>
+</section>
+<section id="distribución-marginal-porcentaje-en-relación-al-total-de-las-filas" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="distribución-marginal-porcentaje-en-relación-al-total-de-las-filas"><span class="header-section-number">7.6</span> <strong><em>Distribución Marginal</em></strong>: Porcentaje en relación al total de las filas</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>pais, dfbaro<span class="sc">$</span>satis_democracia), <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          
+           Satisfecho No Satisfecho
+  Bolivia   0.2778761     0.7221239
+  Colombia  0.2655022     0.7344978
+  Ecuador   0.3653516     0.6346484
+  Peru      0.1118012     0.8881988</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Los peruanos están mas insatisfechos con la democracia 88%</p></li>
+<li><p>Porcentaje en relación al total de las columnas</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>pais, dfbaro<span class="sc">$</span>satis_democracia), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          
+           Satisfecho No Satisfecho
+  Bolivia   0.2683761     0.2401413
+  Colombia  0.2598291     0.2474985
+  Ecuador   0.3641026     0.2177752
+  Peru      0.1076923     0.2945851</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Otro modo de ver, cambiando el lugar de las variables:</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>satis_democracia, dfbaro<span class="sc">$</span>pais), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               
+                  Bolivia  Colombia   Ecuador      Peru
+  Satisfecho    0.2778761 0.2655022 0.3653516 0.1118012
+  No Satisfecho 0.7221239 0.7344978 0.6346484 0.8881988</code></pre>
+</div>
+</div>
+<ul>
+<li>Del total de personas satisfechas con la democracia, los mas satisfechos son los ecuatorianos 36%.</li>
+</ul>
+</section>
+<section id="gráfico" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="gráfico"><span class="header-section-number">7.7</span> <strong>GRÁFICO</strong></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cuadro <span class="ot">=</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>satis_democracia, </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                          dfbaro<span class="sc">$</span>pais), <span class="dv">2</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(cuadro, <span class="at">legend =</span> <span class="fu">rownames</span>(cuadro), <span class="at">axis.lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s7-ejercicio-semana7b_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+</section>
+<section id="frecuencias-esperadas" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> <strong><b style="color : #50D050;">FRECUENCIAS ESPERADAS</b></strong></h1>
+<ul>
+<li>Para esto, necesitamos calcular la prueba chi cuadrado + $expected</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>satis_democracia, dfbaro<span class="sc">$</span>pais)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               
+                Bolivia Colombia Ecuador Peru
+  Satisfecho        314      304     426  126
+  No Satisfecho     816      841     740 1001</code></pre>
+</div>
+</div>
+<ul>
+<li>CHI CUADRADO: frecuencias esperadas (si la distribicion es proporcional entre las casillas: si no habria ninguna relacion entre la satisfaccion de la democracia y el pais de procedencia.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tablaFesperadas <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(dfbaro<span class="sc">$</span>satis_democracia, dfbaro<span class="sc">$</span>pais)<span class="sc">$</span>expected</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>tablaFesperadas</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       dfbaro$pais
+dfbaro$satis_democracia  Bolivia Colombia  Ecuador     Peru
+          Satisfecho    289.4264 293.2684 298.6471 288.6581
+          No Satisfecho 840.5736 851.7316 867.3529 838.3419</code></pre>
+</div>
+</div>
+<section id="chi-cuadrado" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="chi-cuadrado"><span class="header-section-number">8.1</span> <strong><b style="color : #50D050;">CHI CUADRADO</b></strong></h2>
+<p>grados de libertad = (filas-1)(columnas-1) grados de libertad = (2-1)(4-1) grados de libertad = 3</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Con la funcion qchisq se indica el nivel de confianza y el numeros de los grados de libertad (df) para obetener el chi cuadrado teorico:</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qchisq</span>(<span class="fl">0.95</span>, <span class="dv">3</span>) <span class="co"># Valor de la tabla</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.814728</code></pre>
+</div>
+</div>
+<ul>
+<li>Ahora sí con CHI CUADRADO</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(dfbaro<span class="sc">$</span>pais, dfbaro<span class="sc">$</span>satis_democracia)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  dfbaro$pais and dfbaro$satis_democracia
+X-squared = 199.56, df = 3, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<ul>
+<li><p>El chi cuadrado observado es 199.56.</p></li>
+<li><p>Grados de libertad (df) = 3</p></li>
+</ul>
+<p>hipotesis de la prueba chi cuadrado:</p>
+<p>H0: NO HAY ASOCIACIÓN ENTRE LA SATISFACCIÓN DE LA DEMOCRACIA Y EL PAÍS. / LAS VARIABLES SON INDEPENDIENTES.</p>
+<p>P-VALOR = 0.00000000000000022 (&lt; 2.2e-16). Por tanto, Rechazo la hipotesis nula. a um 95% del nivel de confianza Si es posible una relación entre la satisfacción de la democracia y el país de procedencia.</p>
+<ul>
+<li>Entonces, si sale significativo: Lo que sigue son dos casos para dos variables categoricas.</li>
+</ul>
+</section>
+</section>
+<section id="caso-1-medidas-de-asociación-para-al-menos-una-variable-nominal" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> <strong><b style="color : #50D050;">CASO 1: MEDIDAS DE ASOCIACIÓN PARA AL MENOS UNA VARIABLE NOMINAL</b></strong></h1>
+<ul>
+<li><strong><em>En este caso solo mediremos intensidad</em></strong></li>
+</ul>
+<p><strong>MEDIDAS SIMETRICAS</strong></p>
+<p>¿Existe o no relacion entre el pais y su satisfaccion con la democracia?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>cuadro <span class="ot">=</span> <span class="fu">table</span>(dfbaro<span class="sc">$</span>satis_democracia, dfbaro<span class="sc">$</span>pais)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("vcd")</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vcd)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="fu">assocstats</span>(cuadro) <span class="co"># Calcula las medidas de asociacion</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    X^2 df P(&gt; X^2)
+Likelihood Ratio 216.99  3        0
+Pearson          199.56  3        0
+
+Phi-Coefficient   : NA 
+Contingency Coeff.: 0.205 
+Cramer's V        : 0.209 </code></pre>
+</div>
+</div>
+<ul>
+<li>Contingency Coeff.: 0.205 &lt;- el coeficiente de contingencia nos indica que es una relacion de intensidad debil.</li>
+</ul>
+<p><strong>MEDIDAS ASIMETRICAS</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("DescTools")</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">Phi</span>(cuadro, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2090112</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">UncertCoef</span>(cuadro, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        uc     lwr.ci     upr.ci 
+0.02429518 0.01824672 0.03034365 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Lambda</span>(cuadro, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    lambda     lwr.ci     upr.ci 
+0.05708661 0.03969189 0.07448134 </code></pre>
+</div>
+</div>
+<ul>
+<li>Advertimos que el lambda es debil. 0.057</li>
+<li>El (uc) coeficiente de incertidumbre es 0.024, tambien es debil</li>
+</ul>
+</section>
+<section id="caso-2-medidas-de-asociación-para-relación-entre-dos-variables-ordinales" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> <strong><b style="color : #50D050;">CASO 2: MEDIDAS DE ASOCIACIÓN PARA RELACIÓN ENTRE DOS VARIABLES ORDINALES</b></strong></h1>
+<ul>
+<li>En este caso mediremos intensidad y dirección</li>
+</ul>
+<p><strong><em>¿Existe o no relacion entre si se considera justa la distribucion de ingresos y el nivel de progreso del país?</em></strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dfbaro<span class="sc">$</span>justo,dfbaro<span class="sc">$</span>pais_pro)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+              Progreso Estancado Retrocedio
+  Muy justa         32        28         21
+  Justa            439       353        104
+  Injusta          615      1347        478
+  Muy injusta      196       561        308</code></pre>
+</div>
+</div>
+<ul>
+<li>Estadisticos marginales</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>tabla <span class="ot">=</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>justo,dfbaro<span class="sc">$</span>pais_pro),<span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">addmargins</span>(tabla)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             
+               Progreso Estancado Retrocedio       Sum
+  Muy justa    39.50617  34.56790   25.92593 100.00000
+  Justa        48.99554  39.39732   11.60714 100.00000
+  Injusta      25.20492  55.20492   19.59016 100.00000
+  Muy injusta  18.40376  52.67606   28.92019 100.00000
+  Sum         132.11038 181.84620   86.04342 400.00000</code></pre>
+</div>
+</div>
+<ul>
+<li>Chi2</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>cuadro2 <span class="ot">=</span> <span class="fu">table</span>(dfbaro<span class="sc">$</span>justo,dfbaro<span class="sc">$</span>pais_pro)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(cuadro2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  cuadro2
+X-squared = 293.26, df = 6, p-value &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Medidas de asociación para variables ordinales</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">GoodmanKruskalGamma</span>(cuadro2, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    gamma    lwr.ci    upr.ci 
+0.3208106 0.2796476 0.3619736 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">KendallTauB</span>(cuadro2, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    tau_b    lwr.ci    upr.ci 
+0.2005291 0.1740476 0.2270107 </code></pre>
+</div>
+</div>
+<ul>
+<li><p>Segun el gamma esa relacion es media. En este caso la direccion es positiva. Es decir, las personas que consideran que el pais ha retrocedido, tambien consideran que la distribucion de ingresos es mas injusta. Las personas que consideran que el pais ha progresado más, tienden a pensar que la distribucion de ingresos es mas injusta.</p></li>
+<li><p>En este caso nos interesa calcular el TauC, pues no es una matriz cuadrada.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">StuartTauC</span>(cuadro2, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     tauc    lwr.ci    upr.ci 
+0.1839186 0.1593666 0.2084706 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Medidas asimetricas</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>cuadro2 <span class="ot">=</span> <span class="fu">table</span>(dfbaro<span class="sc">$</span>pais_pro, dfbaro<span class="sc">$</span>justo)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>cuadro2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            
+             Muy justa Justa Injusta Muy injusta
+  Progreso          32   439     615         196
+  Estancado         28   353    1347         561
+  Retrocedio        21   104     478         308</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SomersDelta</span>(cuadro2, <span class="at">direction =</span> <span class="st">"row"</span>) <span class="co">#fila = variable dependiente #row reemplazar por col si es que la variable esta en columnas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2020387</code></pre>
+</div>
+</div>
+<p>-SomersDelta: 0.2020387. relacion directa y debil</p>
+<ul>
+<li>DIRECTA:</li>
+</ul>
+<p>A medida que se cree que la distribución de ingresos es muy injusta, se considera que el país retrocedio.</p>
+<p>A medida que se cree que la distribución de ingresos es muy justa, se considera que el país progreso</p>
+<ul>
+<li><p>INTENSIDAD: BAJA 0 a 0.3 es relación baja.</p></li>
+<li><p>Para una mejor compresion de la tabla:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>pais_pro, dfbaro<span class="sc">$</span>justo),<span class="dv">1</span>)<span class="sc">*</span><span class="dv">100</span> <span class="co"># En este caso por filas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            
+             Muy justa     Justa   Injusta Muy injusta
+  Progreso    2.496100 34.243370 47.971919   15.288612
+  Estancado   1.223242 15.421581 58.846658   24.508519
+  Retrocedio  2.305159 11.416026 52.469813   33.809001</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Los que consideran que el pais ha retorcedido, son los que consideran que la distribucion de ingresos es muy injusta. (33.809001)</p></li>
+<li><p>Los que consideran que el pais se ha Estancado, son los que consideran que la distribucion de ingresos es Injusta. (58.846658 )</p></li>
+<li><p>Los que consideran que el pais ha Progresado, son los que consideran que la distribucion de ingresos es injusta. (47.971919)</p></li>
+<li><p>Ahora por columnas:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(dfbaro<span class="sc">$</span>pais_pro, dfbaro<span class="sc">$</span>justo),<span class="dv">2</span>)<span class="sc">*</span><span class="dv">100</span> <span class="co"># En este caso por filas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            
+             Muy justa    Justa  Injusta Muy injusta
+  Progreso    39.50617 48.99554 25.20492    18.40376
+  Estancado   34.56790 39.39732 55.20492    52.67606
+  Retrocedio  25.92593 11.60714 19.59016    28.92019</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Los que consideran que el pais ha Progresado, son los que consideran que la distribucion de ingresos es muy justa. (39.50617 ). Del mismo modo con justa (48.99554)</p></li>
+<li><p>Los que consideran que el pais se ha Estancado, son los que consideran que la distribucion de ingresos es muy injusta. (52.67606). Del mismo modo con Injusta(55.20492)</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./s7-ejercicio-semana7.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong><b style="color : #50D050;">CHI-CUADRADO Y MEDIDAS DE ASOCIACIÓN</b></strong></span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./s8-ejercicio-parcial-semana8.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pregunta 1 (3 puntos)</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

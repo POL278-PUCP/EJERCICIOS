@@ -1,0 +1,419 @@
+---
+aliases:
+  - ejercicio-semana14.html
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Regresión lineal múltiple II
+
+```{r}
+#getwd() 
+#setwd("")
+library(rio)
+data = import("./data/s14/ACOSO_2019.sav")
+```
+
+
+*NOTA: argumentar con datos*
+
+Ejemplo 1: Determinates del acoso callejero.
+
+¿QUÉ DETERMINA LOS EVENTOS DE ACOSO CALLEJERO?
+
+ACOSO CALLEJEROR -> # de eventos de acisi callejero que sufrio una persona.
+
+VD -> # de eventos de acoso callejero  -> 
+
+VI -> edad (numérica) (EDAD)
+      Sexo (Dicotómica) (SEXO)
+      Nivel socioeconómico (NSEGRUP)
+
+```{r}
+names(data) # lectura de la base de datos
+```
+```{r}
+class(data$EDAD)
+class(data$SEXO)
+class(data$NSEGRUP)
+
+str(data$EDAD)
+str(data$SEXO)
+str(data$NSEGRUP)
+
+table(data$EDAD)
+table(data$SEXO)
+table(data$NSEGRUP)
+```
+
+
+    + SEXO (Está como numérica)
+```{r}
+data$SEXO<-as.factor(data$SEXO) # NECESITAMOS CONVERTIRLO A FACTOR de numérica
+levels(data$SEXO)<-c("Hombre","Mujer")
+
+# OTRO CÓDIGO PARA CORRER SI NO FUNCIONA el anterior: 
+# data$SEXO=factor(data$SEXO, levels = levels(data$SEXO), 
+#                  labels = c("Hombre","Mujer"))
+
+table(data$SEXO)
+```
+
+
+
+    + NIVEL SOCIECONÓMICO (NSEGRUP) (hacer esto en una variable categorica ordinal independiente)
+es una variable ordinal, pero la vamos a definir como una variable factor con tres niveles
+
+```{r}
+data$NSEGRUP = as.factor(data$NSEGRUP)
+data$NSEGRUP = factor(data$NSEGRUP, levels = levels(data$NSEGRUP), 
+                      labels = c("AB", "C", "DE"))
+table(data$NSEGRUP)
+```
+
+------------------------------------------------------------------------------------------------------------------------------
+####RECORDAR:
+
+Cuando tenemos variables independientes categoricas de más de dos grupos.
+en este caso sexo -> no hay problema (solo tiene dis grupos). 
+
+Pero ¿qué hacer con la variable (NSEGRUP) NIVEL SOCIECONÓMICO que tiene 3 variable?
+Para la interpretación Va a ser complicado considerarla como una variable ordinal. Entonces, tenemos que dicotomizarlas.
+
+Por ej: 
+
+variable categórica Ordinal de 3 categorias:
+
+        NSEGRUP: 
+--------
+1   A/B
+2   C
+3   D/D
+--------
+CONVERTIR A UNA VARIABLE EN DUMMY (1 Y 0) / DICOTOMIZACIÓN: *EN CASOS DONDE LA VARIABLE CATEGORICA TENGA MÁS DE 2 CATEGORIAS ES CONVENIENTE CONVERTIRLA EN TANTO EL NUMERO DE CATEOGRIAS TENGA COMO VARIABLES DICOTOMICAS QUE PODAMOS GENERAR* -> 
+
+AHORA SON 3 VARIABLES DICOTÓMICAS:
+------------------------------
+    NSE_A/B   NSE_C   NSE_D/E
+SÍ    1         1           1
+NO    0         0           0
+------------------------------
+Es más sencillo interpretarlo así -> como dicotomica (tambien cuando es numerica)
+
+*NOTA:*
+*Cuando tenemos variables independientes categoricas de más de dos grupos, (si está en numérica) LA VOLVEMOS A FACTOR y LUEGO LA CONVERTIMOS EN VARIABLES DUMMY.*
+
+
+Por ejemplo:
+
+Diría usted que… ¿es más riesgoso para un hombre, para una mujer o es igual de riesgoso para ambos?
+
+(POLITÓMICA)
+ P11A: 
+--------
+1   Hombre
+2   Mujer
+3   Ambos
+--------
+
+DICOTOMIZACIÓN:
+
+AHORA SON 3 VARIABLES DICOTÓMICAS:
+------------------------------
+    P11A_Hombre   P11A_Mujer   P11A_Ambos
+SÍ    1             1           1
+NO    0             0           0
+------------------------------
+
+
+*NOTA* --> DEPENDE UTILIZAR LA DICOTOMIZACIÓN 
+
+POR EJEMPLO:
+ORDINAL DE 4 CATEGORIAS
+¿Qué tan seguro(a) o inseguro(a) se siente usted caminando en la calle…
+
+P10A
+--------
+1   Muy seguro(a)
+2   Seguro(a)
+3   Inseguro(a)
+4   Muy inseguro(a)
+--------
+
+DICOTOMIZACIÓN:
+
+AHORA SON 4 VARIABLES DICOTÓMICAS:
+------------------------------------------------------------------------------------------
+    P10A_Muy seguro(a)   P10A_seguro(a)    P10A_Inseguro(a)     P10A_Muy inseguro(a) 
+SÍ    1                        1                   1                   1
+NO    0                        0                   0                   0
+------------------------------------------------------------------------------------------
+
+SI LO HACEMOS ASÍ PODEMOS DISTINGUIR Y COMPARAR MEJOR LAS VARIABLES. Si nos interesa disintguir entre -> P10A_Inseguro(a) y P10A_Muy inseguro(a) *ver la base de datos si hay mucha diferencia entre las variables y así usar esta forma o la siguiente:*
+
+*PERO...* SI SOLO ME INTERESA SEGURIDAD E INSEGURIDAD -> TAMBIÉN PODEMOS CONVERTIRLOS EN 2 GRUPOS DE VARIABLES DICOTOMICAS:
+
+ENTONCES:
+----------------------------------------------------------------------------------
+   |  P10A_Muy seguro(a)/P10A_seguro(a)  | P10A_Inseguro(a)/P10A_Muy inseguro(a) | 
+SÍ |                 1                   |               1                       | 
+NO |                 0                   |               0                       |            
+----------------------------------------------------------------------------------
+
+ ###ESTO SE LLAMA TRATAMIENTO DE LA BASE.
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Continuando...
+
+Dicotomizaremos NSEGRUP:
+
+```{r}
+library(fastDummies)
+data=dummy_cols(data, select_columns = c("SEXO", "NSEGRUP"))
+names(data)
+```
+
+CREAMOS LA VARIABLE DEPENDIENTE (ÍNDICE DE ACOSO):
+```{r}
+ACOSO <- data$P12A+data$P12B+data$P12C+data$P12D+data$P12E+data$P12F+data$P12G+data$P12H
+
+data$ACOSO <- data$P12A+data$P12B+data$P12C+data$P12D+data$P12E+data$P12F+data$P12G+data$P12H #Para crear como variable independiente (VariablesSeleccionadas)
+
+summary(ACOSO)
+```
+
+```{r}
+modelo1<-lm(ACOSO ~ EDAD + SEXO + NSEGRUP, data = data)
+
+summary(modelo1)
+```
+IDENTIFICAMOS:
+NSEGRUPC    -0.352581 
+NSEGRUPDE   -0.264426
+
+¿cómo interpreto de cómo influye C, D o E?
+
+SEXOMujer    1.653558
+-> CUANDO UNA Persona es mujer, en comparacion de ser hombre, aumenta el numero de eventos de acaso callejero en 1.653558 eventos (casi dos eventos).
+
+*R está tomando como referencia al valor menor (Hombre), por ello, NO aparece en la tabla*
+1: Hombre
+2: Mujer 
+
+En el caso de NSEGRUP se toma como referencia a NSEGRUP_A
+1: A
+
+por eso compara "C" con "A" y "DE" con "A"
+
+
+ENTONCES, SI QUEREMOS TOMAR COMO REFERENCIA A LA MUJER -> especificamos:
+
+    REFERENCIA CON LA MUJER Y CON NIVEL SOCIOECONOMICO NSEGRUP_C + NSEGRUP_AB (O SEA, EL VALOR DE REFERENCIA ES EL QUE NO SE COLOCA EN EL CODIGO)
+```{r}
+modelo2 <- lm(ACOSO ~ EDAD + SEXO_Hombre + NSEGRUP_C + NSEGRUP_AB, data = data)
+
+summary(modelo2)
+```
+
+LA DIFERENCIA ENTRE EL MODELO 1 Y modelo2 es la interpretacion:
+
+SEXO_Hombre -1.653558   
+NSEGRUP_C   -0.088155      
+NSEGRUP_AB   0.264426
+
+ + CUANDO UNA Persona es hombre, en comparación de ser mujer, disminuye el numero de eventos de acaso callejero en 1.653558 eventos (casi dos eventos).
+ 
+ LA DOS NO SON SIGNIFICATIVAS (P-value mayor a 0.05), pero vemos el sentido:
+
+ + Cuando una persona es hombre, en comparación de ser mujer, y es parte del grupo socioeconomico C, disminuye el numero de eventos de acaso callejero en 0.088155 eventos.
+ 
+  + Cuando una persona es hombre, en comparación de ser mujer, y es parte del grupo socioeconomico A/B, aumenta el numero de eventos de acaso callejero en 0.264426 eventos.
+
+-------------------------------------------------------------------------------
+
+ + ¿Qué sucede si aumento la variable caminar en la noche (seguridad)¿ -> P10B
+
+```{r}
+table(data$P10B)
+```
+1 = muy seguro 
+4 = muy inseguro 
+-------------------------------------------------------------------------------
+*NO HACER * -> si lo considramos como numerica, cuando interpretamos sería dificil 
+```{r}
+modelo3 <- lm(ACOSO ~ P10B, data = data)
+
+summary(modelo3)
+```
+¿CÓMO SE INTERPRETARÍA?
+  + POR CADA NIVEL QUE UNA PERSONA AUMENTA SU SENSACIÓN DE INSEGURIDAD, EL NUMERO DE EVENTOS DE ACASO AUMENTA EN 0.2453     
+-------------------------------------------
+
+ENTONCES, MEJOR DICOTOMIZAR:
+
+    en este caso,dicotimizar agrupando
+1 -> Formateamos
+```{r}
+str(data$P10B)
+data$P10B = as.numeric(data$P10B)
+```
+ - Recodificando
+```{r}
+library(car)
+data$seguridad = recode(data$P10B, "c(1,2) = 'Seguro'; c(3,4) = 'Inseguro'")
+```
+
+
+```{r}
+modelo4 <- lm(ACOSO ~ seguridad, data = data)
+
+summary(modelo4)
+```
+seguridadSeguro -0.81636 
+
+INTERPRETACIÓN:
+
+cuando una persona se siente segura, en comparación de una persona que se siente insegura, disminuye el numero de eventos de acoso callejero en 0.81636. 
+
+*Más fácil de interpretar*
+
+
+*La recomendación es que las variables independientes sean numerica o dicotomicas.* si no son dictomicas, debemos convertirlas.
+
+-------------------------------------------
+
+ + Ahora agregamos EDAD y SEXO:
+
+```{r}
+modelo5 <- lm(ACOSO ~ seguridad + EDAD + SEXO, data = data)
+summary(modelo5)
+```
+
+
+- el modelo sí es valido (p-value: < 2.2e-16)
+
+- explica el 26% de la variabilidad de los datos
+
+- si cada variable independiente influye:
+
+seguridadSeguro 0.0832 .  
+EDAD            <2e-16 ***
+SEXOMujer       <2e-16
+
+Ahora seguridad ya no es tan relevante. las otras dos sí.
+
+*RECORDAR: hay una relacion espurea y al incorporar otras variables, esa relacion desaparece* -> como en este caso: en el modelo4, hay una relacion entre seguridad y numero de eventos. Pero al incorporar las nuevas variables en el nuevo modelo 5, dicha relación desaparece.   
+
+
+- Por cada año que una persona aumenta su edad, el numero de eventos de acosos callejero disminuye en 0.039834 eventos.
+
+- VIENDO LOS COEFICIENTES ESTANDARIZADOS
+
+```{r}
+#lm.beta(modelo5)
+```
+#Conlusión: (las variables que impactan más son EDAD y luego SEXO)
+
+#INTERPRETACIÓN:
+  + Entonces, la violencia no ocurre por igual entre hombres y mujeres. eN EFECTO, CUANDO HABLAMOS de acoso callejero, hay evidencia que corrobora que la muejres registra mayor numero de eventos de acoso callejero. Aun solamente por la condicion de ser mujer se incrementa en al menos (1.632584) 2 eventos de acoso callejero más que sus pares hombres. En lo que refiere a edad, son las muejeres más jovenes las que reciben mayor cantidad de eventos de acoso callejero. En suma, Mientras mas jóvenes y sean mujeres, son más propensas a sufrir MAYOR NUMERo de eventos de acoso callejero.
+
+  + Tambien se ha indagado si el nivel sociecnomico es un factor, pero se ha encontrado de que no hay evidencia suficiente de que ocurra dependiendo el nivel sociecomonico. Es decor, estos acosos callejeros ocurre sin importar el numero de eventos de caso callejero. 
+
+  + Aun se ha evidenciado en el modelo4 una relacion espurea entre el sensación de seguridad de caminar en la calle y el numero de eventos de acoso callejeros. pero está relacion deja de exisitir cuando se agragan las variables EDAD y SEXO.
+
+
+-----------------------------------------------------------------------------------------------------------
+
+## ¿Qué hacer en estas situaciones en las que tenemos varias variables y no sabemos cual influye más en otra?
+  - ¿Cuál de estas variables puede ayudarnos a explicar mejor la variable dependiente?
+  - En general se suele decir, que impacta más las variables sociodemograficas (edad, sexo, Nivel sociecnomica...). Pero también pueden impactar otras variables.
+
+  + *RECORDAR* -> SI PARTIMOS DESDE CERO -> CUANDO NO SE NOS DA NINGUNA VARIABLE INDEPENDIENTE, TENEMOS QUE BUSCARLAS.
+  
+  - ENTONCES,
+1. Realizar el analisis bivariado
+2. ensayar cuales serian las variables independientes.
+...
+
+HAY MÉTODOS PARA SELECCIONAR QUÉ VARIABLES INDEPENDIENTES SON MEJORES. ADEMÁS NO DEBEN ESTAR RELACIONADAS ENTRE SI. 
+    FORWARD (IR CONSTRUYENDO) COLOCANDO VARIABLES POR VARIABLE
+    BACKWARD (COLOCAS TODAS LAS VARAIBLES Y LUEGO VAN ELIMINANDO LAS QUE NO SON SIGNFICATIVAS)
+
+
+## 1. UTILIZANDO EL MÉTODO 
+  + Filtrando y creando nueva base:
+```{r}
+VariablesSeleccionadas = c("ACOSO", "SEXO_Mujer", "NIVEDU", "NSEGRUP", 
+                           "NSEGRUP_AB", "NSEGRUP_DE", "seguridad", "EDAD")
+
+subdata = data[VariablesSeleccionadas]
+```
+
+  + INSTALAR y definimos el modelo
+```{r}
+library(MASS)
+
+#ModeloCompleto -> Con todas las variables
+full.model <- lm(ACOSO ~ ., data = subdata)
+summary(full.model)
+```
+
+## 2. MODELO HACIA ADELANTE  (Forward) + summary
+```{r}
+model.hacia.delante <- stepAIC(full.model, direction = "forward", 
+                      trace = TRUE)
+summary(model.hacia.delante)
+```
+
+## 3. HACIA ATRÁS (Backward)+ summary
+```{r}
+model.hacia.atras <- stepAIC(full.model, direction = "backward", 
+                      trace = TRUE)
+summary(model.hacia.atras)
+```
+  - ¿CUAL SERIA EL MEJOR MODELO EN BASE A LAS VARIABLES INDEPENDIENTES?
+
+El mejor modelo que explica:
+  - CON ESTE CÓDIGO NO NECESITAMOS CREAR UNA SUBDATA
+```{r}
+library(leaps)
+modelo = regsubsets(
+  ACOSO ~ SEXO + EDAD + seguridad + NIVEDU + NSEGRUP_AB + NSEGRUP_DE,
+  data = data, nbest = 1, nvmax = 10) 
+summary(modelo)
+```
+  - *fijarnos en el asterisco:* 
+   + Por ejemplo, la variable SEXO es significativo en todos los modelos
+
+
+Código para el gráfico 
+```{r}
+#plot(x, labels=obj$xnames, main=NULL, 
+     #scale=c("bic", "Cp", "adjr2", "r2"),
+     #col=gray(seq(0, 0.9, length = 10)),...)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

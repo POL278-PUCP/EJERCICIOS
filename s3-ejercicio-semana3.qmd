@@ -1,0 +1,671 @@
+---
+aliases:
+  - ejercicio-semana3.html
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Ejercicio estadistica descriptiva
+
+Co-author: Luis Valverde
+
+```{r}
+#getwd()
+#setwd(" ")
+
+# Revisar el diccionario, la metadata, cuestionario, etc...
+library("rio")
+datalapop =import("./data/s2/LAPOP_PERU_2019.dta")
+
+#names(datalapop) # Colocar en el Console 
+#str(datalapop)
+#class(datalapop)
+
+```
+
+**q1 <- sexo** (Variable Categórica nominal)
+============================================================
+
+```{r}
+#str(datalapop$q1) # Estructura de la variable
+```
+
+  - formateo
+  
+```{r}
+datalapop$q1 = as.factor(datalapop$q1) # as.factor --> A formato a c. nominal
+
+# El comando `factor` no sirve para dar nombre a las etiquetas de la 
+# variable nominal sexo
+datalapop$q1 = factor(datalapop$q1, # $ --> Pertenencia
+                levels = levels(datalapop$q1), # Niveles de escala 
+                labels = c("Hombre","Mujer"),  # Etiqueta de los valores/niveles
+                ordered = FALSE) # ordered: las categorias están ordenadas.
+# En este caso FALSE para señalar que es nominal y la 
+# variable sexo no presenta un orden
+
+#str(datalapop$q1) # Comprobamos otra vez la estructura
+```
+
+```{r}
+table(datalapop$q1) # tabla de frecuencia respecto al sexo
+
+#prop.table(table(data$var))
+prop.table(table(datalapop$q1))*100 # frecuencias relativas porcentuales
+```
+
+```{r}
+library(Hmisc)
+describe(datalapop$q1) # Mejor opcion para obtener la moda
+
+# Otras opciones para obtener la moda:
+#summary(datalapop$q1)
+
+library(DescTools)
+#Mode(datalapop$q1,na.rm = T)
+```
+
+## **GRAFICO DE BARRAS (BARPLOT)**
+
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center", fig.cap="Figure 1: Encuestadxs según sexo (LAPOP 2019)."}
+
+# creamos un objeto que contenga la tabla de frecuencias de la variable:
+grafico1 <- table(datalapop$q1) 
+
+grafico1 = as.data.frame(grafico1) #dataframe
+colnames(grafico1) = c("Reg","Freq") #renombrar
+
+library(ggplot2) 
+bp = ggplot(grafico1, aes(x = reorder(Reg, Freq), y = Freq, fill = Reg)) + 
+  # aes(x = reorder(Reg, Freq) -> así para ordenar las barras ascendentemente
+  geom_bar(stat = "identity") +
+  coord_flip() + 
+  labs(title = "Genero", y = "Frecuencias", x = "Categorías", subtitle = "", 
+         caption = "Fuente: Elaboración propia. LAPOP: Perú, 2019") +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(panel.background = element_rect(fill = "white", colour = "white")) + 
+  geom_text(aes(label = Freq), # Frecuencias en las barras
+            vjust = 0.5, color = "black", size = 5) 
+bp
+```
+
+**INTERPRETACION:**
+
+  + 
+
+2. **sd6new2 <- Satisalud <- variable nivel de satisfacción con la salud** (variable categorica ordinal)
+============================================================
+
+```{r}
+#str(datalapop$sd6new2) # estructura de la variable
+```
+
+  - formateo
+  
+```{r}
+# as.factor -> a formato c. nominal:
+#datalapop$sd6new2 = as.factor(datalapop$sd6new2) 
+
+# Puedo cambiar el nombre de la variable para un mejor entendimiento: 
+datalapop$Satisalud  = as.factor(datalapop$sd6new2) 
+# Nota: se estaría creando una nueva variable (no se está chancando como en el 
+# codigo anterior), es decir, se esta creando un nuevo objeto.
+
+# El comando factor no sirve para dar nombre a las etiquetas de la 
+# variable nominal sexo:
+datalapop$Satisalud = factor(datalapop$Satisalud, # $ --> pertenencia
+                levels = levels(datalapop$Satisalud), #niveles de escala 
+                labels = c("Muy satisfecho","Satisfecho","Insatisfecho",
+                           "Muy insatisfecho"), # Etiqueta de los valores/niveles
+                ordered = T) # ordered: las categorias están ordenadas. 
+# En este caso TRUE para señalar que es ordinal. presenta un orden.
+
+#str(datalapop$Satisalud) # comprobamos otra vez la estructura
+```
+
+```{r}
+sum(is.na(datalapop$Satisalud))
+datalapop = datalapop[complete.cases(datalapop$Satisalud), ]
+```
+
+```{r}
+table(datalapop$Satisalud) # Tabla respecto al sexo
+
+prop.table(table(datalapop$Satisalud))*100 # frecuencias relativas porcentuales
+```
+
+```{r}
+library(Hmisc)
+describe(datalapop$Satisalud)
+```
+ 
+ - Gráficos: BOXPLOT: ORDINAL Y NUMERICA: PREFERIBLE PARA 7 NIVELES HACIA ARRIBA. Esto es necesario para la interpretacion: el boxplot se interpreta en base a las posiciones de los cuartiles q1 q2 q3.
+ 
+## **GRAFICO DE BARRAS (BARPLOT)**
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center", fig.cap="Figure 2: Nivel de satisfaccion con la salud (LAPOP 2019)."}
+
+# creamos un objeto que contenga la tabla de frecuencias de la variable:
+grafico2 <- table(datalapop$Satisalud) 
+
+grafico2 = as.data.frame(grafico2) # dataframe
+colnames(grafico2) = c("Reg","Freq") # renombrar
+
+library(ggplot2) 
+bp = ggplot(grafico2, aes(x = reorder(Reg, Freq), y = Freq, fill = Reg)) + 
+  #aes(x=reorder(Reg,Freq) -> así para ordenar las barras ascendentemente
+  geom_bar(stat = "identity") +
+  coord_flip() + 
+  labs(title = "Nivel de satisfaccion con la salud", y = "Frecuencias", 
+       x = "Categorías", subtitle = "", 
+       caption = "Fuente: Elaboracion propia. LAPOP 2019") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme(panel.background = element_rect(fill = "white", colour = "white")) +
+  geom_text(aes(label = Freq), # Frecuencias en las barras
+            vjust = 0.5,  color = "black", size = 5) 
+bp
+```
+  
+## **GRAFICO DE CAJAS (BOXPLOT)**
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center", fig.cap="Figure 2: Nivel de satisfaccion con la salud (LAPOP 2019)."}
+
+# boxplot(datalapop$Satisalud) # boxplot basico de R
+  
+library(ggplot2)
+library(plotly)
+p2 <- ggplot(grafico2, aes(x = Reg, y = Freq, color = Reg)) + 
+  geom_boxplot() + 
+  coord_flip() + #Volteamos el gráfico
+  theme(legend.position = "top", axis.text.y = element_blank(), 
+        panel.background=element_rect(fill = "white", 
+                                      colour = "white")) + # Quitamos categorías
+  geom_jitter(shape = 16, 
+              position = position_jitter(0.2)) + # Agregamos los casos como puntos
+  labs(title = "Nivel de satisfaccion con la salud", x = "", y = "Index")
+ggplotly(p2)
+```
+
+3. **q2 <- Edad de los encuestados** (variable numerica).
+============================================================
+  - Formateo
+```{r}
+datalapop$q2 = as.numeric(datalapop$q2) #as.numeric -> a formato a v. numerica
+
+#str(datalapop$q2)
+```
+
+  - Procedemos a la descripcion:
+  
+# Medidas de centralidad
+
+```{r}
+mean(datalapop$q2, na.rm = T) # media
+
+library(DescTools)
+Median(datalapop$q2, na.rm = T) # Mediana
+Mode(datalapop$q2, na.rm = T)  # Moda
+
+describe(datalapop$q2) # percentiles y valores altos y bajos para sacar outliers
+```  
+
+```{r}
+summary(datalapop$q2)
+```
+
+  - Edad de los encuestados está entre los 18 y 91 años 
+  - El 50% de los casos tiene al menos 36 años o el otro 50% está por encima de los 36 años 
+  - el promedio es 38 años  
+  - primer cuartil 
+  - el 75% de los encuestados tiene hasta/por lo menos 49 años 
+
+```{r}
+# otra opcion al summary:
+describe(datalapop$q2) # percentiles y los valores (extremos) bajos y altos
+```
+
+  - Podemos calcular estos valores extremos:
+  
+```{r}
+# valores extremos
+IR = 49-26
+valorextremosuperior = 49+1.5*IR
+valorextremosuperior
+
+#v alores extremos superior
+valorextremoinferior = 26-1.5*IR
+valorextremoinferior
+```
+
+  - Entonces, todos los valores mayores a 83 son los valores extremos hacia arriba.
+  - sale negativo. entonces, no hay valores extremos hacia abajo. en efecto, en concordancia con Describe, el menor tiene 18 años
+
+  - Grafico fachero:
+  
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center", fig.cap="Figure 3: Encuestados según edad (LAPOP 2019)."}
+
+library(ggplot2)
+library(plotly) # Graficos dinamicos
+
+p3 <- ggplot(datalapop, aes(x = "", y = q2, color = "")) + 
+  geom_boxplot() + coord_flip() + # Volteamos el gráfico
+  theme(legend.position = "top", axis.text.y = element_blank(), 
+         panel.background = element_rect(fill = "white", colour = "white")
+        ) + # Quitamos categorías
+  geom_jitter(shape=16,position = position_jitter(0.2)
+              ) + # Agregamos los casos como puntos
+  labs(title = "Encuestados según edad ", x = "", y = "Index", subtitle = "", 
+       caption = "LAPOP 2019")
+ggplotly(p3)
+
+# HIST:
+ggplot(datalapop, aes(x = q2, color = "")) + 
+  geom_histogram(fill = "white", alpha = 0.5, position="identity") + 
+  labs(title = "Encuestados según edad",  y = "", x = "Index", subtitle = "", 
+       caption = "LAPOP 2019") +
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(panel.background = element_rect(fill = "white", colour = "white"))
+```
+
+## **INTERPRETACION:**
+
+  - el 75% de los datos se acumulan al parecer debajo de los 49 años
+  - el 50% de los encuestados está debajo de los 36 años
+  + La línea de dentro de la caja representa la mediana, la caja representa en la parte inferior el cuartil 1 y el cuartil 3, es decir el 50% de los valores de la variable se encuentran dentro de la caja, y las barras representan el valor máximo y mínimo sin los outliers, que son los puntos negros 
+
+  - asimetria positiva. sesgo a la derecha
+  los datos se concentran entre los mas jovenes
+
+
+### Medidas de centralidad
+
+```{r}
+library(DescTools)
+Mode(datalapop$q1, na.rm = T)
+```
+
+```{r}
+library(DescTools)
+Mode(datalapop$Satisalud, na.rm = T) # en este caso es 744
+Median(datalapop$Satisalud, na.rm = T) # en este caso es insatisfecho
+```
+
+
+```{r}
+library(DescTools)
+Mode(datalapop$q2, na.rm = T) # hay dos modas: 30 (personas) y 85 años
+
+# con una tabla podemos advertir cuantas personas personas tienen 85 años:
+table(datalapop$q2)
+
+Median(datalapop$q2, na.rm = T) #--> en este caso es 36
+mean(datalapop$q2, na.rm = T)
+```
+ 
+```{r}
+describe(datalapop$q2)
+```
+
+# Medidas de dispersion para una variable numerica
+
+```{r}
+min(datalapop$q2, na.rm = T) # na.rm= T no considera los valores perdidos
+max(datalapop$q2, na.rm = T)
+range(datalapop$q2, na.rm = T)
+quantile(datalapop$q2, na.rm = T)
+IQR(datalapop$q2, na.rm = T)
+```
+##Medidas de dispersión
+```{r}
+var(datalapop$q2, na.rm = T) #varianza
+sd(datalapop$q2, na.rm = T) #desviación
+```
+  - ambas son altas. parece indicar que hay bastante sesgo
+
+```{r}
+library(moments)
+skewness(datalapop$q2, na.rm = T) #asimetría
+kurtosis(datalapop$q2, na.rm = T) #curtosis
+```
+  - asimetria positiva. sesgo a la derecha.
+  - leptocurtica. 
+
+
+
+
+# Actividad en R
+============================================================
+  - Revisa el cuestionario de LAPOP (PAIDEIA) y realiza los estadísticos descriptivos para una variable nominal, una ordinal y una numérica.
+
+DESARROLLO:
+
+1. Variable Categórica nominal: np1 <- Asistencia a una reunión municipal
+============================================================
+```{r}
+datalapop$np1 = as.factor(datalapop$np1)
+
+#str(datalapop$np1)
+```
+
+```{r}
+datalapop$np1 = factor(datalapop$np1, 
+                levels = levels(datalapop$np1), 
+                labels = c("Asistió","No Asistió"),  
+                ordered = F) 
+
+#str(datalapop$np1) 
+
+```
+  - Tablas respecto a la asistencia a una reunión municipal en los últimos 12 meses
+```{r}
+table(datalapop$np1)
+```
+
+```{r}
+prop.table(table(datalapop$np1)) * 100
+```
+
+```{r}
+library(Hmisc)
+describe(datalapop$np1)
+```
+
+  Gráficas: Pie y barras
+```{r}
+# No recomendado: PIE:
+# pie(table(datalapop$np1), col = rainbow(7),
+#     main = "Asistencia a las reuniones municipales en los últimos 12 meses")
+# tabla = round(prop.table(table(datalapop$np1)) * 100, 2)
+# pie(tabla, labels = paste0(tabla, "%"))
+```
+
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+# Creamos un objeto que contenga la tabla de frecuencias de la variable:
+grafico4 <- table(datalapop$np1) 
+
+grafico4 = as.data.frame(grafico4) # dataframe
+
+colnames(grafico4) = c("Reg","Freq") # renombrar
+
+library(ggplot2) 
+bp4 = ggplot(grafico4, aes(x = reorder(Reg, Freq), y = Freq, fill = Reg)) + 
+  #aes(x=reorder(Reg,Freq) -> así para ordenar las barras ascendentemente
+  geom_bar(stat = "identity") +
+  coord_flip() + 
+  labs(title = "Asistencia a las reuniones municipales en los últimos 12 meses", 
+       y = "Frecuencias", x = "Categorías")+
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(panel.background = element_rect(fill = "white", colour = "white")) + 
+  geom_text(aes(label = Freq), vjust=0.5, color = "gray", 
+            size = 5) #Frecuencias en las barras
+bp4
+```
+
+**INTERPRETACION**: 
+  + La mayoría de encuestados no asistió a un cabildo abierto o a una sesión municipal durante los últimos doce meses. 
+  + En particular, el 87.85% de los encuestados no asistió a un cabildo abierto o a una sesión municipal durante los últimos doce meses, mientras que solo un 12.15% sí lo hizo. 
+
+Variable Categórica ordinal: m1 -> Percepción respecto a la labor del presidente Vizcarra. 
+============================================================
+
+```{r}
+datalapop$m1 = as.factor(datalapop$m1)
+
+datalapop$m1 = factor(datalapop$m1,
+                 levels = levels(datalapop$m1),
+                 labels = c("Muy bueno", "Bueno", "Regular", 
+                            "Malo", "Muy malo"),
+                 ordered = T) 
+#str(datalapop$m1)
+```
+
+  - Tablas sobre la percepción respecto a la labor del presidente Vizcarra. 
+```{r}
+table(datalapop$m1)
+prop.table(table(datalapop$m1))*100
+```
+
+```{r}
+library(Hmisc)
+describe(datalapop$m1)
+```
+
+  - Graficas: Barras y boxplot 
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+
+# creamos un objeto que contenga la tabla de frecuencias de la variable:
+grafico5 <- table(datalapop$m1)
+
+grafico5 = as.data.frame(grafico5) # dataframe
+
+colnames(grafico5) = c("Reg","Freq") # renombrar
+
+# Grafico basico de R:
+# barplot(table(datalapop$m1), col = "darkblue", xlab = NULL, 
+#         ylab = "Conteo de encuestados", main =
+#           "Percepción de satisfacción respecto a la labor del presidente Vizcarra")
+
+library(ggplot2) 
+bp4 = ggplot(grafico5, aes(x = reorder(Reg, Freq), y = Freq, fill = Reg)) + 
+  #aes(x=reorder(Reg,Freq) --> así para ordenar las barras ascendentemente
+  geom_bar(stat = "identity") +
+  coord_flip() + 
+  labs(title = 
+         "Percepción de satisfacción respecto a la labor del presidente Vizcarra", 
+       y = "Frecuencias", x = "Categorías") +
+  theme(plot.title = element_text(hjust = 0.5)
+        ) + 
+  theme(panel.background = element_rect(fill = "white",  colour = "white")
+        ) + 
+  geom_text(aes(label = Freq), vjust = 0.5, color = "gray", 
+            size = 5) #Frecuencias en las barras
+bp4
+```
+
+```{r message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+library(plotly)
+
+p5 <- #boxplot(datalapop$m1, col = "pink") # boxplot basico de R
+ggplot(datalapop, aes(x="", y=m1, color ="")) + 
+  geom_boxplot() + 
+  coord_flip() + # Volteamos el gráfico
+ 
+  theme(legend.position = "top", axis.text.y = element_blank(), 
+         panel.background = element_rect(fill = "white", colour = "white")
+        ) + #Quitamos categorías
+  geom_jitter(shape = 16, position = position_jitter(0.2)
+              ) + #Agregamos los casos como puntos
+  labs(title = 
+         "Percepción de satisfacción respecto a la labor del presidente Vizcarra", 
+       x = "", y = "Index")
+ggplotly(p5)
+```
+
+## **INTERPRETACION:** 
+  + La mayoría de personas considera que la labor del presidente Vizcarra ha sido regular. 
+  + El 2.90% de las personas considera que la labor del presidente vizcarra ha sido muy mala, mientras que el 3.79 considera que fue muy buena. En particular, el 50.27% de los encuestados, es decir, la mayoría considera que su labor fue regular.  
+
+
+
+Variable numérica: **PSC8 <- Horas de agua al día tiene cuando tiene el servicio**
+============================================================
+
+```{r}
+datalapop$psc8 = as.numeric(datalapop$psc8)
+#str(datalapop$psc8)
+```
+
+```{r}
+sum(is.na(datalapop$psc8)) 
+datalapop = datalapop[complete.cases(datalapop$psc8),]
+```
+
+```{r}
+summary(datalapop$psc8)
+```
+
+```{r}
+IR=24-6
+Valorextremosuperior=24+1.5*IR
+Valorextremosuperior
+```
+
+```{r}
+Valorextremoinferior=6-1.5*IR
+Valorextremoinferior
+```
+
+```{r}
+describe(datalapop$psc8)
+```
+
+## Gráficas: boxplot e histograma
+
+```{r fig.show='hold', message=FALSE,warning=FALSE,eval=TRUE,fig.width=9.5,fig.height=5.55, fig.align="center", fig.cap="Figure 1: Docentes según sexo (ENDO 2020)."}
+#boxplot(datalapop$psc8) #Grafica basica de R
+
+p6 <- ggplot(datalapop, aes(x = "", y = psc8, color = "")) + 
+  geom_boxplot() + 
+  coord_flip() + #Volteamos el gráfico
+  theme(legend.position = "top", axis.text.y = element_blank(), 
+        panel.background = element_rect(fill = "white", colour = "white")
+        ) + #Quitamos categorías
+  geom_jitter(shape = 16, position = position_jitter(0.2)
+              ) + # Agregamos los casos como puntos
+  labs(title = "Horas de agua al día cuando cuenta con el servicio", 
+       x = "", y = "Index")
+ggplotly(p6)
+
+# HIST:
+#hist(datalapop$psc8) # basico de R
+
+ggplot(datalapop, aes(x = psc8, color = "")) + 
+  geom_histogram(fill = "white", alpha = 0.5, position = "identity") + 
+  labs(title = "Horas de agua al día cuando cuenta con el servicio", 
+       y = "", x = "Index")+
+  theme(plot.title = element_text(hjust = 0.5)) + 
+  theme(panel.background = element_rect(fill = "white", colour = "white"))
+```
+  
+  + Asimetría negativa
+
+
+## Medidas de centralidad
+
+  - Variable categórica nominal: np1
+```{r}
+library(DescTools)
+Mode(datalapop$np1,na.rm = T)
+```
+  + Es decir, la mayoría de encuestados no asistió a un cabildo abierto o una sesión municipal durante los últimos 12 meses
+
+============================================================
+
+  - Variable categórica ordinal: m1
+```{r}
+library(DescTools)
+Mode(datalapop$m1,na.rm = T)
+```
+La mayoria de gente considera que la labor de Vizcarra es regular
+
+```{r}
+Median(datalapop$m1, na.rm = T)
+```
+  + El 50% de los encuestados considera que la labor de Vizcarra, al menos, fue regular.
+
+============================================================
+
+# Variable numérica: psc8 
+  
+```{r}
+library(DescTools)
+Mode(datalapop$psc8, na.rm = T)
+```
+
+  + La mayoría de encuestados tiene agua las 24 horas cuando tiene el servicio
+
+```{r}
+Median(datalapop$psc8, na.rm = T)
+```
+
+  + El 50% de encuestados tiene agua, al menos, las 24 horas cuando tienen el servicio
+
+```{r}
+mean(datalapop$psc8, na.rm = T)
+```
+  + En promedio, los encuestados tiene agua 16 horas cuando tienen el servicio
+
+```{r}
+describe(datalapop$psc8)
+```
+
+Mínimo:
+```{r}
+min(datalapop$psc8, na.rm = T) # na.rm = T no considera los valores perdidos
+```
+  + El mínimo de horas que un encuestado tiene agua cuando tiene el servicio es una hora.
+
+Máximo:
+
+```{r}
+max(datalapop$psc8, na.rm = T)
+```
+  
+  + El máximo de horas que un encuestado tiene agua cuando tiene el servicio es 24 horas.
+
+Rango:
+
+```{r}
+range(datalapop$psc8, na.rm = T)
+```
+ 
+  + El rango de horas que un encuestado tiene agua cuando tiene el servicio esta entre una a 24 horas.
+
+Quantiles:
+
+```{r}
+quantile(datalapop$psc8, na.rm=T)
+```
+
+  + Q1: El 25% de encuestados tiene agua, al menos, 6 horas cuando tienen el servicio 
+  + Q2: El 50% de encuestados tiene agua, al menos, las 24 horas cuando tienen el servicio 
+  + Q3: El 75% de encuestados tiene agua, al menos, las 24 horas cuando tienen el servicio 
+
+
+IQR:
+
+```{r}
+IQR(datalapop$psc8, na.rm = T)
+```
+  + El 50% intermedio de los datos está entre 6 y 24 horas.
+
+  - Varianza:
+  
+```{r}
+var(datalapop$psc8, na.rm = T) # Varianza
+```
+
+  - desviación
+  
+```{r}
+sd(datalapop$psc8, na.rm = T) # Desviación
+```
+
+
+# Medidas de distribución de la variable numérica:
+  
+  - Asimetría
+
+```{r}
+library(moments)
+skewness(datalapop$psc8, na.rm = T)
+```
+  
+  + Esto indica que los datos tienen una asimetria negativa, es decir, estos tienden a estar hacia la izquierda.
+
+  - Curtosis
+  
+```{r}
+kurtosis(datalapop$psc8, na.rm = T) #curtosis
+```
+
+  + Esto indica que la distribución es mayor que cero, por tanto, es leptocúrtica.

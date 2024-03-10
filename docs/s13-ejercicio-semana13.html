@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="This is where you will find all the resources for the course Introduction to Data Analysis with R">
+
+<title>Ejercicios POL278 - 2022-1 - 13&nbsp; Regresión lineal Múltiple</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./s14-ejercicio-semana14.html" rel="next">
+<link href="./s12-ejercicio-semana12b.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="./style.css">
+<meta property="og:title" content="Ejercicios POL278 - 2022-1 - 13&nbsp; Regresión lineal Múltiple">
+<meta property="og:description" content="This is where you will find all the resources for the course Introduction to Data Analysis with R">
+<meta property="og:image" content="https://pol278-pucp.github.io/test1/s13-ejercicio-semana13_files/figure-html/unnamed-chunk-6-1.png">
+<meta property="og:site-name" content="Ejercicios POL278 - 2022-1">
+<meta property="og:image:height" content="1065">
+<meta property="og:image:width" content="1824">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s13-ejercicio-semana13.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Regresión lineal Múltiple</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Ejercicios POL278 - 2022-1</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/POL278-PUCP/test1" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hello and welcome!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s2-ejercicio-semana2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Mis Primeros Pasos Con R - Actividad 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s3-ejercicio-semana3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ejercicio estadistica descriptiva</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s4-ejercicio-semana4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intervalo de Confianza</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s6-ejercicio-semana6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Comparación de grupos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s6-ejercicio-semana6b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Segunda parte de ejercicios</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s7-ejercicio-semana7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong><b style="color : #50D050;">CHI-CUADRADO Y MEDIDAS DE ASOCIACIÓN</b></strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s7-ejercicio-semana7b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong><b style="color : #50D050;">ANALISIS DE VARIABLES CATEGORICAS</b></strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s8-ejercicio-parcial-semana8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pregunta 1 (3 puntos)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s8-ejercicio-parcial-semana8b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">FACULTAD DE CIENCIAS SOCIALES - PUCP <br></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s10-ejercicio-semana10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Correlación</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s12-ejercicio-semana12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regresión Lineal</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s12-ejercicio-semana12b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Regresión Lineal II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s13-ejercicio-semana13.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Regresión lineal Múltiple</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s14-ejercicio-semana14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Regresión lineal múltiple II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s15-ejercicio-final-semana15.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">REPASO FINAL I</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s15-ejercicio-final-semana15b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso Final II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#formateo-distingamos-las-variables-numericas-y-nominales-dicotomicas" id="toc-formateo-distingamos-las-variables-numericas-y-nominales-dicotomicas" class="nav-link active" data-scroll-target="#formateo-distingamos-las-variables-numericas-y-nominales-dicotomicas"><span class="header-section-number">13.1</span> Formateo: DISTINGAMOS LAS VARIABLES NUMERICAS Y (NOMINALES) DICOTOMICAS</a></li>
+  <li><a href="#hipotesis-1" id="toc-hipotesis-1" class="nav-link" data-scroll-target="#hipotesis-1"><span class="header-section-number">14</span> <strong>HIPOTESIS 1:</strong></a></li>
+  <li><a href="#hipotesis-2" id="toc-hipotesis-2" class="nav-link" data-scroll-target="#hipotesis-2"><span class="header-section-number">15</span> <strong>HIPOTESIS 2:</strong></a>
+  <ul class="collapse">
+  <li><a href="#modelo-2" id="toc-modelo-2" class="nav-link" data-scroll-target="#modelo-2"><span class="header-section-number">15.1</span> Modelo 2</a></li>
+  <li><a href="#frente-a-uribista" id="toc-frente-a-uribista" class="nav-link" data-scroll-target="#frente-a-uribista"><span class="header-section-number">15.2</span> Frente a uribista</a></li>
+  <li><a href="#frente-a-pctopo-no-es-signifcativa" id="toc-frente-a-pctopo-no-es-signifcativa" class="nav-link" data-scroll-target="#frente-a-pctopo-no-es-signifcativa"><span class="header-section-number">15.3</span> Frente a pctopo (No es signifcativa)</a></li>
+  </ul></li>
+  <li><a href="#ahora-con-las-variables-independientes-consejocomunal-ejecucion" id="toc-ahora-con-las-variables-independientes-consejocomunal-ejecucion" class="nav-link" data-scroll-target="#ahora-con-las-variables-independientes-consejocomunal-ejecucion"><span class="header-section-number">16</span> AHORA CON LAS VARIABLES INDEPENDIENTES: consejocomunal + ejecucion</a></li>
+  <li><a href="#hipotesis-general-la-asignación-presupuestal-se-debe-a-criterios-técnicas-políticos-y-populistas." id="toc-hipotesis-general-la-asignación-presupuestal-se-debe-a-criterios-técnicas-políticos-y-populistas." class="nav-link" data-scroll-target="#hipotesis-general-la-asignación-presupuestal-se-debe-a-criterios-técnicas-políticos-y-populistas."><span class="header-section-number">17</span> HIPOTESIS GENERAL: La asignación presupuestal se debe a criterios técnicas, políticos y populistas.</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/POL278-PUCP/test1/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/POL278-PUCP/test1/blob/main/s13-ejercicio-semana13.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Regresión lineal Múltiple</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>El objetivo de esta sesión es conocer los comandos básicos de para la regresión lineal Múltiple Para este ejercicio utilizaremos para reaplicar la base de datos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#getwd() </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd("")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dataPAVI <span class="ot">=</span> <span class="fu">import</span>(<span class="st">"./data/s12/b-pavimentando con votos.sav"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#names(dataPAVI)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#str(dataPAVI)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="formateo-distingamos-las-variables-numericas-y-nominales-dicotomicas" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="formateo-distingamos-las-variables-numericas-y-nominales-dicotomicas"><span class="header-section-number">13.1</span> Formateo: DISTINGAMOS LAS VARIABLES NUMERICAS Y (NOMINALES) DICOTOMICAS</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># forma corta</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dataPAVI[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">8</span>)] <span class="ot">=</span> <span class="fu">lapply</span>(dataPAVI[,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">7</span><span class="sc">:</span><span class="dv">8</span>)],as.numeric)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>dataPAVI[,<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">6</span>)] <span class="ot">=</span> <span class="fu">lapply</span>(dataPAVI[,<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">6</span>)],as.factor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># forma larga</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#dataPAVI$poblacioncienmil = as.numeric(dataPAVI$poblacioncienmil)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#dataPAVI$nbi = as.numeric(dataPAVI$nbi)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#dataPAVI$consejocomunal = as.factor(dataPAVI$consejocomunal)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#dataPAVI$priorizado = as.factor(dataPAVI$priorizado)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#dataPAVI$uribista = as.numeric(dataPAVI$uribista)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#dataPAVI$ejecucion = as.factor(dataPAVI$ejecucion)</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#dataPAVI$apropiaciondolar = as.numeric(dataPAVI$apropiaciondolar)</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#dataPAVI$pctopo = as.numeric(dataPAVI$pctopo)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="hipotesis-1" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> <strong>HIPOTESIS 1:</strong></h1>
+<ul>
+<li>Reﬁere a la asignación presupuestal en relación a los criterios TÉCNICOs determinados por documentos elaborados por el gobierno / La asignación presupuestal se debe a criterios técnicos</li>
+</ul>
+<p>apropiaciondolar -&gt; Variable dependiente Priorizado -&gt; variable independiente - categorica dummy -&gt; sí y no.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>modelo1 <span class="ot">=</span> <span class="fu">lm</span>(apropiaciondolar <span class="sc">~</span> priorizado, <span class="at">data =</span> dataPAVI) <span class="co">#(Y~X)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo1) <span class="co">#modelo1 -&gt; este es incompleto, mejor usar summary</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = apropiaciondolar ~ priorizado, data = dataPAVI)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+ -8.277  -8.277  -8.272   1.108 124.371 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  8.277427   0.560554  14.766   &lt;2e-16 ***
+priorizado1 -0.005434   1.117040  -0.005    0.996    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 16.05 on 1094 degrees of freedom
+Multiple R-squared:  2.163e-08, Adjusted R-squared:  -0.0009141 
+F-statistic: 2.367e-05 on 1 and 1094 DF,  p-value: 0.9961</code></pre>
+</div>
+</div>
+<ul>
+<li>Gráfico: SOLO LINEAL</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># para hacer gráficos facheros</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dataPAVI, <span class="fu">aes</span>(<span class="at">x =</span> priorizado, <span class="at">y =</span> apropiaciondolar)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">colour=</span><span class="st">"red"</span>) <span class="sc">+</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"priorizado"</span>) <span class="sc">+</span>  <span class="fu">ylab</span>(<span class="st">"apropiaciondolar"</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"priorizado / apropiaciondolar"</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="s13-ejercicio-semana13_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>#No es regresión lineal múltiple, pues <em>Solo tenemos una variable independiente -&gt; priorizado</em></p>
+<p>#INTERPRETACIÓN: + Al revisar el p-value (0.9961), el cual es mayor a 0.05, se determina que el modelo1 no es válido para predecir la variable dependiente (apropiaciondolar) a partir de la variable (priorizado). Parece que la H1 no funciona, es decir, no aporta ninguna explicación.</p>
+</section>
+<section id="hipotesis-2" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> <strong>HIPOTESIS 2:</strong></h1>
+<ul>
+<li>La asignación presupuestal en infraestructura vial en Colombia r esponde a negociaciones bilaterales entre el ejecutivo y el legislativo basadas en necesidades políticas y electorales de corto plazo // Reﬁere a la asignación presupuestal en relación a negociaciones basadas en necesidades políticas y electorales (mecanismo clientelista)</li>
+</ul>
+<p>variables: alcalde uribista o no uribista-categorica dicotomica porcentaje de oposicion -numérica-,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#str(dataPAVI$uribista)</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Uribista tiene que estar como factor:</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>dataPAVI<span class="sc">$</span>uribista <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dataPAVI<span class="sc">$</span>uribista)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dataPAVI<span class="sc">$</span>uribista)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  0   1 
+332 560 </code></pre>
+</div>
+</div>
+<section id="modelo-2" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="modelo-2"><span class="header-section-number">15.1</span> Modelo 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># aca se le añade otra variable con el signo: + </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>modelo2 <span class="ot">=</span> <span class="fu">lm</span>(apropiaciondolar <span class="sc">~</span> uribista <span class="sc">+</span> pctopo, <span class="at">data =</span> dataPAVI) </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = apropiaciondolar ~ uribista + pctopo, data = dataPAVI)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-11.939  -8.803  -7.585   2.127 122.158 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 11.93907    1.18455  10.079  &lt; 2e-16 ***
+uribista1   -3.04661    1.17808  -2.586  0.00987 ** 
+pctopo      -0.04209    0.02282  -1.845  0.06539 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 16.74 on 885 degrees of freedom
+  (208 observations deleted due to missingness)
+Multiple R-squared:  0.009834,  Adjusted R-squared:  0.007596 
+F-statistic: 4.395 on 2 and 885 DF,  p-value: 0.01261</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Si una municipalidad tiene alcalde uribista, el presupuesto de infraestructura vial disminuye en 3.04661.</p></li>
+<li><p>Si una municipalidad incrementa su porcentaje oposición al uribismo en una unidad, el presupuesto de infraestructura vial disminuye en 0.04209.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scatterplot3d)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>(<span class="at">a=</span><span class="fu">scatterplot3d</span>(dataPAVI[,<span class="fu">c</span>(<span class="st">'uribista'</span>, <span class="st">'pctopo'</span>, <span class="st">'apropiaciondolar'</span>)]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="s13-ejercicio-semana13_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<pre><code>H0: las variables independientes no influyen en la variable dependiente / (Los coeficientes de las variables independientes son iguales a cero)
+H1: las variables independientes sí influyen en la variable dependiente</code></pre>
+<ul>
+<li><p>Al revisar el p-value (0.01261), el cual es menor a 0.05, se determina que el modelo2 es válido para predecir la variable dependiente (apropiaciondolar) a partir de las variables (uribista + pctopo). Por lo que podemos rechazar la hipotesos nula.</p></li>
+<li><p>Al revisar el p-value (2.2e-16), el cual es menor a 0.05, rechazamos la H0. Por lo que a un 95% de confianza las variables independientes (educ) y (experiencia) tienen impacto significativo en la variable dependiente (salario_actual).</p></li>
+</ul>
+<p>Pero al revisar el p-value (0.1330) de la otra variable independiente (antiguedad), advertimos que es mayor a 0.05, a saber, no aporta significativamente al modelo5. Por tanto, se recomienda construir un modelo de regresión sin la variable (antiguedad). Pese a ello, para la interpretacón lo tomaremos en cuenta. Así se determina que el modelo5 solo es válido para predecir el salario actual de un trabjador a partir de su educación y experiencia.</p>
+</section>
+<section id="frente-a-uribista" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="frente-a-uribista"><span class="header-section-number">15.2</span> Frente a uribista</h2>
+<pre><code>H0: Si un municipio tenga o no tenga un alcalde uribista no influye en la variable independiente (la asignación presupuestal) 
+H1: Si un municipio tenga o no tenga un alcalde uribista sí influye en la variable independiente (la asignación presupuestal)</code></pre>
+<p>El p-value específico de esta variable es 0.00987, menor a 0.05, por lo que la variable uribista sí impacta en la asignacion presupuestal. Rechazamos la H0.</p>
+<p>#INTERPRETACIÓN: - sentido: inverso -3.04661 - variable uribista: - 0: no fue uribista el alcalde - 1: sí fue uribista el alcalde</p>
+<ul>
+<li>CUANDO UN MUNICIPIO tiene un alcalde uribista, manteniendo consante el porcentaje de oposición, la asignación presupuestal vial disminuye en 3.04661 millones de dólares</li>
+</ul>
+</section>
+<section id="frente-a-pctopo-no-es-signifcativa" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="frente-a-pctopo-no-es-signifcativa"><span class="header-section-number">15.3</span> Frente a pctopo (No es signifcativa)</h2>
+<ul>
+<li><p>El p-value especifico para la variable pctopo es 0.06539, mayor a 0.05,por lo que fracasamos al rechazar la H0.La variable no impacta significativamente en la (variable dependiente) asignacion presupuestal.</p></li>
+<li><p>Explicando su sentido: Inverso -0.04209</p></li>
+<li><p>Cuando un porcentaje de oposición incrementa en una unidad (1%) (o punto procentual mayor), mateniendo constante el ser una alcalde uribista, la asignación presupuestal vial disminuye en 0.04209 millones de dólares.</p></li>
+</ul>
+<p>Coeficientes:</p>
+<p>asignaciónvial = 11.93907 + (-3.04661<em>uribista1) + (-0.04209</em>pctopo)</p>
+<p>EJEMPLOS: #PERO ANTES: ¿CÓMO SABER EL PORCENTAJE DE OPOSICIÓN DE UNA MUNICIPALIDAD QUE ES URIBISTA? #EN este caso usaremos summary para conocer el min y el max</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(dataPAVI<span class="sc">$</span>pctopo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  0.000   5.922  20.308  27.874  45.711  99.419       7 </code></pre>
+</div>
+</div>
+<p>Entonces, ¿qué sucede con un municipio que tiene un alcalde uribista y que tiene 27.874 de porcentaje de oposición?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Y1 <span class="ot">&lt;-</span> <span class="fl">11.93907</span><span class="sc">+</span>(<span class="sc">-</span><span class="fl">3.04661</span><span class="sc">*</span><span class="dv">1</span>)<span class="sc">+</span>(<span class="sc">-</span><span class="fl">0.04209</span><span class="sc">*</span><span class="fl">27.874</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Y1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7.719243</code></pre>
+</div>
+</div>
+<p>Un municipio con esas características va a tener un presupuesto de 7.719243 millones</p>
+<p>Ahora: ¿qué sucede con un municipio que no tiene un alcalde uribista y que tiene 27.874 de porcentaje de oposición?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">&lt;-</span> <span class="fl">11.93907</span><span class="sc">+</span>(<span class="sc">-</span><span class="fl">3.04661</span><span class="sc">*</span><span class="dv">0</span>)<span class="sc">+</span>(<span class="sc">-</span><span class="fl">0.04209</span><span class="sc">*</span><span class="fl">27.874</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Y2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10.76585</code></pre>
+</div>
+</div>
+<p>Un municipio con esas características va a tener un presupuesto de 10.76585 millones</p>
+<ul>
+<li>CONCLUSIÓN:</li>
+<li>El gobierno prefirió a los alcaldes no uribistas y también donde no tenían tanto porcentaje de oposición.</li>
+</ul>
+<ol start="3" type="1">
+<li>El modelo ayuda a predecir el 0.7% de la variabilidad de la variable dependiente asignación presupuestal vial (apropiaciondolar).</li>
+</ol>
+<p><em>de la variabilidad de la variable dependiente = del cambio sistemático de nuestra variable dependiente</em></p>
+<p>Entonces, la variable que más impacta es “Uribista” –&gt; PARA ESTAR MÁS SEGUROS, GUIARNOS POR LO COEFICIENTES ESTANDARIZADOS:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("lm.beta")</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lm.beta)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lm.beta</span>(modelo2) <span class="co">#Nos otorga los coeficientes estandarizados para ver los efectos de las variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = apropiaciondolar ~ uribista + pctopo, data = dataPAVI)
+
+Standardized Coefficients::
+(Intercept)   uribista1      pctopo 
+         NA -0.08763178 -0.06251466 </code></pre>
+</div>
+</div>
+<p><em>NOTA: FIJARNOS EN EL VALOR ABSOLUTO, ES DECIR, SIN EL SIGNO</em></p>
+<p>La variable uribista1 (-0.08763178) impacta más en el modelo. o sea, tener o no alcalde Uribista impacta más en el modelo.</p>
+<p>###PARA VISUALIZAR LOS DATOS #Pequeña tabla</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("jtools")</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summ</span>(modelo2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MODEL INFO:
+Observations: 888 (208 missing obs. deleted)
+Dependent Variable: apropiaciondolar
+Type: OLS linear regression 
+
+MODEL FIT:
+F(2,885) = 4.39, p = 0.01
+R² = 0.01
+Adj. R² = 0.01 
+
+Standard errors: OLS
+------------------------------------------------
+                     Est.   S.E.   t val.      p
+----------------- ------- ------ -------- ------
+(Intercept)         11.94   1.18    10.08   0.00
+uribista1           -3.05   1.18    -2.59   0.01
+pctopo              -0.04   0.02    -1.84   0.07
+------------------------------------------------</code></pre>
+</div>
+</div>
+<p><em>NOTA: Est. -&gt; Estimate P. -&gt; P-value S.E. -&gt; ERROR ESTANDAR t val. -&gt; LOS VALORES T -&gt; t value (en summary)</em></p>
+<p>###Grafico de los coeficientes</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">#plot_coefs(modelo2)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_coefs</span>(modelo1, modelo2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="s13-ejercicio-semana13_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>INTERPRETACIÓN:</p>
+<p>Ser uribista1 tiene un efecto más lejano de cero y el porcentaje de oposicion sale muy cercano a cero.</p>
+<p><em>la linea es el intervalo de confianza del coeficiente, es decir, dicho coeficiente puede variar de acuerdo a la muestra que tengamos</em></p>
+<p><em>El cuadradito es el promedio del coeficiente y la linea que le cruza es el intervalo de confianza.</em></p>
+<p>#ahora con más variables… tabla resumen</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(huxtable) <span class="co">#install.packages("huxtable")</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(officer) <span class="co">#install.packages("officer")</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">export_summs</span>(modelo1, modelo2, <span class="at">scale =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">error_format =</span> <span class="st">"[{conf.low}, {conf.high}]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table class="huxtable" data-quarto-disable-processing="true" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  ">
+<colgroup><col><col><col></colgroup><tbody><tr>
+<th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 1</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 2</th></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(Intercept)</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">8.28 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">10.79 ***</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">[7.18, 9.38]&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">[8.96, 12.61]&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">priorizado1</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.01&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">[-2.20, 2.19]&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">uribista1</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-3.05 **&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">[-5.36, -0.73]&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">pctopo</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-1.05&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">[-2.17, 0.07]&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">N</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1096&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">888&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">R2</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.00&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.01&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th colspan="3" style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">All continuous predictors are mean-centered and scaled by 1 standard deviation. The outcome variable is in its original units.  *** p &lt; 0.001;  ** p &lt; 0.01;  * p &lt; 0.05.</th></tr>
+</tbody></table>
+
+</div>
+</div>
+<p>INTERPRETACIÓN:</p>
+<p>HIPOTESIS 3 :la asignación presupuestal en infraestructura vial en Colombia responde al esfuerzo del gobierno por fortalecer su base social de apoyo local a través de los Consejos Comunales de Gobierno.</p>
+</section>
+</section>
+<section id="ahora-con-las-variables-independientes-consejocomunal-ejecucion" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> AHORA CON LAS VARIABLES INDEPENDIENTES: consejocomunal + ejecucion</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>modelo3 <span class="ot">=</span> <span class="fu">lm</span>(apropiaciondolar <span class="sc">~</span> consejocomunal <span class="sc">+</span> ejecucion, <span class="at">data =</span> dataPAVI) </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = apropiaciondolar ~ consejocomunal + ejecucion, data = dataPAVI)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-23.924  -7.321  -7.321   0.773 125.321 
+
+Coefficients:
+                Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       7.3214     0.4928  14.855  &lt; 2e-16 ***
+consejocomunal1  16.6023     2.0734   8.007 2.98e-15 ***
+ejecucion1        1.2232     2.4855   0.492    0.623    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 15.6 on 1093 degrees of freedom
+Multiple R-squared:  0.05592,   Adjusted R-squared:  0.05419 
+F-statistic: 32.37 on 2 and 1093 DF,  p-value: 2.198e-14</code></pre>
+</div>
+</div>
+<ul>
+<li>Si la municipalidad ha tenido la instalación del consejo comunal , el presupuesto de infraestructura vial incrementaría en 16.60 millones de dólares.</li>
+</ul>
+<p>rechazar la H0, p-value (2.198e-14) menor a 0.05, sí explica</p>
+<p>la variable consejocomunal que indica esfuerzops populista si</p>
+<p>#PARA VER LA UNIDAD</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataPAVI<span class="sc">$</span>consejocomunal) <span class="co">#ES DICOTÓMICA </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 2 levels "0","1": 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+</div>
+<p>INTERPRETACIÓN:</p>
+<p>consejocomunal<br>
+Manteniendo fija la variable ejecución, si la alcaldía presenta consejo comunal el presupesto vial asiganado se incrementa en 16.6023 de dolares, en comparación de un consejo que no es comunal.</p>
+<p>ejecucion</p>
+<p>##Frente a ejecucion (No es signifcativa)</p>
+<p>El p-value especifico para la variable ejecucion es 0.623, mayor a 0.05, por lo que fracasamos al rechazar la H0. La variable no impacta significativamente en la (variable dependiente) asignación presupuestal.</p>
+<p>Explicando su sentido: directo 1.2232</p>
+<p>Cuando la ejecucion se incrementa en una unidad (1%) (o punto procentual mayor), mateniendo constante la varaible independiente consejocomunal, la asignación presupuestal vial aumenta en 1.2232 millones de dólares.</p>
+<p>Coeficientes:</p>
+<p>Presupuesto asignación vial = 7.3214 + (-3.04661<em>uribista1) + (-0.04209</em>pctopo)</p>
+<p>EJEMPLOS:</p>
+</section>
+<section id="hipotesis-general-la-asignación-presupuestal-se-debe-a-criterios-técnicas-políticos-y-populistas." class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> HIPOTESIS GENERAL: La asignación presupuestal se debe a criterios técnicas, políticos y populistas.</h1>
+<p>3 hipotesis + población en 100 mil y necesidades básicas insatisfechas</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>modelo4 <span class="ot">=</span> <span class="fu">lm</span>(apropiaciondolar <span class="sc">~</span> priorizado <span class="sc">+</span> uribista <span class="sc">+</span> pctopo <span class="sc">+</span> consejocomunal <span class="sc">+</span> ejecucion <span class="sc">+</span> poblacioncienmil <span class="sc">+</span> nbi,<span class="at">data =</span> dataPAVI) </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = apropiaciondolar ~ priorizado + uribista + pctopo + 
+    consejocomunal + ejecucion + poblacioncienmil + nbi, data = dataPAVI)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-60.201  -8.207  -5.875   2.505  92.488 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      14.13181    1.67651   8.429  &lt; 2e-16 ***
+priorizado1      -2.21395    1.18715  -1.865  0.06253 .  
+uribista1        -2.57184    1.09188  -2.355  0.01872 *  
+pctopo           -0.03096    0.02126  -1.456  0.14563    
+consejocomunal1  14.05017    2.32452   6.044 2.23e-09 ***
+ejecucion1        2.95688    2.80758   1.053  0.29255    
+poblacioncienmil  1.83866    0.20024   9.182  &lt; 2e-16 ***
+nbi              -0.09292    0.02941  -3.160  0.00163 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 15.38 on 868 degrees of freedom
+  (220 observations deleted due to missingness)
+Multiple R-squared:  0.1751,    Adjusted R-squared:  0.1684 
+F-statistic: 26.32 on 7 and 868 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer) </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(modelo1,modelo2,modelo3,modelo4, <span class="at">type =</span> <span class="st">"text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+=================================================================================================================
+                                                         Dependent variable:                                     
+                    ---------------------------------------------------------------------------------------------
+                                                          apropiaciondolar                                       
+                             (1)                    (2)                    (3)                      (4)          
+-----------------------------------------------------------------------------------------------------------------
+priorizado1                 -0.005                                                                -2.214*        
+                           (1.117)                                                                (1.187)        
+                                                                                                                 
+uribista1                                        -3.047***                                       -2.572**        
+                                                  (1.178)                                         (1.092)        
+                                                                                                                 
+pctopo                                            -0.042*                                         -0.031         
+                                                  (0.023)                                         (0.021)        
+                                                                                                                 
+consejocomunal1                                                         16.602***                14.050***       
+                                                                         (2.073)                  (2.325)        
+                                                                                                                 
+ejecucion1                                                                1.223                    2.957         
+                                                                         (2.485)                  (2.808)        
+                                                                                                                 
+poblacioncienmil                                                                                 1.839***        
+                                                                                                  (0.200)        
+                                                                                                                 
+nbi                                                                                              -0.093***       
+                                                                                                  (0.029)        
+                                                                                                                 
+Constant                   8.277***              11.939***               7.321***                14.132***       
+                           (0.561)                (1.185)                (0.493)                  (1.677)        
+                                                                                                                 
+-----------------------------------------------------------------------------------------------------------------
+Observations                1,096                   888                   1,096                     876          
+R2                         0.00000                 0.010                  0.056                    0.175         
+Adjusted R2                 -0.001                 0.008                  0.054                    0.168         
+Residual Std. Error   16.052 (df = 1094)     16.735 (df = 885)      15.604 (df = 1093)       15.378 (df = 868)   
+F Statistic         0.00002 (df = 1; 1094) 4.395** (df = 2; 885) 32.371*** (df = 2; 1093) 26.316*** (df = 7; 868)
+=================================================================================================================
+Note:                                                                                 *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_coefs</span>(modelo1, modelo2, modelo3, modelo4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="s13-ejercicio-semana13_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Modelo1 -&gt; nos dice que no influye nada la priorización técnica</p>
+<p>el modelo 4 -&gt; es distinto porque hemos añadiddo las variables de los modelos anteriroes a él, pero ademas las variables población en 100 mil y necesidades básicas insatisfechas.</p>
+<p>parece ser que si solamente tuvisiesempos que explicar la aporacion dolar, a traves de la priorizacion tecina, no logaramos explicarla.</p>
+<p>Pero si le añadimos otras variables como sucede en el modelo4 CON LAS VARIABALES población en 100 mil y necesidades básicas insatisfechas, parece ser que el ser priroizado tiene un efecto inverso (negativo) en la aporpiacion dolar. es decir que los criterios tecnicos tiene un efecto inverso en la aporpaicon dolar. es decir, de no tener ninguna relacion, ahora tiene algun impacto negativo. En efecto, si observamos los intervalos de confianza de priorizado1 en el modelo 4, la linea (vigote) esta myr cerca de cero, no termina de impactar.</p>
+<p>en los modelos 2 y 4 se mantiene sin ningun efecto en la asignacion presupuestal el porcfentaje de oposicion</p>
+<p>Respecto al modelo 4, nbi parece no impactar nada, en contraste con la POBLACION EN CIEN MIL</p>
+<p>Respecto a consejo comunal en el modelo 4 se hace más pequeño cuango agreagmos las otras dos variables, respecto al modelo 3. Los mismo podriamos señalar de la variable ejecución, pero sus respectivos inetrvalos tocan el cero, entonces, la variable ehecucion tampoco impacta en la apropicacion dolar (presupuesto.)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("jtools")</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggstance")</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggstance)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("broom.mixed")</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>modelo5<span class="ot">=</span><span class="fu">lm</span>(apropiaciondolar <span class="sc">~</span> uribista <span class="sc">+</span> pctopo <span class="sc">+</span> consejocomunal <span class="sc">+</span> poblacioncienmil <span class="sc">+</span> nbi,<span class="at">data =</span> dataPAVI)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = apropiaciondolar ~ uribista + pctopo + consejocomunal + 
+    poblacioncienmil + nbi, data = dataPAVI)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-61.260  -8.165  -5.819   1.669  92.937 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)      13.52620    1.64309   8.232 6.69e-16 ***
+uribista1        -2.53957    1.09309  -2.323  0.02039 *  
+pctopo           -0.03082    0.02127  -1.449  0.14772    
+consejocomunal1  13.94523    2.31933   6.013 2.68e-09 ***
+poblacioncienmil  1.81659    0.20014   9.077  &lt; 2e-16 ***
+nbi              -0.09037    0.02939  -3.075  0.00217 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 15.4 on 870 degrees of freedom
+  (220 observations deleted due to missingness)
+Multiple R-squared:  0.1712,    Adjusted R-squared:  0.1664 
+F-statistic: 35.93 on 5 and 870 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>testplot1 <span class="ot">&lt;-</span> <span class="fu">plot_summs</span>(modelo4, modelo5, <span class="at">legend.title =</span><span class="st">"Determinantes de la asignación presupuestal"</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">robust =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>testplot1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="s13-ejercicio-semana13_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Interpretación:</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./s12-ejercicio-semana12b.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Regresión Lineal II</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./s14-ejercicio-semana14.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Regresión lineal múltiple II</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

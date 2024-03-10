@@ -1,0 +1,308 @@
+---
+aliases:
+  - ejercicio-semana7b.html
+---
+```{r, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r}
+#getwd() 
+#setwd("")
+#dir()
+
+library(rio)
+dfbaro <-import("./data/s7/b-Latinobarometro_2018_Esp_Spss_v20190303.sav")
+#names(dfbaro)
+#str(dfbaro)
+#class(dfbaro) 
+```
+
+
+**<b style = 'color : #50D050;'>ANALISIS DE VARIABLES CATEGORICAS</b>**
+============================================================
+
+- Co-author: Luis Valverde
+
+## **SELECCIONAR (un subconjunto de la) DATA** <- funcion subset
+  
+  - Subsetear data:
+```{r}
+dfbaro = subset(dfbaro, IDENPA == 68 | IDENPA == 170 | IDENPA == 604 | IDENPA == 218)
+table(dfbaro$IDENPA) # | <- signfica o
+```
+
+  - Recodificar (cambiar los valores) numeros por paises
+```{r}
+library(car)
+dfbaro$pais <- recode(dfbaro$IDENPA, "68 = 'Bolivia'; 170 = 'Colombia'; 604 = 'Peru'; 218 = 'Ecuador'")
+
+table(dfbaro$pais)
+```
+
+## **Descripción de la base**
+
+  - ***Sexo***
+```{r}
+dfbaro$SEXO = as.factor(dfbaro$SEXO)
+levels(dfbaro$SEXO) = c("Hombre","Mujer")
+```
+
+  - ***Autoubicación en escala de pobreza-riqueza: Personal***
+```{r}
+dfbaro$pobr_riq = as.numeric(dfbaro$P10STC.A)
+```
+
+  - ***En términos generales ¿Diría usted que (PAÍS) está gobernado por unos cuantos grupos poderosos en su propio beneficio, o que está gobernado para el bien de todo el pueblo? (ESPERE RESPUESTA Y MARQUE UNA SOLA)***
+```{r}
+dfbaro$pode_pueblo = as.factor(dfbaro$P14ST)
+levels(dfbaro$pode_pueblo) = c("Poderosos","Pueblo")
+```
+
+  - ***¿Y en los próximos doce meses, cree que su situación económica y la de su familia será mucho mejor, un poco mejor, igual, un poco peor, o mucho peor qu e la que tiene hoy? (ORDINAL) 5 Mucho peor / 1 Mucho mejor***
+```{r}
+dfbaro$situ_eco = as.factor(dfbaro$P9STGBSC)
+levels(dfbaro$situ_eco) = c("Mucho mejor", "Un poco mejor", "Igual", "Un poco peor", "Mucho peor")
+```
+
+  - ***¿Diría Ud. que este país… progresado 1, estancado 2, esta retroceso 3?***
+```{r}
+dfbaro$pais_pro = as.factor(dfbaro$P2STC)
+dfbaro$pais_pro = factor(dfbaro$pais_pro, 
+                         levels = levels(dfbaro$pais_pro),  
+                         labels = c("Progreso","Estancado","Retrocedio"),
+                         ordered = T)
+table(dfbaro$pais_pro)
+```
+
+  - ***En general, ¿Diría Ud. que está muy satisfecho, más bien satisfecho, no muy satisfecho o nada satisfecho con el funcionamiento de la democracia en (PAÍS)?*** -> 4 niveles: muy satisfecho, mas bien satisfecho, no muy satisfecho, nada satisfecho
+  
+  - En este caso pasaremos de 4 niveles a 2: 
+```{r}
+library(car)
+table(dfbaro$P13STGBS.A)
+
+dfbaro$satis_democracia = as.factor(dfbaro$P13STGBS.A)
+dfbaro$satis_democracia <- recode(dfbaro$P13STGBS.A, "1:2 = 1; 3:4 =2")
+table(dfbaro$satis_democracia)
+
+dfbaro$satis_democracia = as.factor(dfbaro$satis_democracia)
+levels(dfbaro$satis_democracia) = c("Satisfecho","No Satisfecho")
+table(dfbaro$satis_democracia)
+```
+
+  - ***¿Cuán justa cree Ud. que es la distribución del ingreso en (PAÍS)?***
+```{r}
+str(dfbaro$P23ST)
+
+dfbaro$justo = as.factor(dfbaro$P23ST)
+levels(dfbaro$justo) = c("Muy justa","Justa","Injusta","Muy injusta")
+```
+
+
+## **DESCRIPCIÓN DE VARIABLES**
+
+  - Calcular las tablas de frecuencias y de frecuencias acumuladas en porcentajes (variables categoricas)
+```{r}
+library(jmv) # Para calcular tablas 
+
+descriptives(dfbaro, vars = vars(justo, pode_pueblo, pobr_riq, situ_eco, pais_pro, satis_democracia), freq = TRUE)
+```
+
+
+
+## TABLA DE CONTINGENCIA
+
+UNIDAD DE ANALISIS: Personas entrevistadas
+  
+  -  Para obtener las frecuencias observadas, solo con la funcion table
+```{r}
+table(dfbaro$pais, dfbaro$satis_democracia) #tabla cruzada
+```
+
+  - Totales marginales: de filas y columnas
+```{r}
+addmargins(table(dfbaro$pais, dfbaro$satis_democracia))
+```
+  - Total general de esta tabla: 4568
+
+
+## ***Distribución conjunta***: Porcentaje en relación al total general
+
+  - Bolivia & Satisfechos = 314/4568 = 0.068
+
+```{r}
+prop.table(table(dfbaro$pais, dfbaro$satis_democracia)) # Para obetner las proporciones
+```
+
+## ***Distribución Marginal***: Porcentaje en relación al total de las filas
+```{r}
+prop.table(table(dfbaro$pais, dfbaro$satis_democracia), 1)
+```
+  - Los peruanos están mas insatisfechos con la democracia 88%
+  
+
+
+  - Porcentaje en relación al total de las columnas
+```{r}
+prop.table(table(dfbaro$pais, dfbaro$satis_democracia), 2)
+# Otro modo de ver, cambiando el lugar de las variables:
+prop.table(table(dfbaro$satis_democracia, dfbaro$pais), 2)
+```
+  - Del total de personas satisfechas con la democracia, los mas satisfechos son los ecuatorianos 36%.
+
+
+## **GRÁFICO**
+```{r}
+cuadro = prop.table(table(dfbaro$satis_democracia, 
+                          dfbaro$pais), 2)
+barplot(cuadro, legend = rownames(cuadro), axis.lty = 2)
+```
+
+
+# **<b style = 'color : #50D050;'>FRECUENCIAS ESPERADAS</b>**
+  - Para esto, necesitamos calcular la prueba chi cuadrado + $expected
+```{r}
+table(dfbaro$satis_democracia, dfbaro$pais)
+```
+  - CHI CUADRADO: frecuencias esperadas (si la distribicion es proporcional entre las casillas: si no habria ninguna relacion entre la satisfaccion de la democracia y el pais de procedencia.
+  
+```{r}
+tablaFesperadas <- chisq.test(dfbaro$satis_democracia, dfbaro$pais)$expected
+tablaFesperadas
+```
+
+
+## **<b style = 'color : #50D050;'>CHI CUADRADO</b>**
+
+grados de libertad = (filas-1)(columnas-1) 
+grados de libertad = (2-1)(4-1) 
+grados de libertad = 3
+
+```{r}
+# Con la funcion qchisq se indica el nivel de confianza y el numeros de los grados de libertad (df) para obetener el chi cuadrado teorico:
+qchisq(0.95, 3) # Valor de la tabla
+```
+
+  - Ahora sí con CHI CUADRADO
+```{r}
+chisq.test(dfbaro$pais, dfbaro$satis_democracia)
+```
+  
+  - El chi cuadrado observado es 199.56.
+  
+  - Grados de libertad (df) = 3
+
+hipotesis de la prueba chi cuadrado:
+
+H0: NO HAY ASOCIACIÓN ENTRE LA SATISFACCIÓN DE LA DEMOCRACIA Y EL PAÍS. / LAS VARIABLES SON INDEPENDIENTES.
+
+P-VALOR = 0.00000000000000022 (< 2.2e-16). Por tanto, Rechazo la hipotesis nula. a um 95% del nivel de confianza Si es posible una relación entre la satisfacción de la democracia y el país de procedencia.
+
+
+
+  - Entonces, si sale significativo: Lo que sigue son dos casos para dos variables categoricas.
+
+**<b style = 'color : #50D050;'>CASO 1: MEDIDAS DE ASOCIACIÓN PARA AL MENOS UNA VARIABLE NOMINAL</b>**
+============================================================
+  - ***En este caso solo mediremos intensidad***
+
+**MEDIDAS SIMETRICAS**
+
+¿Existe o no relacion entre el pais y su satisfaccion con la democracia?
+```{r}
+cuadro = table(dfbaro$satis_democracia, dfbaro$pais)
+#install.packages("vcd")
+
+library(vcd)
+assocstats(cuadro) # Calcula las medidas de asociacion
+```
+
+  - Contingency Coeff.: 0.205 <- el coeficiente de contingencia nos indica que es una relacion de intensidad debil. 
+
+**MEDIDAS ASIMETRICAS**
+
+```{r}
+#install.packages("DescTools")
+library(DescTools)
+
+Phi(cuadro, conf.level = 0.95)
+UncertCoef(cuadro, conf.level = 0.95)
+Lambda(cuadro, conf.level = 0.95)
+```
+  - Advertimos que el lambda es debil. 0.057
+  - El (uc) coeficiente de incertidumbre es 0.024, tambien es debil
+
+
+**<b style = 'color : #50D050;'>CASO 2: MEDIDAS DE ASOCIACIÓN PARA RELACIÓN ENTRE DOS VARIABLES ORDINALES</b>**
+============================================================
+  - En este caso mediremos intensidad y dirección
+
+
+***¿Existe o no relacion entre si se considera justa la distribucion de ingresos y el nivel de progreso del país?***
+```{r}
+table(dfbaro$justo,dfbaro$pais_pro)
+```
+
+  - Estadisticos marginales 
+```{r}
+tabla = prop.table(table(dfbaro$justo,dfbaro$pais_pro),1)*100
+addmargins(tabla)
+
+```
+
+  - Chi2 
+```{r}
+cuadro2 = table(dfbaro$justo,dfbaro$pais_pro)
+chisq.test(cuadro2)
+```
+
+```{r}
+# Medidas de asociación para variables ordinales
+GoodmanKruskalGamma(cuadro2, conf.level=0.95)
+KendallTauB(cuadro2, conf.level=0.95)
+```
+  - Segun el gamma esa relacion es media. En este caso la direccion es positiva. Es decir, las personas que consideran que el pais ha retrocedido, tambien consideran que la distribucion de ingresos es mas injusta. Las personas que consideran que el pais ha progresado más, tienden  a pensar que la distribucion de ingresos es mas injusta.
+
+  - En este caso nos interesa calcular el TauC, pues no es una matriz cuadrada.
+```{r}
+StuartTauC(cuadro2, conf.level=0.95)
+```
+
+
+```{r}
+#Medidas asimetricas
+cuadro2 = table(dfbaro$pais_pro, dfbaro$justo)
+cuadro2
+SomersDelta(cuadro2, direction = "row") #fila = variable dependiente #row reemplazar por col si es que la variable esta en columnas
+```
+
+  -SomersDelta: 0.2020387. relacion directa y debil
+
+  + DIRECTA: 
+  
+  A medida que se cree que la distribución de ingresos es muy injusta, se considera que el país retrocedio. 
+  
+  A medida que se cree que la distribución de ingresos es muy justa, se considera que el país progreso
+
+  + INTENSIDAD: BAJA 0 a 0.3 es relación baja.
+
+
+
+  - Para una mejor compresion de la tabla:
+```{r}
+prop.table(table(dfbaro$pais_pro, dfbaro$justo),1)*100 # En este caso por filas
+```
+  - Los que consideran que el pais ha retorcedido, son los que consideran que la distribucion de ingresos es muy injusta. (33.809001)
+  - Los que consideran que el pais se ha Estancado, son los que consideran que la distribucion de ingresos es Injusta. (58.846658 )
+  - Los que consideran que el pais ha Progresado, son los que consideran que la distribucion de ingresos es injusta. (47.971919)
+  
+  - Ahora por columnas:
+```{r}
+prop.table(table(dfbaro$pais_pro, dfbaro$justo),2)*100 # En este caso por filas
+```
+  - Los que consideran que el pais ha Progresado, son los que consideran que la distribucion de ingresos es muy justa. (39.50617 ).  Del mismo modo con justa (48.99554)
+  
+  - Los que consideran que el pais se ha Estancado, son los que consideran que la distribucion de ingresos es muy injusta. (52.67606). Del mismo modo con Injusta(55.20492)
+
+

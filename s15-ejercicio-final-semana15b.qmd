@@ -1,0 +1,68 @@
+---
+aliases:
+  - ejercicio-semana15b.html
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Repaso Final II
+
+```{r}
+#setwd(" ")
+library(rio)
+data = import("./data/s15/b-Latinobarometro_2020.dta")
+```
+
+```{r}
+names(data)
+```
+
+Descargue la base de datos Latinobarometro2020.dta que corresponde a las respuestas de peruanos y residentes al cuestionario del Latinobarometro. Descargue el cuestionario <https://www.latinobarometro.org/latContents.jsp>.  Seleccione Perú. 
+
+•	Crear un modelo de regresión lineal múltiple en que explique la variable “dinero que le queda al grupo más rico”* (p73npn_5), con por lo menos dos variables independientes (V. independiente (X1):  Autoubicación en la escala de pobreza (Variable dicotómica)  V. Independiente (X2): Satisfacción con el funcionamiento de la economía en el país) (Variable dicotómica)   Recuerda practicar la recodificación de variables.
+
+Determinar si el modelo es valido, el poder explicativo del modelo.
+
+Analizar el modelo de regresión lineal múltiple. 
+
+Estima los resultados de la ecuación del modelo y coloca un ejemplo.
+
+Realiza el gráfico de los coeficientes.
+
+
+#FILTRAMOS: SOLO PERU 
+```{r}
+#instalar rtoools
+#library(dyplr)
+#dataperu <- filter(data, idenpa == 604)
+```
+
+#OTRO MODO DE FILTRAR SIN PAQUETES
+```{r}
+dataperu = subset(data, idenpa == "604") 
+```
+
+#recodificacion de -> Autoidentificacion en la escala de pobreza (p8st_a)
+```{r}
+str(dataperu$p8st_a)
+```
+
+```{r}
+dataperu$p8st_a = as.numeric(dataperu$p8st_a)
+str(dataperu$p8st_a)
+```
+
+```{r}
+library(car)
+dataperu$pobre = recode(dataperu$p8st_a, 
+                        "1:5 = 'pobre'; 6:10 = 'rico'; else = NA")
+
+table(dataperu$pobre)
+```
+
+
+#Satisfacción con la Economía
+
+
+DONE ------------------------->

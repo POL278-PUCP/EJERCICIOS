@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="This is where you will find all the resources for the course Introduction to Data Analysis with R">
+
+<title>Ejercicios POL278 - 2022-1 - 15&nbsp; REPASO FINAL I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./s15-ejercicio-final-semana15b.html" rel="next">
+<link href="./s14-ejercicio-semana14.html" rel="prev">
+<link href="./favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="./style.css">
+<meta property="og:title" content="Ejercicios POL278 - 2022-1 - 15&nbsp; REPASO FINAL I">
+<meta property="og:description" content="This is where you will find all the resources for the course Introduction to Data Analysis with R">
+<meta property="og:image" content="https://pol278-pucp.github.io/test1/s15-ejercicio-final-semana15_files/figure-html/unnamed-chunk-4-1.png">
+<meta property="og:site-name" content="Ejercicios POL278 - 2022-1">
+<meta property="og:image:height" content="1065">
+<meta property="og:image:width" content="1824">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./s15-ejercicio-final-semana15.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">REPASO FINAL I</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Ejercicios POL278 - 2022-1</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/POL278-PUCP/test1" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hello and welcome!</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s2-ejercicio-semana2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Mis Primeros Pasos Con R - Actividad 2</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s3-ejercicio-semana3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Ejercicio estadistica descriptiva</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s4-ejercicio-semana4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Intervalo de Confianza</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s6-ejercicio-semana6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Comparación de grupos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s6-ejercicio-semana6b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Segunda parte de ejercicios</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s7-ejercicio-semana7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title"><strong><b style="color : #50D050;">CHI-CUADRADO Y MEDIDAS DE ASOCIACIÓN</b></strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s7-ejercicio-semana7b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title"><strong><b style="color : #50D050;">ANALISIS DE VARIABLES CATEGORICAS</b></strong></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s8-ejercicio-parcial-semana8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pregunta 1 (3 puntos)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s8-ejercicio-parcial-semana8b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">FACULTAD DE CIENCIAS SOCIALES - PUCP <br></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s10-ejercicio-semana10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Correlación</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s12-ejercicio-semana12.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regresión Lineal</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s12-ejercicio-semana12b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Regresión Lineal II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s13-ejercicio-semana13.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Regresión lineal Múltiple</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s14-ejercicio-semana14.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Regresión lineal múltiple II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s15-ejercicio-final-semana15.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">REPASO FINAL I</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s15-ejercicio-final-semana15b.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso Final II</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#una-hipótesis-es-que-la-confianza-al-presidente-b21a-está-vinculada-a-la-edad-q2.-corroboré-esta-hipótesis." id="toc-una-hipótesis-es-que-la-confianza-al-presidente-b21a-está-vinculada-a-la-edad-q2.-corroboré-esta-hipótesis." class="nav-link active" data-scroll-target="#una-hipótesis-es-que-la-confianza-al-presidente-b21a-está-vinculada-a-la-edad-q2.-corroboré-esta-hipótesis."><span class="header-section-number">16</span> 1• Una hipótesis es que la confianza al presidente (B21A) está vinculada a la edad (q2). Corroboré esta hipótesis.</a></li>
+  <li><a href="#parte-2" id="toc-parte-2" class="nav-link" data-scroll-target="#parte-2"><span class="header-section-number">17</span> PARTE 2</a></li>
+  <li><a href="#formato-de-base-de-datos" id="toc-formato-de-base-de-datos" class="nav-link" data-scroll-target="#formato-de-base-de-datos"><span class="header-section-number">18</span> Formato de base de datos</a></li>
+  <li><a href="#confianza-al-presidente" id="toc-confianza-al-presidente" class="nav-link" data-scroll-target="#confianza-al-presidente"><span class="header-section-number">19</span> Confianza al Presidente</a></li>
+  <li><a href="#confianza-al-presidente-y-edad" id="toc-confianza-al-presidente-y-edad" class="nav-link" data-scroll-target="#confianza-al-presidente-y-edad"><span class="header-section-number">20</span> Confianza al Presidente y edad</a></li>
+  <li><a href="#hipótesis-del-investigador" id="toc-hipótesis-del-investigador" class="nav-link" data-scroll-target="#hipótesis-del-investigador"><span class="header-section-number">21</span> Hipótesis del investigador</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/POL278-PUCP/test1/issues/new" class="toc-action">Report an issue</a></p><p><a href="https://github.com/POL278-PUCP/test1/blob/main/s15-ejercicio-final-semana15.qmd" class="toc-action">View source</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">REPASO FINAL I</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Descargue la base de datos LAPOPPERU2019.dta que corresponde a las respuestas de peruanos y residentes al cuestionario de LAPOP 2019. Descargue el cuestionario.</p>
+<p>Consideraciones: El archivo esta en formato stata. (.dta) Verifique las hipótesis formuladas usando las pruebas estadísticas correspondientes. Tenga en cuenta el tipo de variables para utilizar cada prueba. Interprete.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#getwd() </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd("")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rio)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dataBARO <span class="ot">=</span> <span class="fu">import</span>(<span class="st">"./data/s15/Peru-LAPOP-2019.dta"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Un investigador desea analizar la satisfacción con el presidente y la confianza al presidente en Perú antes de la crisis por la pandemia del Covid-19. Para ello, busca variables que estén relacionadas:</p>
+<pre><code>1•  Una hipótesis es que la confianza al presidente (B21A) está vinculada a la edad. Corroboré esta hipótesis.  
+
+2•  El investigador formula un primer modelo de regresión para verificar qué variables están relacionadas con la confianza al presidente (B21A).  El investigador utiliza las variables sociodemográficas como: Rural o Urbano (UR), Tamaño de la ciudad (ESTRATOSEC), Género (Hombre y Mujer) y Edad.   El investigador considera que estas variables sociodemográficas tienen un efecto sobre la confianza al presidente. 
+
+3•  Un segundo modelo que se plantea es el efecto que tiene el apoyo a la democracia (ING4) en la confianza al presidente (B21A). 
+
+4•  Elabore un tercer modelo que explique la confianza al presidente (B12A). </code></pre>
+<p>Consideraciones: El archivo esta en formato stata. (.dta) Verifique las hipótesis formuladas usando las pruebas estadísticas correspondientes. Tenga en cuenta el tipo de variables para utilizar cada prueba. Interprete.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#names(dataBARO)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#str(dataPAVI)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="una-hipótesis-es-que-la-confianza-al-presidente-b21a-está-vinculada-a-la-edad-q2.-corroboré-esta-hipótesis." class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> 1• Una hipótesis es que la confianza al presidente (B21A) está vinculada a la edad (q2). Corroboré esta hipótesis.</h1>
+<p>VD -&gt; confianza al presidente (B21A) - Y VI -&gt; la edad (q2) - X</p>
+<pre><code>H0: No existe correlacion entrer la variables confianza al presidente (B21A) y la edad (q2).
+H1:</code></pre>
+<p>#Como la base de datos es grande, no es necesario aplicar la prueba de normalidad. TLC -&gt; más de 121 de casos. Por tanto, por defecto con Pearson.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(dataBARO<span class="sc">$</span>b21a, dataBARO<span class="sc">$</span>q2) <span class="co">#Pearson</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  dataBARO$b21a and dataBARO$q2
+t = 3.5927, df = 1510, p-value = 0.0003378
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.04184437 0.14181627
+sample estimates:
+       cor 
+0.09206231 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#cor.test(data$b21a, data$q2, method = "spearman")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Debido a que el p-value (0.0003378) es menor a 0.05, rechazamos la H0 y, por tanto, aceptamos la H1 de que “sí existe correlación entre confianza al presidente (B21A) y la edad (q2)”.</p>
+<p>El Coeficiente de Pearson (RHO) es de 0.09 (9%) quiere decir: - Se trata de una “correlación positiva”; es decir, relación directa (a medida de que la edad aumenta, la confianza al presidente aumenta). No obstante el nivel de fuerza de la relación es muy débil. - Se trata de una “correlación no es relevante”. En efecto, según el criterio de Cohen, la correlación se encuentra en el rango entre 0.0 y 0.1.</p>
+<p>Graficamos:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dataBARO<span class="sc">$</span>b21a,dataBARO<span class="sc">$</span>q2, <span class="at">xlab=</span><span class="st">"b21a"</span>, <span class="at">ylab=</span><span class="st">"q2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="s15-ejercicio-final-semana15_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>INTERPRETACIÓN:</p>
+<ul>
+<li><p>No se aprecia la dirección. no nos da un diagonal perfecta.</p>
+<ul>
+<li>AHORA REGRESIÓN LINEAL SIMPLE DE ESTAS VARIABLES:</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(b21a <span class="sc">~</span> q2, <span class="at">data =</span> dataBARO) </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = b21a ~ q2, data = dataBARO)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.0590 -1.4746  0.2936  1.3541  3.6060 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 3.212687   0.117258  27.398  &lt; 2e-16 ***
+q2          0.010075   0.002804   3.593 0.000338 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.693 on 1510 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.008475,  Adjusted R-squared:  0.007819 
+F-statistic: 12.91 on 1 and 1510 DF,  p-value: 0.0003378</code></pre>
+</div>
+</div>
+<p><em>Nos fijamos en el Multiple R-squared: 0.008475 (ya que solo tenemos una variable independiente)</em></p>
+<ol start="2" type="1">
+<li><p>Al revisar el p-value (0.0003378), el cual es menor a 0.05), se determina que el modelo1 es válido para predecir la variable dependiente (confianza al presidente) a partir de la variable (edad). Es decir, la edad sí influye en la confianza al presidente.</p></li>
+<li><p>El modelo ayuda a predecir el 0.08% de la variabilidad de la variable independiente confianza al presidente.</p></li>
+</ol>
+<p>4 y 5. Coeficientes: Y = a + bx El salario actual de un trabajador va a ser igual a 3.212687 + 0.010075*(educ). En ese sentido, por cada año adicional de edad, la confianza al presidente se incrementa en 3.212687 puntos.</p>
+<pre><code>2•  El investigador formula un primer modelo de regresión para verificar qué variables están relacionadas con la confianza al presidente (B21A).  El investigador utiliza las variables sociodemográficas como: Rural o Urbano (UR), Tamaño de la ciudad (ESTRATOSEC), Género (Hombre y Mujer) y Edad.   El investigador considera que estas variables sociodemográficas tienen un efecto sobre la confianza al presidente.</code></pre>
+<p>#Formateando - Rural o Urbano (UR)</p>
+<pre><code>::: {.cell}
+
+```{.r .cell-code}
+str(dataBARO$ur)
+```
+
+::: {.cell-output .cell-output-stdout}
+```
+ num [1:1521] 1 1 1 1 1 1 1 1 1 1 ...
+ - attr(*, "label")= chr "Urbano/Rural"
+ - attr(*, "format.stata")= chr "%36.0g"
+ - attr(*, "labels")= Named num [1:2] 1 2
+  ..- attr(*, "names")= chr [1:2] "Urbano" "Rural"
+```
+:::
+:::</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dataBARO<span class="sc">$</span>ur <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dataBARO<span class="sc">$</span>ur)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dataBARO<span class="sc">$</span>ur <span class="ot">&lt;-</span> <span class="fu">factor</span>(dataBARO<span class="sc">$</span>ur, <span class="at">levels =</span> <span class="fu">levels</span>(dataBARO<span class="sc">$</span>ur), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Urbano"</span>, <span class="st">"Rural"</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>ur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 2 levels "Urbano","Rural": 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dataBARO<span class="sc">$</span>ur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Urbano  Rural 
+  1165    356 </code></pre>
+</div>
+</div>
+<pre><code>- Tamaño de la ciudad (estratosec)</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>estratosec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 1 1 1 1 1 1 1 1 1 1 ...
+ - attr(*, "label")= chr "Estrato Secundario"
+ - attr(*, "format.stata")= chr "%36.0g"
+ - attr(*, "labels")= Named num [1:3] 1 2 3
+  ..- attr(*, "names")= chr [1:3] "Grande (más de 100,000)" "Mediana (entre 25,000 y 100,000)" "Pequeña (menos de 25,000)"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>dataBARO<span class="sc">$</span>estratosec <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dataBARO<span class="sc">$</span>estratosec)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>dataBARO<span class="sc">$</span>estratosec <span class="ot">&lt;-</span> <span class="fu">factor</span>(dataBARO<span class="sc">$</span>estratosec, <span class="at">levels =</span> <span class="fu">levels</span>(dataBARO<span class="sc">$</span>estratosec), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Grande"</span>, <span class="st">"Mediana"</span>, <span class="st">"Pequeña"</span>), <span class="at">ordered=</span>T)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>estratosec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Ord.factor w/ 3 levels "Grande"&lt;"Mediana"&lt;..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dataBARO<span class="sc">$</span>estratosec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Grande Mediana Pequeña 
+    845     223     453 </code></pre>
+</div>
+</div>
+<pre><code>- Sexo (q1)</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>q1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 2 1 1 1 2 2 2 1 2 1 ...
+ - attr(*, "label")= chr "Sexo"
+ - attr(*, "format.stata")= chr "%36.0g"
+ - attr(*, "labels")= Named num [1:2] 1 2
+  ..- attr(*, "names")= chr [1:2] "Hombre" "Mujer"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dataBARO<span class="sc">$</span>q1 <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dataBARO<span class="sc">$</span>q1)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>dataBARO<span class="sc">$</span>q1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(dataBARO<span class="sc">$</span>q1, <span class="at">levels =</span> <span class="fu">levels</span>(dataBARO<span class="sc">$</span>q1), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Hombre"</span>, <span class="st">"Mujer"</span>))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>q1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 2 levels "Hombre","Mujer": 2 1 1 1 2 2 2 1 2 1 ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dataBARO<span class="sc">$</span>q1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Hombre  Mujer 
+   758    762 </code></pre>
+</div>
+</div>
+<pre><code>- AHORA PROCEDEMOS CON EL MODELO DE REGRESIÓN LINEAL (MODELO SIN HACER FASTDUMMIES)</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(b21a<span class="sc">~</span> ur <span class="sc">+</span> estratosec <span class="sc">+</span> q1 <span class="sc">+</span> q2, <span class="at">data =</span> dataBARO)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = b21a ~ ur + estratosec + q1 + q2, data = dataBARO)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2370 -1.4453  0.2649  1.3704  3.6947 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   3.199374   0.134676  23.756  &lt; 2e-16 ***
+urRural       0.204014   0.139327   1.464 0.143327    
+estratosec.L -0.044191   0.094435  -0.468 0.639890    
+estratosec.Q  0.096863   0.101656   0.953 0.340818    
+q1Mujer      -0.109753   0.087109  -1.260 0.207883    
+q2            0.009825   0.002807   3.501 0.000477 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.693 on 1506 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.01182,   Adjusted R-squared:  0.00854 
+F-statistic: 3.603 on 5 and 1506 DF,  p-value: 0.00304</code></pre>
+</div>
+</div>
+<p>Usaremos este modelo pero… - Dicotomizando las variables independientes: <em>NOTA: DICOTOMIZAR SIRVE PARA CREAR LA VARIABLE DE REFERENCIA/CONTROL, TAMBIEN PARA REEMPLAZAR EN LA ECUICACION DE ACUERDO A (SÍ: 1 ; NO: 0). ADEMÁS, PARA AGRUPAR Y TRATAR MEJOR A LAS VARIABLES</em></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./data/s15/DICO.PNG" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fastDummies)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>dataBARO <span class="ot">=</span> <span class="fu">dummy_cols</span>(dataBARO, <span class="at">select_columns =</span> <span class="fu">c</span>(<span class="st">"estratosec"</span>, <span class="st">"ur"</span>, <span class="st">"q1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<pre><code>VERIFICANDO LAS NUEVAS VARIABLES CREADAS:</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(dataBARO)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "idnum"                  "uniq_id"                "cluster"               
+  [4] "upm"                    "wt"                     "wave"                  
+  [7] "pais"                   "nationality"            "estratopri"            
+ [10] "prov"                   "municipio"              "estratosec"            
+ [13] "tamano"                 "ur"                     "fecha"                 
+ [16] "q1"                     "q2"                     "a4"                    
+ [19] "soct2"                  "idio2"                  "np1"                   
+ [22] "sgl1"                   "cp6"                    "cp7"                   
+ [25] "cp8"                    "cp13"                   "it1"                   
+ [28] "l1"                     "prot3"                  "jc10"                  
+ [31] "jc13"                   "jc15a"                  "jc16a"                 
+ [34] "vic1ext"                "vicbar7"                "arm2"                  
+ [37] "vic73"                  "vic41"                  "vicbar4a"              
+ [40] "percap1"                "percap2"                "percap3"               
+ [43] "percap4"                "aoj11"                  "aoj12"                 
+ [46] "aoj22"                  "b0"                     "b1"                    
+ [49] "b2"                     "b3"                     "b4"                    
+ [52] "b6"                     "b10a"                   "b12"                   
+ [55] "b13"                    "b18"                    "b21"                   
+ [58] "b21a"                   "b31"                    "b32"                   
+ [61] "b37"                    "b47a"                   "m1"                    
+ [64] "sd2new2"                "sd3new2"                "sd6new2"               
+ [67] "infrax"                 "ros4"                   "redist1"               
+ [70] "redist2a"               "redist3"                "redist_questions_order"
+ [73] "ing4"                   "eff1"                   "eff2"                  
+ [76] "eff10"                  "eff11"                  "dst1b"                 
+ [79] "drk1"                   "env1"                   "env1calt"              
+ [82] "env2b"                  "envp3l"                 "envp3n"                
+ [85] "envp41"                 "envp42"                 "pn4"                   
+ [88] "dem30"                  "e5"                     "d1"                    
+ [91] "d2"                     "d3"                     "d4"                    
+ [94] "d5"                     "d6"                     "lib1"                  
+ [97] "lib2c"                  "exc2"                   "exc6"                  
+[100] "exc11"                  "exc13"                  "exc14"                 
+[103] "exc15"                  "exc16"                  "exc18"                 
+[106] "exc7"                   "exc7new"                "immig1xa"              
+[109] "immig1xb"               "immig1xc"               "comcon3xa"             
+[112] "comcon3xb"              "comcon3xc"              "perven1"               
+[115] "perven2"                "perven3"                "perven4"               
+[118] "perven5"                "vb2"                    "vb3n"                  
+[121] "vb10"                   "vb11"                   "pol1"                  
+[124] "vb20"                   "clien4a"                "clien1n"               
+[127] "clien1na"               "clien4b"                "vb50"                  
+[130] "vb51"                   "vb52"                   "vb58"                  
+[133] "w14a"                   "mil10a"                 "mil10e"                
+[136] "ie1n"                   "ie2"                    "wf1"                   
+[139] "cct1b"                  "ed"                     "q3cn"                  
+[142] "q5a"                    "q5b"                    "ocup4a"                
+[145] "ocupoit"                "ocup1a"                 "formal"                
+[148] "q10new"                 "q14"                    "q10e"                  
+[151] "q11n"                   "q12c"                   "q12bn"                 
+[154] "etid"                   "gi0n"                   "gi1"                   
+[157] "gi4"                    "gi7"                    "smedia1"               
+[160] "smedia2"                "smedia3"                "smedia4"               
+[163] "smedia5"                "smedia6"                "smedia7"               
+[166] "smedia8"                "smedia9"                "r3"                    
+[169] "r4"                     "r4a"                    "r5"                    
+[172] "r6"                     "r7"                     "r8"                    
+[175] "r12"                    "r14"                    "r15"                   
+[178] "r18"                    "r1"                     "r16"                   
+[181] "psc1"                   "psc2"                   "psc7"                  
+[184] "psc8"                   "psc9"                   "psc10"                 
+[187] "psc11"                  "psc11a"                 "psc12"                 
+[190] "psc13_1"                "psc13_2"                "psc13_3"               
+[193] "psc13_4"                "psc13_5"                "psc13_6"               
+[196] "psc13_7"                "psc13_8"                "psc13_9"               
+[199] "psc13_10"               "psc13_11"               "psc13_12"              
+[202] "psc13_13"               "psc3_0"                 "psc3_1"                
+[205] "psc3_2"                 "psc3_3"                 "psc4"                  
+[208] "psc5"                   "psc6"                   "inteval"               
+[211] "noise1"                 "noise2_1"               "noise2_2"              
+[214] "noise2_3"               "noise2_4"               "noise2_5"              
+[217] "noise2_6"               "noise2_7"               "noise2_8"              
+[220] "noise2_9"               "noise2_10"              "conocim"               
+[223] "sex"                    "formatq"                "colorr"                
+[226] "sexi"                   "colori"                 "intid"                 
+[229] "idiomaq"                "estratosec_Grande"      "estratosec_Mediana"    
+[232] "estratosec_Pequeña"     "ur_Urbano"              "ur_Rural"              
+[235] "q1_Hombre"              "q1_Mujer"               "q1_NA"                 </code></pre>
+</div>
+</div>
+<ul>
+<li>utilizaremos las variables de interes A LA VARIABLE DE REFERENCIA NO SE COLOCA EN EL CODIGO.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>modelo3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(b21a <span class="sc">~</span> ur_Urbano <span class="sc">+</span> estratosec_Grande <span class="sc">+</span> estratosec_Mediana <span class="sc">+</span> q1_Mujer <span class="sc">+</span> q2, <span class="at">data =</span> dataBARO)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo3) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = b21a ~ ur_Urbano + estratosec_Grande + estratosec_Mediana + 
+    q1_Mujer + q2, data = dataBARO)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2370 -1.4453  0.2649  1.3704  3.6947 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         3.411685   0.151963  22.451  &lt; 2e-16 ***
+ur_Urbano          -0.204014   0.139327  -1.464 0.143327    
+estratosec_Grande   0.062495   0.133551   0.468 0.639890    
+estratosec_Mediana -0.087385   0.148119  -0.590 0.555301    
+q1_Mujer           -0.109753   0.087109  -1.260 0.207883    
+q2                  0.009825   0.002807   3.501 0.000477 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.693 on 1506 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.01182,   Adjusted R-squared:  0.00854 
+F-statistic: 3.603 on 5 and 1506 DF,  p-value: 0.00304</code></pre>
+</div>
+</div>
+<p><em>EDAD no es variable de control o referencia -&gt; porque es numérica , solo se asume que aumenta en una unidad. las demás variables son de control.</em></p>
+<p>INTERPRETACIÓN:</p>
+<p>H0: NO ES VALIDO H1:</p>
+<p>Rechazamos la H0, alguna de estas variables independientes puede determinar la variable dependiente.</p>
+<ol start="2" type="1">
+<li><p>Al revisar el p-value (0.00304), el cual es menor a 0.05), se determina que el modelo3 es válido para predecir la variable dependiente la confianza al presidente (b21a) solo a partir de la variable edad(q2).</p></li>
+<li><p>El modelo ayuda a predecir el 0.85% de la variabilidad de la variable salario actual.</p></li>
+<li><p>La única variable que influye es EDAD (las otras no) de acuerdo con el p-value (0.000477)</p></li>
+</ol>
+<p>4 y 5. Coeficientes: Y = a + bx + b2x2 …</p>
+<p>La confianza al presidente va a ser igual a 3.411685 + (-0.204014<em>ur_urbano) + 0.062495</em>(estratosec_Grande) + (-0.087385<em>estratosec_Mediana) + (-0.109753</em>q1_Mujer)+ 0.009825*(q2)</p>
+<p>por ejemplo:</p>
+<p>una persona que vive en un sitio urbano, en una ciudad grande, es mujer y tiene 20 años dedad</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">=</span> <span class="fl">3.411685</span> <span class="sc">+</span> (<span class="sc">-</span><span class="fl">0.204014</span><span class="sc">*</span><span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.062495</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span>  (<span class="sc">-</span><span class="fl">0.109753</span><span class="sc">*</span><span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.009825</span><span class="sc">*</span>(<span class="dv">20</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>Y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.356913</code></pre>
+</div>
+</div>
+<p>La confianza al presidente por parte de una mujer que vive en un sitio urbano, en una ciudad grande y tiene 20 años de edad va a ser igual a 3.356913 puntos.</p>
+<p>OTOR EJEMPLO</p>
+<p>Si es hombre (en este modelo es el modelo de referencia, por ello, reemplazamos con cero)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>Y2 <span class="ot">=</span> <span class="fl">3.411685</span> <span class="sc">+</span> (<span class="sc">-</span><span class="fl">0.204014</span><span class="sc">*</span><span class="dv">1</span>) <span class="sc">+</span> <span class="fl">0.062495</span><span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span>  (<span class="sc">-</span><span class="fl">0.109753</span><span class="sc">*</span><span class="dv">0</span>) <span class="sc">+</span> <span class="fl">0.009825</span><span class="sc">*</span>(<span class="dv">20</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>Y2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.466666</code></pre>
+</div>
+</div>
+<p>La confianza al presidente por parte de un hombre que vive en un sitio urbano, en una ciudad grande y tiene 20 años de edad va a ser igual a 3.466666 puntos.</p>
+<p>OTOR EJEMPLO:</p>
+<p>Tomemos en cuenta (SER 1 EN LUGAR DE SER 0, DISMINUYE/AUMENTA LA CONFIANZA) referencia -&gt; rural: 0 urbano: 1</p>
+<ul>
+<li>SI UNA PERSONA PASA DE URBANO A RURAL, SU CONFIANZA DISMINUYE EN 0.204014.</li>
+</ul>
+<p>ENTONCES…</p>
+<ul>
+<li><p>SI UNA PERSONA PASA DE ESTRATO GRANDE A PEQUEÑO, SU CONFIANZA AUMENTA EN 0.062495.</p></li>
+<li><p>SI UNA PERSONA PASA DE ESTRATO MEDIANO A PEQUEÑO, SU CONFIANZA DISMINUYE EN 0.087385.</p></li>
+<li><p>SI UNA PERSONA ES MUJER EN LUGAR DE SER HOMBRE, SU CONFIANZA DISMINUYE EN 0.109753.</p></li>
+<li><p>RESPECTO A EDAD -&gt; COMO ES NUMÉRICA, ASUMIMOS QUE AUMENTA EN UNA UNIDAD. ENTONCES, NO HAY CON QUIEN COMPARARLO.</p></li>
+</ul>
+<p>Gráfica</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_summs</span>(modelo3, <span class="at">scale=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="s15-ejercicio-final-semana15_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>INTERPRETACIÓN: por los intervalos de confianza nos damos cuenta que solo EDAD influye en la varaible dependiente.</p>
+<p>Los intervalos de confianza de los coefricientes de las otras variables está tomando el valor cero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">#lm.beta(modelo3) #para ver el coeficiente estandarizado (NOS INDICA QUÉ VARIABLE IMPACTA MÁS EN LA VARIABLE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>verlo en valor absoluto</em></p>
+<p>EL MAYOR ES ES EDAD</p>
+<pre><code>3•  Un segundo modelo que se plantea es el *efecto* que tiene el apoyo a la democracia (ING4) en la confianza al presidente (B21A). (Regresión lineal simple)</code></pre>
+<p>VD: CONFIANZA AL PRESIDENTE VI: APOYO A LA DEMOCRACIA</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>ing4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 5 5 4 3 5 4 3 4 5 4 ...
+ - attr(*, "label")= chr "La democracia es mejor que cualquier otra forma de gobierno"
+ - attr(*, "format.stata")= chr "%36.0f"
+ - attr(*, "labels")= Named num [1:5] 1 7 NA NA NA
+  ..- attr(*, "names")= chr [1:5] "Muy en desacuerdo" "Muy de acuerdo" "No sabe" "No responde" ...</code></pre>
+</div>
+</div>
+<p>Convertimos en numerica: #que salga numerica en R no signfica que sea definida así. R solamente está leyendo numeros.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>dataBARO<span class="sc">$</span>ing4 <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dataBARO<span class="sc">$</span>ing4)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>ing4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 5 5 4 3 5 4 3 4 5 4 ...</code></pre>
+</div>
+</div>
+<p>#que salga numerica en R no signfica que sea así.</p>
+<p>definimos como numerica tambien b21a</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>b21a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 3 6 4 5 5 4 3 5 6 5 ...
+ - attr(*, "label")= chr "Confianza en el presidente"
+ - attr(*, "format.stata")= chr "%36.0f"
+ - attr(*, "labels")= Named num [1:5] 1 7 NA NA NA
+  ..- attr(*, "names")= chr [1:5] "Nada" "Mucho" "No sabe" "No responde" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>dataBARO<span class="sc">$</span>b21a <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(dataBARO<span class="sc">$</span>b21a)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dataBARO<span class="sc">$</span>b21a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 3 6 4 5 5 4 3 5 6 5 ...</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>modelo4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(b21a <span class="sc">~</span> ing4, <span class="at">data =</span> dataBARO)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo4) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = b21a ~ ing4, data = dataBARO)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.1197 -1.2928  0.0871  1.2938  4.1207 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.67255    0.13627   19.61  &lt; 2e-16 ***
+ing4         0.20673    0.02908    7.11 1.79e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.668 on 1489 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.03284,   Adjusted R-squared:  0.03219 
+F-statistic: 50.56 on 1 and 1489 DF,  p-value: 1.791e-12</code></pre>
+</div>
+</div>
+<p>INTERPRETACIÓN:</p>
+<ol start="2" type="1">
+<li><p>Al revisar el p-value (1.791e-12), el cual es menor a 0.05, se determina que el modelo4 es válido para predecir la variable dependiente la confianza al presidente (b21a) a partir de la variable (ing4) apoyo a la democracia.</p></li>
+<li><p>El modelo ayuda a predecir/explicar el 3.2% de la variabilidad de la variable (dependiente) confianza al presidente.</p></li>
+</ol>
+<p>Es una relacion positiva directa. por lo que a mayor apoyo a la demcoracua, habrá mayor confianza en el presidente.</p>
+<p>4 y 5. Coeficientes: Y = a + bx + b2x2 …</p>
+<p>La confianza al presidente va a ser igual a 2.67255 + 0.20673*(ing4)</p>
+<p>por ejemplo:</p>
+<ul>
+<li>Cuánto tendra una persona confianza al presidente que tienen 2 apoyo a la democraqcia</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>Y4 <span class="ot">=</span> <span class="fl">2.67255</span> <span class="sc">+</span> <span class="fl">0.20673</span><span class="sc">*</span>(<span class="dv">2</span>) </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>Y4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.08601</code></pre>
+</div>
+</div>
+<p>La confianza al presidente por una persona que apoya a la democracia en 2 puntos, sería de 3.08601 puntos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dataBARO<span class="sc">$</span>b21a,dataBARO<span class="sc">$</span>ing4)  </span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(modelo4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s15-ejercicio-final-semana15_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+<p>INTERPRETACIÓN:</p>
+</section>
+<section id="parte-2" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> PARTE 2</h1>
+<ul>
+<li>Co-author: Luis Valverde</li>
+</ul>
+<p>El objetivo de esta sesión es conocer los comandos básicos de para la regresión lineal Múltiple. Para este ejercicio utilizaremos para reaplicar la base de datos de LAPOP.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rmdformats)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd("~/Documentos/12 PUCP-Docencia/4. Estadística 1 Ciencia Politica")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="formato-de-base-de-datos" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> Formato de base de datos</h1>
+<section id="importa-la-base-de-datos-a-r.-recuerda-que-si-termina-en-.dta-proviene-de-stata-si-termina-con-.xslx-proviene-de-excel" class="level4" data-number="18.0.0.1">
+<h4 data-number="18.0.0.1" class="anchored" data-anchor-id="importa-la-base-de-datos-a-r.-recuerda-que-si-termina-en-.dta-proviene-de-stata-si-termina-con-.xslx-proviene-de-excel"><span class="header-section-number">18.0.0.1</span> Importa la base de datos a R. Recuerda que si termina en .dta proviene de stata, si termina con .xslx proviene de excel</h4>
+<p>• Una hipótesis es que la confianza al presidente (B21A) está vinculada a la edad. Corroboré esta hipótesis.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 3 6 4 5 5 4 3 5 6 5 ...
+ - attr(*, "label")= chr "Confianza en el presidente"
+ - attr(*, "format.stata")= chr "%36.0f"
+ - attr(*, "labels")= Named num [1:5] 1 7 NA NA NA
+  ..- attr(*, "names")= chr [1:5] "Nada" "Mucho" "No sabe" "No responde" ...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 21 60 23 36 30 78 54 20 40 68 ...
+ - attr(*, "label")= chr "Edad"
+ - attr(*, "format.stata")= chr "%36.0g"
+ - attr(*, "labels")= Named num NA
+  ..- attr(*, "names")= chr "No sabe"</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="confianza-al-presidente" class="level1" data-number="19">
+<h1 data-number="19"><span class="header-section-number">19</span> Confianza al Presidente</h1>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  1.000   2.000   4.000   3.605   5.000   7.000       8 </code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="s15-ejercicio-final-semana15_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+</section>
+<section id="confianza-al-presidente-y-edad" class="level1" data-number="20">
+<h1 data-number="20"><span class="header-section-number">20</span> Confianza al Presidente y edad</h1>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  data$ConfPresidente and data$Edad
+t = 3.5927, df = 1510, p-value = 0.0003378
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.04184437 0.14181627
+sample estimates:
+       cor 
+0.09206231 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="s15-ejercicio-final-semana15_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+</section>
+<section id="hipótesis-del-investigador" class="level1" data-number="21">
+<h1 data-number="21"><span class="header-section-number">21</span> Hipótesis del investigador</h1>
+<p>• El investigador formula un primer modelo de regresión para verificar qué variables están relacionadas con la confianza al presidente (B21A). El investigador utiliza las variables sociodemográficas como: Rural o Urbano (UR), Tamaño de la ciudad (ESTRATOSEC), Género (Hombre y Mujer) y Edad. El investigador considera que estas variables sociodemográficas tienen un efecto sobre la confianza al presidente.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 1 1 1 1 1 1 1 1 1 1 ...
+ - attr(*, "label")= chr "Urbano/Rural"
+ - attr(*, "format.stata")= chr "%36.0g"
+ - attr(*, "labels")= Named num [1:2] 1 2
+  ..- attr(*, "names")= chr [1:2] "Urbano" "Rural"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 2 levels "Urbano","Rural": 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 1 1 1 1 1 1 1 1 1 1 ...
+ - attr(*, "label")= chr "Estrato Secundario"
+ - attr(*, "format.stata")= chr "%36.0g"
+ - attr(*, "labels")= Named num [1:3] 1 2 3
+  ..- attr(*, "names")= chr [1:3] "Grande (más de 100,000)" "Mediana (entre 25,000 y 100,000)" "Pequeña (menos de 25,000)"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>estratosec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Grande Mediana Pequeña 
+    845     223     453 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">table</span>(data<span class="sc">$</span>estratosec_Grande))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Var1</th>
+<th style="text-align: right;">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: right;">676</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">1</td>
+<td style="text-align: right;">845</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>estratosec_Mediana)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+1298  223 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>estratosec_Pequeña)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+1068  453 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data<span class="sc">$</span>q1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> num [1:1521] 2 1 1 1 2 2 2 1 2 1 ...
+ - attr(*, "label")= chr "Sexo"
+ - attr(*, "format.stata")= chr "%36.0g"
+ - attr(*, "labels")= Named num [1:2] 1 2
+  ..- attr(*, "names")= chr [1:2] "Hombre" "Mujer"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sexo<span class="ot">=</span><span class="fu">as.factor</span>(data<span class="sc">$</span>q1)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(data<span class="sc">$</span>sexo) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Hombre"</span>,<span class="st">"Mujer"</span>)</span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data<span class="sc">$</span>sexo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Factor w/ 2 levels "Hombre","Mujer": 2 1 1 1 2 2 2 1 2 1 ...</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>modelo1<span class="ot">=</span><span class="fu">lm</span>(ConfPresidente<span class="sc">~</span>ur<span class="sc">+</span>Edad<span class="sc">+</span>sexo<span class="sc">+</span>estratosec_Pequeña,<span class="at">data =</span> data)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ConfPresidente ~ ur + Edad + sexo + estratosec_Pequeña, 
+    data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2252 -1.4457  0.2615  1.3620  3.6634 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         3.238179   0.129860  24.936  &lt; 2e-16 ***
+urRural             0.158333   0.133210   1.189 0.234783    
+Edad                0.009920   0.002806   3.536 0.000419 ***
+sexoMujer          -0.109924   0.087116  -1.262 0.207210    
+estratosec_Pequeña -0.004657   0.123129  -0.038 0.969835    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.693 on 1507 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.011, Adjusted R-squared:  0.008376 
+F-statistic: 4.191 on 4 and 1507 DF,  p-value: 0.002228</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>modelo2<span class="ot">=</span><span class="fu">lm</span>(ConfPresidente<span class="sc">~</span>ur<span class="sc">+</span>Edad<span class="sc">+</span>sexo<span class="sc">+</span>estratosec,<span class="at">data =</span> data)</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ConfPresidente ~ ur + Edad + sexo + estratosec, 
+    data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2370 -1.4453  0.2649  1.3704  3.6947 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        3.270166   0.132965  24.594  &lt; 2e-16 ***
+urRural            0.204014   0.139327   1.464 0.143327    
+Edad               0.009825   0.002807   3.501 0.000477 ***
+sexoMujer         -0.109753   0.087109  -1.260 0.207883    
+estratosecMediana -0.149880   0.134092  -1.118 0.263855    
+estratosecPequeña -0.062495   0.133551  -0.468 0.639890    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.693 on 1506 degrees of freedom
+  (9 observations deleted due to missingness)
+Multiple R-squared:  0.01182,   Adjusted R-squared:  0.00854 
+F-statistic: 3.603 on 5 and 1506 DF,  p-value: 0.00304</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer) </span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(modelo1,modelo2, <span class="at">type =</span> <span class="st">"text"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+===================================================================
+                                  Dependent variable:              
+                    -----------------------------------------------
+                                    ConfPresidente                 
+                              (1)                     (2)          
+-------------------------------------------------------------------
+urRural                      0.158                   0.204         
+                            (0.133)                 (0.139)        
+                                                                   
+Edad                       0.010***                0.010***        
+                            (0.003)                 (0.003)        
+                                                                   
+sexoMujer                   -0.110                  -0.110         
+                            (0.087)                 (0.087)        
+                                                                   
+estratosec_Pequeña          -0.005                                 
+                            (0.123)                                
+                                                                   
+estratosecMediana                                   -0.150         
+                                                    (0.134)        
+                                                                   
+estratosecPequeña                                   -0.062         
+                                                    (0.134)        
+                                                                   
+Constant                   3.238***                3.270***        
+                            (0.130)                 (0.133)        
+                                                                   
+-------------------------------------------------------------------
+Observations                 1,512                   1,512         
+R2                           0.011                   0.012         
+Adjusted R2                  0.008                   0.009         
+Residual Std. Error    1.693 (df = 1507)       1.693 (df = 1506)   
+F Statistic         4.191*** (df = 4; 1507) 3.603*** (df = 5; 1506)
+===================================================================
+Note:                                   *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("jtools")</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggstance")</span></span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggstance)</span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("broom.mixed")</span></span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom.mixed)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jtools)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>testplot1 <span class="ot">&lt;-</span> <span class="fu">plot_summs</span>(modelo1,modelo2,<span class="at">legend.title=</span><span class="st">"Determinantes de la Confianza al Presidente"</span>,<span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">robust =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>testplot1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s15-ejercicio-final-semana15_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid" style="width:100.0%"></p>
+</div>
+</div>
+<p>• Un segundo modelo que se plantea es el efecto que tiene el apoyo a la democracia (ING4) en la confianza al presidente (B21A).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>ing4<span class="ot">=</span><span class="fu">as.numeric</span>(data<span class="sc">$</span>ing4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>modelo3<span class="ot">=</span><span class="fu">lm</span>(ConfPresidente<span class="sc">~+</span>ing4,<span class="at">data =</span> data)</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ConfPresidente ~ +ing4, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.1197 -1.2928  0.0871  1.2938  4.1207 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.67255    0.13627   19.61  &lt; 2e-16 ***
+ing4         0.20673    0.02908    7.11 1.79e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.668 on 1489 degrees of freedom
+  (30 observations deleted due to missingness)
+Multiple R-squared:  0.03284,   Adjusted R-squared:  0.03219 
+F-statistic: 50.56 on 1 and 1489 DF,  p-value: 1.791e-12</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>modelo4<span class="ot">=</span><span class="fu">lm</span>(ConfPresidente<span class="sc">~</span>ur<span class="sc">+</span>Edad<span class="sc">+</span>sexo<span class="sc">+</span>estratosec_Grande<span class="sc">+</span>estratosec_Pequeña<span class="sc">+</span>ing4,<span class="at">data =</span> data)</span>
+<span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ConfPresidente ~ ur + Edad + sexo + estratosec_Grande + 
+    estratosec_Pequeña + ing4, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.4029 -1.3070  0.1318  1.2692  4.3157 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         2.190092   0.211831  10.339  &lt; 2e-16 ***
+urRural             0.224731   0.138142   1.627  0.10399    
+Edad                0.009604   0.002770   3.468  0.00054 ***
+sexoMujer          -0.097373   0.086195  -1.130  0.25879    
+estratosec_Grande   0.131755   0.131702   1.000  0.31728    
+estratosec_Pequeña  0.055013   0.146018   0.377  0.70641    
+ing4                0.210139   0.029022   7.241 7.14e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.66 on 1483 degrees of freedom
+  (31 observations deleted due to missingness)
+Multiple R-squared:  0.04492,   Adjusted R-squared:  0.04106 
+F-statistic: 11.62 on 6 and 1483 DF,  p-value: 9.342e-13</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>modelo5<span class="ot">=</span><span class="fu">lm</span>(ConfPresidente<span class="sc">~</span>Edad<span class="sc">+</span>ing4,<span class="at">data =</span> data)</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ConfPresidente ~ Edad + ing4, data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.3768 -1.3100  0.1155  1.2615  4.2622 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 2.270801   0.174456  13.016  &lt; 2e-16 ***
+Edad        0.009857   0.002767   3.563 0.000378 ***
+ing4        0.210742   0.028972   7.274 5.63e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.66 on 1487 degrees of freedom
+  (31 observations deleted due to missingness)
+Multiple R-squared:  0.0417,    Adjusted R-squared:  0.04041 
+F-statistic: 32.35 on 2 and 1487 DF,  p-value: 1.768e-14</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="huxtable" data-quarto-disable-processing="true" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  ">
+<colgroup><col><col><col><col><col></colgroup><tbody><tr>
+<th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 1</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 2</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 3</th><th style="vertical-align: top; text-align: center; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 4</th></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(Intercept)</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3.24 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3.27 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">2.67 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">2.19 ***</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.13)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.13)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.14)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.21)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">urRural</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.16&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.20&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.22&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.13)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.14)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.14)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Edad</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.01 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.01 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.01 ***</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.00)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.00)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.00)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">sexoMujer</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.11&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.11&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.10&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.09)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.09)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.09)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">estratosec_Pequeña</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.00&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.06&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.12)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.15)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">estratosecMediana</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.15&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.13)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">estratosecPequeña</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.06&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.13)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">ing4</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.21 ***</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.21 ***</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.03)&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.03)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">estratosec_Grande</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.13&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.4pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.13)&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">N</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1512&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1512&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1491&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0.4pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1490&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">R2</th><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.01&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.01&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.03&nbsp;&nbsp;&nbsp;&nbsp;</td><td style="vertical-align: top; text-align: right; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 0.8pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.04&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+<tr>
+<th colspan="5" style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0.8pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"> *** p &lt; 0.001;  ** p &lt; 0.01;  * p &lt; 0.05.</th></tr>
+</tbody></table>
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = ConfPresidente ~ Edad + ing4, data = data)
+
+Standardized Coefficients::
+(Intercept)        Edad        ing4 
+         NA  0.09046121  0.18468520 </code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./s14-ejercicio-semana14.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Regresión lineal múltiple II</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./s15-ejercicio-final-semana15b.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Repaso Final II</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

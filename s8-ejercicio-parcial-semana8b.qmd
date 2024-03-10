@@ -1,0 +1,253 @@
+---
+aliases:
+  - ejercicio-parcial-semana8b.html
+---
+
+Co-author: Luis Valverde
+
+
+<br> 
+<center><img src=" " width="200"></center>
+
+```{r,echo=FALSE, out.width="30%"}
+#knitr::include_graphics("logo_pucp.png") 
+```
+
+
+
+
+## FACULTAD DE CIENCIAS SOCIALES - PUCP <br>
+
+### Curso: POL 278 - Estadística para el análisis político 1 <br> 
+
+### Semestre 2021-2<br> 
+
+### Docente: Marylia Cruz <br> 
+
+### **Sesión de Repaso ** <br>
+
+============================================================
+
+<br>
+
+
+<br>
+
+
+
+<br>
+
+El objetivo de esta sesión es realizar un repaso de regresiones.
+
+La base de datos es del proyecto LAS AMERICAS Y EL MUNDO : 
+
+https://www.lasamericasyelmundo.cide.edu
+
+
+# Abrir la base de datos
+
+
+```{r}
+library(rio)
+data = import("./data/s8/b-peru_2014_base.dta")
+```
+
+
+
+
+
+
+## PREGUNTA 1
+
+1.	Calcule el intervalo de confianza para la proporción de peruanos que consideran estar muy de acuerdo con que los extranjeros que viven en el Perú contribuyen a la economía en el Perú P4_9_1_A_A
+
+```{r}
+table(data$P4_9_1_A_A)
+```
+
+## INTERVALO DE PROPORCIONES
+
+```{r}
+#Intervalo de proporciones
+n=209+266+57+28
+x=209 
+prop.test(x, n, p=NULL,
+          alternative=c("two.sided", "less", "greater"),
+          conf.level=0.95, correct=TRUE)
+```
+
+
+```{r}
+library(car)
+data$P4_9_1_A_A<- recode(data$P4_9_1_A_A, "8=NA;9=NA")
+data$P4_9_1_A_D<- recode(data$P4_9_1_A_D, "8=NA;9=NA")
+```
+
+```{r}
+table(data$P4_9_1_A_A,data$P4_9_1_A_D)
+```
+
+## PREGUNTA 2
+
+2.	Describa la relación entre considerar que los extranjeros en el Perú contribuyen a la economía peruana y traen ideas innovadoras (P4_9_1_A_A, P4_9_1_A_B)
+
+## CHI CUADRADO
+
+```{r}
+chisq.test(table(data$P4_9_1_A_A,data$P4_9_1_A_D))
+```
+
+## Medidas de asociación
+
+
+```{r}
+# Medidas de asociación para variables ordinales
+library(DescTools)
+tabla=table(data$P4_9_1_A_A,data$P4_9_1_A_D)
+GoodmanKruskalGamma(tabla, conf.level=0.95)
+
+KendallTauB(tabla, conf.level=0.95)
+
+StuartTauC(tabla, conf.level=0.95)
+```
+
+## PREGUNTA 3 
+
+3.	Realice un índice aditivo de xenofobia a partir de las siguientes preguntas: P4_9_1_A_A, P4_9_1_A_B, P4_9_1_A_C, P4_9_1_A_D, P4_9_1_A_E) (Agregue gráficos para ampliar su interpretación)
+
+## CREACIÓN DE INDICADORES
+
+```{r}
+library(car)
+
+data$P4_9_1_A_B<- recode(data$P4_9_1_A_B, "1=4;2=3;3=2;4=1;8=NA;9=NA")
+data$P4_9_1_A_C<- recode(data$P4_9_1_A_C, "1=4;2=3;3=2;4=1;8=NA;9=NA")
+data$P4_9_1_A_E<- recode(data$P4_9_1_A_E, "1=4;2=3;3=2;4=1;8=NA;9=NA")
+```
+
+```{r}
+data$sum_xenofobia=(data$P4_9_1_A_A+data$P4_9_1_A_B+data$P4_9_1_A_C+data$P4_9_1_A_D+data$P4_9_1_A_E)
+summary(data$sum_xenofobia)
+```
+
+```{r}
+data$xenofobia=((data$sum_xenofobia-5)/15)*100
+summary(data$xenofobia)  
+```
+
+```{r}
+boxplot(data$xenofobia)
+hist(data$xenofobia)
+```
+
+```{r}
+table(data$P2_7)
+```
+
+## PREGUNTA 4
+
+4.	Describa la relación entre el índice de xenofobia y si las personas tienen una relación con extranjeros que viven en el Perú (P4_5)
+
+## PRUEBA T
+
+```{r}
+
+data$P4_5<- recode(data$P4_5, "1='SI';2='NO';8=NA;9=NA")
+```
+
+```{r}
+t.test(xenofobia ~ P4_5, data = data,conf.level = 0.95)
+```
+
+
+```{r}
+library(gplots) # para solicitar las graficas de error
+plotmeans(xenofobia~P4_5,data=data, p=0.95, 
+          xlab="Tuvo o no relación con extranjeros", ylab="Indice de xenofobia", 
+          main="Mean Plot\nwith 95% CI")
+```
+
+## PREGUNTA 5
+
+5.	Describa la relación entre el índice de xenofobia y si la percepción sobre el número de extranjeros en el Perú (P4_6)
+
+## ANOVA
+
+```{r}
+table(data$P4_6)
+data$P4_6<- recode(data$P4_6, "8=NA;9=NA")
+```
+
+
+```{r}
+data$P4_6=as.factor(data$P4_6)
+```
+
+```{r}
+anova=aov(xenofobia ~ P4_6, data = data)
+summary(anova)
+anova
+```
+
+
+
+```{r}
+TukeyHSD(anova)
+```
+
+¿Qué concluimos?
+
+```{r}
+ plotmeans(data$xenofobia~data$P4_6, p=0.95,
+          main="Mean Plot\nwith 95% CI")
+```
+
+
+```{r}
+plot(TukeyHSD(anova))
+```
+
+
+
+
+
+
+
+
+
+
+
+# SESIÓN DE REPASO
+
+
+Descargue la base de datos del perú_2014_base.dta que corresponde al estudio del Perú y Las Américas del 2014.  Descargue el cuestionario. 
+
+1.	Calcule el intervalo de confianza para la proporción de peruanos que consideran estar muy de acuerdo con que los extranjeros que viven en el Perú contribuyen a la economía en el Perú P4_9_1_A_A
+
+2.	Describa la relación entre considerar que los extranjeros en el Perú contribuyen a la economía peruana y traen ideas innovadoras (P4_9_1_A_A, P4_9_1_A_B)
+
+3.	Realice un índice aditivo de xenofobia a partir de las siguientes preguntas: P4_9_1_A_A, P4_9_1_A_B, P4_9_1_A_C, P4_9_1_A_D, P4_9_1_A_E) (Agregue gráficos para ampliar su interpretación)
+
+4.	Describa la relación entre el índice de xenofobia y si las personas tienen una relación con extranjeros que viven en el Perú (P4_5)
+
+5.	Describa la relación entre el índice de xenofobia y si la percepción sobre el número de extranjeros en el Perú (P4_6)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

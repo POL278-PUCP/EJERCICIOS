@@ -1,0 +1,495 @@
+---
+aliases:
+  - ejercicio-semana15.html
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+
+# REPASO FINAL I
+
+
+Descargue la base de datos LAPOPPERU2019.dta que corresponde a las respuestas de peruanos y residentes al cuestionario de LAPOP 2019. Descargue el cuestionario. 
+
+Consideraciones:
+El archivo esta en formato stata. (.dta)
+Verifique las hipótesis formuladas usando las pruebas estadísticas correspondientes. Tenga en cuenta el tipo de variables para utilizar cada prueba. Interprete.
+
+
+```{r}
+#getwd() 
+#setwd("")
+
+library(rio)
+dataBARO = import("./data/s15/Peru-LAPOP-2019.dta")
+```
+
+Un investigador desea analizar la satisfacción con el presidente y la confianza al presidente en Perú antes de la crisis por la pandemia del Covid-19.  Para ello, busca variables que estén relacionadas:
+
+
+    1•	Una hipótesis es que la confianza al presidente (B21A) está vinculada a la edad. Corroboré esta hipótesis.  
+
+    2•	El investigador formula un primer modelo de regresión para verificar qué variables están relacionadas con la confianza al presidente (B21A).  El investigador utiliza las variables sociodemográficas como: Rural o Urbano (UR), Tamaño de la ciudad (ESTRATOSEC), Género (Hombre y Mujer) y Edad.   El investigador considera que estas variables sociodemográficas tienen un efecto sobre la confianza al presidente. 
+
+    3•	Un segundo modelo que se plantea es el efecto que tiene el apoyo a la democracia (ING4) en la confianza al presidente (B21A). 
+
+    4•	Elabore un tercer modelo que explique la confianza al presidente (B12A). 
+    
+    
+ Consideraciones:
+El archivo esta en formato stata. (.dta)
+Verifique las hipótesis formuladas usando las pruebas estadísticas correspondientes. Tenga en cuenta el tipo de variables para utilizar cada prueba. Interprete.
+   
+    
+    
+    
+    
+    
+    
+```{r}
+#names(dataBARO)
+#str(dataPAVI)
+```
+
+
+# 1•	Una hipótesis es que la confianza al presidente (B21A) está vinculada a la edad (q2). Corroboré esta hipótesis. 
+
+VD -> confianza al presidente (B21A) - Y
+VI -> la edad (q2) - X
+
+    H0: No existe correlacion entrer la variables confianza al presidente (B21A) y la edad (q2).
+    H1:
+
+#Como la base de datos es grande, no es necesario aplicar la prueba de normalidad. TLC -> más de 121 de casos.
+Por tanto, por defecto con Pearson.
+```{r}
+cor.test(dataBARO$b21a, dataBARO$q2) #Pearson
+#cor.test(data$b21a, data$q2, method = "spearman")
+```
+Debido a que el p-value (0.0003378) es menor a 0.05, rechazamos la H0 y, por tanto, aceptamos la H1 de que "sí existe correlación entre confianza al presidente (B21A) y la edad (q2)".
+
+El Coeficiente de Pearson (RHO) es de 0.09 (9%) quiere decir:
+- Se trata de una "correlación positiva"; es decir, relación directa (a medida de que la edad aumenta, la confianza al presidente aumenta). No obstante el nivel de fuerza de la relación es muy débil. 
+- Se trata de una "correlación no es relevante". En efecto, según el criterio de Cohen, la correlación se encuentra en el rango entre 0.0 y 0.1.
+
+
+Graficamos:
+```{r, message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+plot(dataBARO$b21a,dataBARO$q2, xlab="b21a", ylab="q2")
+```
+INTERPRETACIÓN:
+
++ No se aprecia la dirección. no nos da un diagonal perfecta.
+
+
+    - AHORA REGRESIÓN LINEAL SIMPLE DE ESTAS VARIABLES:
+```{r}
+modelo1 <- lm(b21a ~ q2, data = dataBARO) 
+summary(modelo1)
+```
+*Nos fijamos en el Multiple R-squared: 0.008475 (ya que solo tenemos una variable independiente)*
+
+ 2. Al revisar el p-value (0.0003378), el cual es menor a 0.05), se determina que el modelo1 es válido para predecir la variable dependiente (confianza al presidente) a partir de la variable (edad). Es decir, la edad sí influye en la confianza al presidente.
+ 
+3. El modelo ayuda a predecir el 0.08% de la variabilidad de la variable independiente confianza al presidente.
+
+4 y 5. Coeficientes: Y = a + bx
+El salario actual de un trabajador va a ser igual a 3.212687 + 0.010075*(educ). En ese sentido, por cada año adicional de edad, la confianza al presidente se incrementa en 3.212687 puntos.
+
+ 
+    2•	El investigador formula un primer modelo de regresión para verificar qué variables están relacionadas con la confianza al presidente (B21A).  El investigador utiliza las variables sociodemográficas como: Rural o Urbano (UR), Tamaño de la ciudad (ESTRATOSEC), Género (Hombre y Mujer) y Edad.   El investigador considera que estas variables sociodemográficas tienen un efecto sobre la confianza al presidente.
+
+#Formateando
+    - Rural o Urbano (UR)
+    ```{r}
+str(dataBARO$ur)
+```
+
+```{r}
+dataBARO$ur <- as.factor(dataBARO$ur)
+dataBARO$ur <- factor(dataBARO$ur, levels = levels(dataBARO$ur), labels = c("Urbano", "Rural"))
+str(dataBARO$ur)
+table(dataBARO$ur)
+```
+
+    - Tamaño de la ciudad (estratosec)
+```{r}
+str(dataBARO$estratosec)
+```
+```{r}
+dataBARO$estratosec <- as.factor(dataBARO$estratosec)
+dataBARO$estratosec <- factor(dataBARO$estratosec, levels = levels(dataBARO$estratosec), labels = c("Grande", "Mediana", "Pequeña"), ordered=T)
+
+str(dataBARO$estratosec)
+table(dataBARO$estratosec)
+```
+
+    - Sexo (q1)
+```{r}
+str(dataBARO$q1)
+```
+
+```{r}
+dataBARO$q1 <- as.factor(dataBARO$q1)
+dataBARO$q1 <- factor(dataBARO$q1, levels = levels(dataBARO$q1), labels = c("Hombre", "Mujer"))
+
+str(dataBARO$q1)
+table(dataBARO$q1)
+```
+
+    - AHORA PROCEDEMOS CON EL MODELO DE REGRESIÓN LINEAL (MODELO SIN HACER FASTDUMMIES)
+```{r}
+modelo2 <- lm(b21a~ ur + estratosec + q1 + q2, data = dataBARO)
+summary(modelo2)
+```
+Usaremos este modelo pero...
+    - Dicotomizando las variables independientes: 
+    *NOTA: DICOTOMIZAR SIRVE PARA CREAR LA VARIABLE DE REFERENCIA/CONTROL, TAMBIEN PARA REEMPLAZAR EN LA ECUICACION DE ACUERDO A (SÍ: 1 ; NO: 0). ADEMÁS, PARA AGRUPAR Y TRATAR MEJOR A LAS VARIABLES*
+```{r,echo=FALSE, out.width="60%",fig.align="center"}
+knitr::include_graphics("./data/s15/DICO.PNG") 
+```
+
+```{r}
+library(fastDummies)
+dataBARO = dummy_cols(dataBARO, select_columns = c("estratosec", "ur", "q1"))
+```
+
+    VERIFICANDO LAS NUEVAS VARIABLES CREADAS:
+```{r}
+names(dataBARO)
+```
+
+  - utilizaremos las variables de interes
+  A LA VARIABLE DE REFERENCIA NO SE COLOCA EN EL CODIGO.
+```{r}
+modelo3 <- lm(b21a ~ ur_Urbano + estratosec_Grande + estratosec_Mediana + q1_Mujer + q2, data = dataBARO)
+summary(modelo3) 
+```
+*EDAD no es variable de control o referencia -> porque es numérica , solo se asume que aumenta en una unidad. las demás variables son de control.*
+
+INTERPRETACIÓN:
+
+H0: NO ES VALIDO
+H1:
+
+Rechazamos la H0, alguna de estas variables independientes puede determinar la variable dependiente.
+
+2. Al revisar el p-value (0.00304), el cual es menor a 0.05), se determina que el modelo3 es válido para predecir la variable dependiente la confianza al presidente (b21a) solo a partir de la variable edad(q2).  
+
+3. El modelo ayuda a predecir el 0.85% de la variabilidad de la variable salario actual.
+
+3. La única variable que influye es EDAD (las otras no) de acuerdo con el p-value (0.000477)
+
+4 y 5. Coeficientes: Y = a + bx + b2x2 ...
+
+La confianza al presidente va a ser igual a 3.411685 + (-0.204014*ur_urbano) + 0.062495*(estratosec_Grande) + (-0.087385*estratosec_Mediana) +  (-0.109753*q1_Mujer)+ 0.009825*(q2)
+
+por ejemplo:
+
+una persona que vive en un sitio urbano, en una ciudad grande, es mujer y tiene 20 años dedad
+
+```{r}
+Y = 3.411685 + (-0.204014*1) + 0.062495*1 +  (-0.109753*1) + 0.009825*(20)
+Y
+```
+
+La confianza al presidente por parte de una mujer que vive en un sitio urbano, en una ciudad grande y tiene 20 años de edad va a ser igual a 3.356913 puntos. 
+
+
+OTOR EJEMPLO
+
+Si es hombre (en este modelo es el modelo de referencia, por ello, reemplazamos con cero)
+
+```{r}
+Y2 = 3.411685 + (-0.204014*1) + 0.062495*1 +  (-0.109753*0) + 0.009825*(20)
+Y2
+```
+
+La confianza al presidente por parte de un hombre que vive en un sitio urbano, en una ciudad grande y tiene 20 años de edad va a ser igual a 3.466666 puntos. 
+
+
+OTOR EJEMPLO:
+
+Tomemos en cuenta (SER 1 EN LUGAR DE SER 0, DISMINUYE/AUMENTA LA CONFIANZA)
+referencia -> rural: 0
+              urbano: 1
+
++ SI UNA PERSONA PASA DE URBANO A RURAL, SU CONFIANZA DISMINUYE EN 0.204014. 
+
+ENTONCES...
+
++ SI UNA PERSONA PASA DE ESTRATO GRANDE A PEQUEÑO, SU CONFIANZA AUMENTA  EN 0.062495. 
+
++ SI UNA PERSONA PASA DE ESTRATO MEDIANO A PEQUEÑO, SU CONFIANZA DISMINUYE EN 0.087385. 
+
++ SI UNA PERSONA ES MUJER EN LUGAR DE SER HOMBRE, SU CONFIANZA DISMINUYE EN 0.109753. 
+
++ RESPECTO A EDAD -> COMO ES NUMÉRICA, ASUMIMOS QUE AUMENTA EN UNA UNIDAD. ENTONCES, NO HAY CON QUIEN COMPARARLO.
+
+
+Gráfica
+```{r, message=FALSE,warning=FALSE,eval=TRUE,fig.show='hold',fig.width=9.5,fig.height=5.55, fig.align="center"}
+library(jtools)
+plot_summs(modelo3, scale=TRUE)
+```
+INTERPRETACIÓN:
+por los intervalos de confianza nos damos cuenta que solo EDAD influye en la varaible dependiente.
+
+Los intervalos de confianza de los coefricientes de las otras variables está tomando el valor cero.
+
+
+```{r}
+#lm.beta(modelo3) #para ver el coeficiente estandarizado (NOS INDICA QUÉ VARIABLE IMPACTA MÁS EN LA VARIABLE)
+```
+*verlo en valor absoluto*
+
+EL MAYOR ES ES EDAD
+
+
+
+    3•	Un segundo modelo que se plantea es el *efecto* que tiene el apoyo a la democracia (ING4) en la confianza al presidente (B21A). (Regresión lineal simple)
+
+VD: CONFIANZA AL PRESIDENTE
+VI: APOYO A LA DEMOCRACIA
+
+```{r}
+str(dataBARO$ing4)
+```
+Convertimos en numerica:
+#que salga numerica en R no signfica que sea definida así. R solamente está leyendo numeros.
+```{r}
+dataBARO$ing4 <- as.numeric(dataBARO$ing4)
+str(dataBARO$ing4)
+```
+#que salga numerica en R no signfica que sea así.
+
+definimos como numerica tambien b21a
+
+```{r}
+str(dataBARO$b21a)
+dataBARO$b21a <- as.numeric(dataBARO$b21a)
+str(dataBARO$b21a)
+```
+
+
+```{r}
+modelo4 <- lm(b21a ~ ing4, data = dataBARO)
+summary(modelo4) 
+```
+INTERPRETACIÓN:
+
+2. Al revisar el p-value (1.791e-12), el cual es menor a 0.05, se determina que el modelo4 es válido para predecir la variable dependiente la confianza al presidente (b21a) a partir de la variable (ing4)  apoyo a la democracia.
+
+3. El modelo ayuda a predecir/explicar el 3.2% de la variabilidad de la variable (dependiente) confianza al presidente.
+
+Es una relacion positiva directa. por lo que a mayor apoyo a la demcoracua, habrá mayor confianza en el presidente.
+
+4 y 5. Coeficientes: Y = a + bx + b2x2 ...
+
+La confianza al presidente va a ser igual a 2.67255 + 0.20673*(ing4) 
+
+por ejemplo:
+
++ Cuánto tendra una persona confianza al presidente que tienen 2 apoyo a la democraqcia
+
+```{r}
+Y4 = 2.67255 + 0.20673*(2) 
+Y4
+```
+La confianza al presidente por una persona que apoya a la democracia en 2 puntos, sería de 3.08601 puntos.
+
+
+```{r}
+plot(dataBARO$b21a,dataBARO$ing4)  
+abline(modelo4)
+```
+INTERPRETACIÓN:
+
+
+
+
+
+
+
+
+# PARTE 2
+
+- Co-author: Luis Valverde
+
+El objetivo de esta sesión es conocer los comandos básicos de para la regresión lineal Múltiple. Para este ejercicio utilizaremos para reaplicar la base de datos de LAPOP.
+
+
+
+```{r}
+library(rmdformats)
+#setwd("~/Documentos/12 PUCP-Docencia/4. Estadística 1 Ciencia Politica")
+```
+
+# Formato de base de datos
+
+#### Importa la base de datos a R. Recuerda que si termina en .dta proviene de stata, si termina con .xslx proviene de excel
+
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(rio)
+data <- import("./data/s15/Peru-LAPOP-2019.dta")
+```
+
+```{r, echo=FALSE,eval=FALSE, warning=FALSE, message=FALSE}
+names(data)
+#str(data)
+```
+
+
+•	Una hipótesis es que la confianza al presidente (B21A) está vinculada a la edad. Corroboré esta hipótesis. 
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+str(data$b21a)
+str(data$q2)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+data$ConfPresidente=as.numeric(data$b21a)
+data$Edad=as.numeric(data$q2)
+```
+
+# Confianza al Presidente
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+summary(data$ConfPresidente)
+hist(data$ConfPresidente)
+```
+
+# Confianza al Presidente y edad
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+cor.test(data$ConfPresidente,data$Edad)
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+plot(data$Edad,data$ConfPresidente)
+```
+
+# Hipótesis del investigador 
+
+•	El investigador formula un primer modelo de regresión para verificar qué variables están relacionadas con la confianza al presidente (B21A).  El investigador utiliza las variables sociodemográficas como: Rural o Urbano (UR), Tamaño de la ciudad (ESTRATOSEC), Género (Hombre y Mujer) y Edad.   El investigador considera que estas variables sociodemográficas tienen un efecto sobre la confianza al presidente.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+str(data$ur)
+data$ur=as.factor(data$ur)
+levels(data$ur) = c("Urbano","Rural")
+str(data$ur)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+str(data$estratosec)
+data$estratosec=as.factor(data$estratosec)
+data$estratosec=factor(data$estratosec,levels=levels(data$estratosec) ,labels=c("Grande","Mediana","Pequeña"))
+```
+
+```{r}
+table(data$estratosec)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(fastDummies)
+data=dummy_cols(data, select_columns = c("estratosec"))
+```
+
+```{r}
+library(knitr)
+kable(table(data$estratosec_Grande))
+```
+
+```{r}
+table(data$estratosec_Mediana)
+```
+```{r}
+table(data$estratosec_Pequeña)
+```
+
+```{r}
+str(data$q1)
+data$sexo=as.factor(data$q1)
+levels(data$sexo) = c("Hombre","Mujer")
+str(data$sexo)
+```
+
+```{r}
+modelo1=lm(ConfPresidente~ur+Edad+sexo+estratosec_Pequeña,data = data)
+summary(modelo1)
+```
+
+```{r}
+modelo2=lm(ConfPresidente~ur+Edad+sexo+estratosec,data = data)
+summary(modelo2)
+```
+
+
+
+```{r}
+library(stargazer) 
+stargazer(modelo1,modelo2, type = "text")
+```
+```{r}
+
+#install.packages("jtools")
+library(jtools)
+#install.packages("ggstance")
+library(ggstance)
+#install.packages("broom.mixed")
+library(broom.mixed)
+```
+
+
+```{r}
+library(jtools)
+library(sandwich)
+testplot1 <- plot_summs(modelo1,modelo2,legend.title="Determinantes de la Confianza al Presidente",scale = TRUE, robust = TRUE)
+testplot1
+```
+•	Un segundo modelo que se plantea es el efecto que tiene el apoyo a la democracia (ING4) en la confianza al presidente (B21A).
+
+```{r}
+data$ing4=as.numeric(data$ing4)
+```
+
+```{r}
+modelo3=lm(ConfPresidente~+ing4,data = data)
+summary(modelo3)
+```
+
+
+```{r}
+modelo4=lm(ConfPresidente~ur+Edad+sexo+estratosec_Grande+estratosec_Pequeña+ing4,data = data)
+summary(modelo4)
+```
+
+
+```{r}
+modelo5=lm(ConfPresidente~Edad+ing4,data = data)
+summary(modelo5)
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(jtools)
+library(huxtable)
+export_summs(modelo1,modelo2,modelo3,modelo4)
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(lm.beta)
+lm.beta(modelo5)
+```
+
+
+
+
+
+
+
+
+
