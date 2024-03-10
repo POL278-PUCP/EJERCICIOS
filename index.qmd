@@ -15,12 +15,8 @@ Powered by **Bajitos**
 
 ::: {.alert .alert-secondary}
 **Este libro es posible gracias a...**\
-Book´s codes thanks to Jannik Buhr aka [jmbuhr](https://github.com/jmbuhr).
-
 Jannik Buhr aka [jmbuhr](https://github.com/jmbuhr) por los códigos del libro.\
-
 La magister [Marylia Cruz](https://github.com/MaryliaCruzS) por los scripts del curso.\
-
 [Luis Valverde](https://github.com/LuisEduardoValverdeRamos) por editar algunos scripts.\
 :::
 
